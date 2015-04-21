@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesZord.Core", "NesZord.Core\NesZord.Core.csproj", "{5F2AC895-87ED-42EF-AD02-C6E5F9A5EEBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesZord.Tests", "NesZord.Tests\NesZord.Tests.csproj", "{1D11EE50-2A8F-4320-8FAE-3341325DB8BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0C491E28-D131-4846-8B11-44EC11DA343B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F2AC895-87ED-42EF-AD02-C6E5F9A5EEBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F2AC895-87ED-42EF-AD02-C6E5F9A5EEBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F2AC895-87ED-42EF-AD02-C6E5F9A5EEBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F2AC895-87ED-42EF-AD02-C6E5F9A5EEBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D11EE50-2A8F-4320-8FAE-3341325DB8BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D11EE50-2A8F-4320-8FAE-3341325DB8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D11EE50-2A8F-4320-8FAE-3341325DB8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D11EE50-2A8F-4320-8FAE-3341325DB8BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
