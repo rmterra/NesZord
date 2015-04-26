@@ -59,7 +59,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DebuggerShim.cs" />
-    <Compile Include="DescribeAccumulatorOperations.cs" />
+    <Compile Include="Describe_microprocessor_accumulator_operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
