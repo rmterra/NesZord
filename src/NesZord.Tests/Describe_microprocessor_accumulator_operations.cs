@@ -29,7 +29,11 @@ namespace NesZord.Tests
 				expectedAccumulatorValue = this.fixture.Create<byte>();
 			};
 
-			act = () => { processor.Start(new byte[] { 0xa9, expectedAccumulatorValue }); };
+			act = () =>
+			{
+				byte operation = (byte)MicroprocessorOperations.LoadAccumulatorWithImmediateAddressingMode;
+				processor.Start(new byte[] { operation, expectedAccumulatorValue });
+			};
 
 			it["Should add 2 to program counter"] = () => { processor.ProgramCounter.should_be(2); };
 			it["Should set accumulator with received value"] = () => { processor.Accumulator.should_be(expectedAccumulatorValue); };
