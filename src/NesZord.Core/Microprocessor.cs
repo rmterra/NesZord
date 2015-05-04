@@ -7,11 +7,11 @@ namespace NesZord.Core
 {
 	public class Microprocessor
 	{
+		public byte X { get; private set; }
+
 		public byte Accumulator { get; private set; }
 
 		public int ProgramCounter { get; private set; }
-
-		private byte[] program;
 
 		public void Start(IEnumerable<byte> program)
 		{
@@ -20,18 +20,25 @@ namespace NesZord.Core
 
 		public void Start(byte[] program)
 		{
-			OpCode receivedOpCode = (OpCode)program[0];
-
-			if (receivedOpCode == OpCode.ImmediateLoadAccumulator)
+			while (program.Length > this.ProgramCounter)
 			{
-				this.ProgramCounter = 2;
-				this.Accumulator = program[1];
+				OpCode receivedOpCode = (OpCode)program[this.ProgramCounter];
+
+				if (receivedOpCode == OpCode.ImmediateLoadAccumulator)
+				{
+					this.ProgramCounter = 2;
+					this.Accumulator = program[1];
+				}
+				else if (receivedOpCode == OpCode.AbsoluteStoreAccumulator)
+				{
+					this.ProgramCounter += 3;
+				}
+				else
+				{
+					this.ProgramCounter += 1;
+					this.X = this.Accumulator;
+				}
 			}
-
-			if (program.Length <= this.ProgramCounter) { return; }
-
-			receivedOpCode = (OpCode)program[this.ProgramCounter];
-			this.ProgramCounter += 3;
 		}
 
 		public object ValueAt(int p1, int p2)

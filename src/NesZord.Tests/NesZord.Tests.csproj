@@ -59,7 +59,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DebuggerShim.cs" />
-    <Compile Include="Describe_microprocessor_accumulator_operations.cs" />
+    <Compile Include="Describe_microprocessor_load_operations.cs" />
+    <Compile Include="Describe_microprocessor_store_operations.cs" />
+    <Compile Include="Describe_microprocessor_transfer_operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
