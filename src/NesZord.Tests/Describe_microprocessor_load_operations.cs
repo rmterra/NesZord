@@ -31,8 +31,8 @@ namespace NesZord.Tests
 				processor.Start(new byte[] { operation, expectedAccumulatorValue });
 			};
 
-			it["Should increment 2 to program counter"] = () => { processor.ProgramCounter.should_be(2); };
-			it["Should set accumulator with received value"] = () => { processor.Accumulator.should_be(expectedAccumulatorValue); };
+			it["should increment 2 to program counter"] = () => { processor.ProgramCounter.should_be(2); };
+			it["should set accumulator with received value"] = () => { processor.Accumulator.should_be(expectedAccumulatorValue); };
 		}
 	}
 }
