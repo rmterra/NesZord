@@ -12,5 +12,7 @@ namespace NesZord.Core
 		ImmediateLoadAccumulator = 0xa9,
 
 		TransferFromAccumulatorToX = 0xaa,
+
+		IncrementValueAtX = 0xe8
 	}
 }

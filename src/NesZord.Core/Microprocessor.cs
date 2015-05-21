@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -37,6 +38,16 @@ namespace NesZord.Core
 				{
 					this.ProgramCounter += 1;
 					this.X = this.Accumulator;
+				}
+				else if (receivedOpCode == OpCode.IncrementValueAtX)
+				{
+					this.ProgramCounter += 1;
+					this.X += 1;
+				}
+				else
+				{
+					String error = String.Format(CultureInfo.InvariantCulture, "unknown opcode {0}", receivedOpCode);
+					throw new InvalidOperationException(error);
 				}
 			}
 		}
