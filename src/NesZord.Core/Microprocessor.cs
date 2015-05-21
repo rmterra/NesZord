@@ -33,7 +33,7 @@ namespace NesZord.Core
 				{
 					this.ProgramCounter += 3;
 				}
-				else
+				else if (receivedOpCode == OpCode.TransferFromAccumulatorToX)
 				{
 					this.ProgramCounter += 1;
 					this.X = this.Accumulator;
