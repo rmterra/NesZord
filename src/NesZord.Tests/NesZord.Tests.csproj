@@ -37,7 +37,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NSpec">
+    <Reference Include="NSpec, Version=0.9.68.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\nspec.0.9.68\lib\NSpec.dll</HintPath>
     </Reference>
     <Reference Include="Ploeh.AutoFixture">
@@ -59,6 +60,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DebuggerShim.cs" />
+    <Compile Include="Describe_microprocessor_increment_operations.cs" />
     <Compile Include="Describe_microprocessor_load_operations.cs" />
     <Compile Include="Describe_microprocessor_store_operations.cs" />
     <Compile Include="Describe_microprocessor_transfer_operations.cs" />
