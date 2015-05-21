@@ -28,8 +28,8 @@ namespace NesZord.Tests
 				});
 			};
 
-			it["Should increment 3 to program counter"] = () => { processor.ProgramCounter.should_be(5); };
-			it["Should store the accumulator value in $0200"] = () =>
+			it["should increment 3 to program counter"] = () => { processor.ProgramCounter.should_be(5); };
+			it["should store the accumulator value in $0200"] = () =>
 			{
 				processor.ValueAt(0x20, 0x00).should_be(processor.Accumulator);
 			};
