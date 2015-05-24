@@ -52,7 +52,7 @@ namespace NesZord.Core
 			}
 		}
 
-		public object ValueAt(int p1, int p2)
+		public object ValueAt(int page, int offset)
 		{
 			return this.Accumulator;
 		}
