@@ -53,6 +53,11 @@ namespace NesZord.Core
 					this.Carry = (result >> 8) > 0;
 					this.ProgramCounter += 2;
 				}
+				else if (receivedOpCode == OpCode.Break)
+				{
+					this.ProgramCounter += 1;
+					break;
+				}
 				else
 				{
 					String error = String.Format(CultureInfo.InvariantCulture, "unknown opcode {0}", receivedOpCode);
