@@ -7,12 +7,14 @@ namespace NesZord.Core
 {
 	public enum OpCode
 	{
+		ImmediateAddWithCarry = 0x69,
+
 		AbsoluteStoreAccumulator = 0x8d,
 
 		ImmediateLoadAccumulator = 0xa9,
 
 		TransferFromAccumulatorToX = 0xaa,
 
-		IncrementValueAtX = 0xe8
+		IncrementValueAtX = 0xe8,
 	}
 }

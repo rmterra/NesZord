@@ -8,6 +8,8 @@ namespace NesZord.Core
 {
 	public class Microprocessor
 	{
+		public bool Carry { get; private set; }
+
 		public byte X { get; private set; }
 
 		public byte Accumulator { get; private set; }
@@ -43,6 +45,13 @@ namespace NesZord.Core
 				{
 					this.ProgramCounter += 1;
 					this.X += 1;
+				}
+				else if (receivedOpCode == OpCode.ImmediateAddWithCarry)
+				{
+					int result = this.Accumulator + program[this.ProgramCounter + 1];
+					this.Accumulator = (byte)(result & 0xff);
+					this.Carry = (result >> 8) > 0;
+					this.ProgramCounter += 2;
 				}
 				else
 				{

@@ -60,6 +60,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DebuggerShim.cs" />
+    <Compile Include="Describe_microprocessor_arithmetic_operations.cs" />
     <Compile Include="Describe_microprocessor_increment_operations.cs" />
     <Compile Include="Describe_microprocessor_load_operations.cs" />
     <Compile Include="Describe_microprocessor_store_operations.cs" />
