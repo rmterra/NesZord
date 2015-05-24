@@ -48,7 +48,7 @@ namespace NesZord.Tests
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
-			context["given a byte less than #ff"] = () =>
+			context["given a byte lower than #ff"] = () =>
 			{
 				before = () => { byteToAdd = 0x00; };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be(false); };
