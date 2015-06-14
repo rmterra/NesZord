@@ -19,6 +19,8 @@ namespace NesZord.Core
 
 		TransferFromAccumulatorToX = 0xaa,
 
+		DecrementValueAtX = 0xca,
+
 		IncrementValueAtX = 0xe8
 	}
 }

@@ -51,6 +51,11 @@ namespace NesZord.Core
 					this.ProgramCounter += 1;
 					this.X += 1;
 				}
+				else if (receivedOpCode == OpCode.DecrementValueAtX)
+				{
+					this.ProgramCounter += 1;
+					this.X -= 1;
+				}
 				else if (receivedOpCode == OpCode.ImmediateAddWithCarry)
 				{
 					int result = this.Accumulator + program[this.ProgramCounter + 1];
