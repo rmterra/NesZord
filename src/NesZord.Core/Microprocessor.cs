@@ -8,6 +8,14 @@ namespace NesZord.Core
 {
 	public class Microprocessor
 	{
+		private readonly byte[][] memory;
+
+		public Microprocessor()
+		{
+			this.memory = new byte[Byte.MaxValue][];
+			for (int i = 0; i < Byte.MaxValue; i++) { this.memory[i] = new byte[Byte.MaxValue]; }
+		}
+
 		public bool Carry { get; private set; }
 
 		public byte X { get; private set; }
@@ -39,6 +47,16 @@ namespace NesZord.Core
 				}
 				else if (receivedOpCode == OpCode.AbsoluteStoreAccumulator)
 				{
+					byte page = program[this.ProgramCounter + 2];
+					byte offset = program[this.ProgramCounter + 1];
+					this.memory[page][offset] = this.Accumulator;
+					this.ProgramCounter += 3;
+				}
+				else if (receivedOpCode == OpCode.AbsoluteStoreXRegister)
+				{
+					byte page = program[this.ProgramCounter + 2];
+					byte offset = program[this.ProgramCounter + 1];
+					this.memory[page][offset] = this.X;
 					this.ProgramCounter += 3;
 				}
 				else if (receivedOpCode == OpCode.TransferFromAccumulatorToX)
@@ -78,7 +96,7 @@ namespace NesZord.Core
 
 		public object ValueAt(int page, int offset)
 		{
-			return this.Accumulator;
+			return this.memory[page][offset];
 		}
 	}
 }
