@@ -32,6 +32,11 @@ namespace NesZord.Core
 					this.ProgramCounter = 2;
 					this.Accumulator = program[1];
 				}
+				else if (receivedOpCode == OpCode.ImmediateLoadXRegister)
+				{
+					this.ProgramCounter = 2;
+					this.X = program[1];
+				}
 				else if (receivedOpCode == OpCode.AbsoluteStoreAccumulator)
 				{
 					this.ProgramCounter += 3;

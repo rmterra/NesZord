@@ -13,6 +13,8 @@ namespace NesZord.Core
 
 		AbsoluteStoreAccumulator = 0x8d,
 
+		ImmediateLoadXRegister = 0xa2,
+
 		ImmediateLoadAccumulator = 0xa9,
 
 		TransferFromAccumulatorToX = 0xaa,

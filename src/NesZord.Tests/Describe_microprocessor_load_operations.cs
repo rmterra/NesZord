@@ -34,5 +34,26 @@ namespace NesZord.Tests
 			it["should increment 2 to program counter"] = () => { processor.ProgramCounter.should_be(2); };
 			it["should set accumulator with received value"] = () => { processor.Accumulator.should_be(expectedAccumulatorValue); };
 		}
+
+		public void When_load_the_x_register_with_immediate_addressing_mode()
+		{
+			Microprocessor processor = null;
+			byte expectedAccumulatorValue = 0x00;
+
+			before = () =>
+			{
+				processor = new Microprocessor();
+				expectedAccumulatorValue = fixture.Create<byte>();
+			};
+
+			act = () =>
+			{
+				byte operation = (byte)OpCode.ImmediateLoadXRegister;
+				processor.Start(new byte[] { operation, expectedAccumulatorValue });
+			};
+
+			it["should increment 2 to program counter"] = () => { processor.ProgramCounter.should_be(2); };
+			it["should set x register with received value"] = () => { processor.X.should_be(expectedAccumulatorValue); };
+		}
 	}
 }
