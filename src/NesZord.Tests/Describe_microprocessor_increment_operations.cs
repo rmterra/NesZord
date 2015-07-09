@@ -19,9 +19,8 @@ namespace NesZord.Tests
 
 			before = () => { processor = new Microprocessor(); };
 
-			act = () => { processor.Start(new byte[] { (byte)OpCode.IncrementValueAtX }); };
+			act = () => { processor.RunProgram(new byte[] { (byte)OpCode.IncrementValueAtX }); };
 
-			it["should increment 1 to program counter"] = () => { processor.ProgramCounter.should_be(1); };
 			it["should increment 1 to x register"] = () => { processor.X.should_be(0x01); };
 		}
 	}

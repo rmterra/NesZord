@@ -17,7 +17,6 @@ namespace NesZord.Tests
 		{
 			Microprocessor processor = null;
 			byte[] program = new byte[0];
-			int expectedProgramCounter = 0;
 
 			before = () =>
 			{
@@ -27,15 +26,13 @@ namespace NesZord.Tests
 					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
 					(byte)OpCode.TransferFromAccumulatorToX,
 					(byte)OpCode.Break,
-					(byte)OpCode.ImmediateAddWithCarry, fixture.Create<byte>()
+					(byte)OpCode.ImmediateAddWithCarry, 0xff
 				};
-
-				expectedProgramCounter = program.Length - 2;
 			};
 
-			act = () => { processor.Start(program); };
+			act = () => { processor.RunProgram(program); };
 
-			it["should ignore all commands after execute it"] = () => { processor.ProgramCounter.should_be(expectedProgramCounter); };
+			it["should ignore all commands after execute it"] = () => { processor.Carry.should_be_false(); };
 		}
 	}
 }

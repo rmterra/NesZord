@@ -23,6 +23,10 @@ namespace NesZord.Core
 
 		DecrementValueAtX = 0xca,
 
+		BranchIfNotEqual = 0xd0,
+
+		ImmediateCompareXRegister = 0xe0,
+
 		IncrementValueAtX = 0xe8
 	}
 }

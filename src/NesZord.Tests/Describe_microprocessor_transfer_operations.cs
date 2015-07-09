@@ -21,14 +21,13 @@ namespace NesZord.Tests
 
 			act = () =>
 			{
-				processor.Start(new byte[]
+				processor.RunProgram(new byte[]
 				{
 					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
 					(byte)OpCode.TransferFromAccumulatorToX
 				});
 			};
 
-			it["should increment 1 to the program counter"] = () => { processor.ProgramCounter.should_be(3); };
 			it["x must be equal to accumulator"] = () => { processor.X.should_be(processor.Accumulator); };
 		}
 	}

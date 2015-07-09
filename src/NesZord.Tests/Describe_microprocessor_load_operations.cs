@@ -28,10 +28,9 @@ namespace NesZord.Tests
 			act = () =>
 			{
 				byte operation = (byte)OpCode.ImmediateLoadAccumulator;
-				processor.Start(new byte[] { operation, expectedAccumulatorValue });
+				processor.RunProgram(new byte[] { operation, expectedAccumulatorValue });
 			};
 
-			it["should increment 2 to program counter"] = () => { processor.ProgramCounter.should_be(2); };
 			it["should set accumulator with received value"] = () => { processor.Accumulator.should_be(expectedAccumulatorValue); };
 		}
 
@@ -49,10 +48,9 @@ namespace NesZord.Tests
 			act = () =>
 			{
 				byte operation = (byte)OpCode.ImmediateLoadXRegister;
-				processor.Start(new byte[] { operation, expectedAccumulatorValue });
+				processor.RunProgram(new byte[] { operation, expectedAccumulatorValue });
 			};
 
-			it["should increment 2 to program counter"] = () => { processor.ProgramCounter.should_be(2); };
 			it["should set x register with received value"] = () => { processor.X.should_be(expectedAccumulatorValue); };
 		}
 	}

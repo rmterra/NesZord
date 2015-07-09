@@ -1,8 +1,10 @@
-﻿using NesZord.Core;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NesZord.Core;
 using NSpec;
 using Ploeh.AutoFixture;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +19,6 @@ namespace NesZord.Tests
 		{
 			Microprocessor processor = null;
 			byte byteToAdd = default(byte);
-			int programCounterBeforeAdd = 3;
 
 			before = () =>
 			{
@@ -27,7 +28,7 @@ namespace NesZord.Tests
 
 			act = () =>
 			{
-				processor.Start(new byte[]
+				processor.RunProgram(new byte[]
 				{
 					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
 					(byte)OpCode.TransferFromAccumulatorToX,
@@ -35,7 +36,6 @@ namespace NesZord.Tests
 				});
 			};
 
-			it["should increment 2 to program counter"] = () => { processor.ProgramCounter.should_be(programCounterBeforeAdd + 2); };
 			it["should add the specified value to accumulator"] = () =>
 			{
 				int resultWithCarry = processor.X + byteToAdd;
@@ -51,7 +51,45 @@ namespace NesZord.Tests
 			context["given a byte lower than #ff"] = () =>
 			{
 				before = () => { byteToAdd = 0x00; };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be(false); };
+				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
+			};
+		}
+
+		public void When_compare_x_register_with_memory_with_immediate_addressing_mode()
+		{
+			Microprocessor processor = null;
+			byte byteToCompare = default(byte);
+
+			before = () => { processor = new Microprocessor(); };
+
+			act = () =>
+			{
+				processor.RunProgram(new byte[]
+				{
+					(byte)OpCode.ImmediateLoadXRegister, 0x05,
+					(byte)OpCode.ImmediateCompareXRegister, byteToCompare
+				});
+			};
+
+			context["given that x register value is lower than compared byte"] = () =>
+			{
+				before = () => { byteToCompare = 0xff; };
+				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
+				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
+			};
+
+			context["given that x register value is equal than compared byte"] = () =>
+			{
+				before = () => { byteToCompare = 0x05; };
+				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
+				it["should turn on zero flag"] = () => { processor.Zero.should_be_true(); };
+			};
+
+			context["given that x register value is grater than compared byte"] = () =>
+			{
+				before = () => { byteToCompare = 0x00; };
+				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
+				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 		}
 	}

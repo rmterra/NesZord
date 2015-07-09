@@ -26,14 +26,13 @@ namespace NesZord.Tests
 
 			act = () =>
 			{
-				processor.Start(new byte[]
+				processor.RunProgram(new byte[]
 				{
 					(byte)OpCode.ImmediateLoadXRegister, (byte)(expectedXRegisterValue + 1),
 					(byte)OpCode.DecrementValueAtX
 				});
 			};
 
-			it["should increment 1 to program counter"] = () => { processor.ProgramCounter.should_be(3); };
 			it["should decrement 1 to x register"] = () => { processor.X.should_be(expectedXRegisterValue); };
 		}
 	}
