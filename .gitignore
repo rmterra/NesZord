@@ -8,3 +8,13 @@ artifacts/
 *.userprefs
 *DS_Store
 *.sln.ide
+
+src/watcher_dot_net.rb
+src/NesZord.Core/specwatchr-usage.txt
+src/dotnet.watchr.rb
+src/green.png
+src/red.png
+src/sidekick.bat
+src/sidekickapp.cs
+src/stacktrace.txt
+src/watchr.bat
