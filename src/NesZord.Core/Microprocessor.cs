@@ -31,6 +31,7 @@ namespace NesZord.Core
 				{ OpCode.DecrementValueAtX, this.DecrementValueAtX },
 				{ OpCode.BranchIfNotEqual, this.BranchIfNotEqual },
 				{ OpCode.ImmediateCompareXRegister, this.CompareXRegister },
+				{ OpCode.IncrementValueAtY, this.IncrementValueAtY },
 				{ OpCode.IncrementValueAtX, this.IncrementValueAtX }
 			};
 		}
@@ -154,6 +155,11 @@ namespace NesZord.Core
 			int result = this.X - this.ReadProgramByte();
 			this.Carry = result >= 0;
 			this.Zero = result == 0;
+		}
+
+		private void IncrementValueAtY()
+		{
+			this.Y += 1;
 		}
 
 		private void IncrementValueAtX()

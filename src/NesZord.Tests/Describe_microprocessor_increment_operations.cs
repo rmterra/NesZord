@@ -13,6 +13,17 @@ namespace NesZord.Tests
 	{
 		private static readonly Fixture fixture = new Fixture();
 
+		public void When_increment_the_value_of_y_register()
+		{
+			Microprocessor processor = null;
+
+			before = () => { processor = new Microprocessor(); };
+
+			act = () => { processor.RunProgram(new byte[] { (byte)OpCode.IncrementValueAtY }); };
+
+			it["should increment 1 to y register"] = () => { processor.Y.should_be(0x01); };
+		}
+
 		public void When_increment_the_value_of_x_register()
 		{
 			Microprocessor processor = null;

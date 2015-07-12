@@ -29,6 +29,8 @@ namespace NesZord.Core
 
 		ImmediateCompareXRegister = 0xe0,
 
+		IncrementValueAtY = 0xc8,
+
 		IncrementValueAtX = 0xe8
 	}
 }
