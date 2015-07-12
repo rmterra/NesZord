@@ -29,6 +29,8 @@ namespace NesZord.Core
 
 		BranchIfNotEqual = 0xd0,
 
+		BranchIfEqual = 0xf0,
+
 		ImmediateCompareYRegister = 0xc0,
 
 		ImmediateCompareXRegister = 0xe0,

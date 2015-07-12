@@ -42,5 +42,33 @@ namespace NesZord.Tests
 				it["should Zero flag turn on"] = () => { processor.Zero.should_be_true(); };
 			};
 		}
+
+		public void When_branch_if_equal()
+		{
+			Microprocessor processor = null;
+
+			before = () => { processor = new Microprocessor(); };
+
+			context["given that executed program must branch while Y register is not 0x02"] = () =>
+			{
+				act = () =>
+				{
+					processor.RunProgram(new byte[]
+					{
+						(byte) OpCode.ImmediateLoadYRegister, 0x01,
+						(byte) OpCode.IncrementValueAtY,
+						(byte) OpCode.ImmediateCompareYRegister, 0x02,
+						(byte) OpCode.BranchIfEqual, 0xfb,
+						(byte) OpCode.AbsoluteStoreYRegister, 0x00, 0x02,
+						(byte) OpCode.Break
+					});
+				};
+
+				it["should Y register value be equal 0x03"] = () => { processor.Y.should_be(0x03); };
+				it["should value at $0200 be equal 0x03"] = () => { processor.ValueAt(0x02, 0x00).should_be(0x03); };
+				it["should Carry flag turn on"] = () => { processor.Carry.should_be_true(); };
+				it["should Zero flag turn on"] = () => { processor.Zero.should_be_false(); };
+			};
+		}
 	}
 }

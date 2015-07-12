@@ -31,6 +31,7 @@ namespace NesZord.Core
 				{ OpCode.TransferFromAccumulatorToX, this.TransferFromAccumulatorToX },
 				{ OpCode.DecrementValueAtX, this.DecrementValueAtX },
 				{ OpCode.BranchIfNotEqual, this.BranchIfNotEqual },
+				{ OpCode.BranchIfEqual, this.BranchIfEqual },
 				{ OpCode.ImmediateCompareYRegister, this.CompareYRegister },
 				{ OpCode.ImmediateCompareXRegister, this.CompareXRegister },
 				{ OpCode.IncrementValueAtY, this.IncrementValueAtY },
@@ -145,11 +146,17 @@ namespace NesZord.Core
 
 		private void BranchIfNotEqual()
 		{
-			if (this.Zero)
-			{
-				this.ReadProgramByte();
-				return;
-			}
+			this.BranchIfConditionIsNotSatisfied(() => this.Zero);
+		}
+
+		private void BranchIfEqual()
+		{
+			this.BranchIfConditionIsNotSatisfied(() => this.Zero == false);
+		}
+
+		private void BranchIfConditionIsNotSatisfied(Func<bool> condition)
+		{
+			if (condition()) { this.ReadProgramByte(); return; }
 
 			byte memoryPage = (byte)(this.ProgramCounter >> 8);
 			byte memoryOffset = (byte)(this.ProgramCounter & 0xff);
