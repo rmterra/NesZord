@@ -15,6 +15,8 @@ namespace NesZord.Core
 
 		AbsoluteStoreXRegister = 0x8e,
 
+		ImmediateLoadYRegister = 0xa0,
+
 		ImmediateLoadXRegister = 0xa2,
 
 		ImmediateLoadAccumulator = 0xa9,

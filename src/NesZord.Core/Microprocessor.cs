@@ -24,6 +24,7 @@ namespace NesZord.Core
 				{ OpCode.ImmediateAddWithCarry, this.AddWithCarry },
 				{ OpCode.AbsoluteStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.AbsoluteStoreXRegister, this.StoreXRegister },
+				{ OpCode.ImmediateLoadYRegister, this.LoadYRegister },
 				{ OpCode.ImmediateLoadXRegister, this.LoadXRegister },
 				{ OpCode.ImmediateLoadAccumulator, this.LoadAccumulator },
 				{ OpCode.TransferFromAccumulatorToX, this.TransferFromAccumulatorToX },
@@ -39,6 +40,8 @@ namespace NesZord.Core
 		public bool Zero { get; private set; }
 
 		public byte X { get; private set; }
+
+		public byte Y { get; private set; }
 
 		public byte Accumulator { get; private set; }
 
@@ -103,6 +106,11 @@ namespace NesZord.Core
 			byte offset = this.ReadProgramByte();
 			byte page = this.ReadProgramByte();
 			this.memory[page][offset] = this.X;
+		}
+
+		private void LoadYRegister()
+		{
+			this.Y = this.ReadProgramByte();
 		}
 
 		private void LoadXRegister()
