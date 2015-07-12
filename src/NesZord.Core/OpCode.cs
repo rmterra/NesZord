@@ -11,6 +11,8 @@ namespace NesZord.Core
 
 		ImmediateAddWithCarry = 0x69,
 
+		AbsoluteStoreYRegister = 0x8c,
+
 		AbsoluteStoreAccumulator = 0x8d,
 
 		AbsoluteStoreXRegister = 0x8e,

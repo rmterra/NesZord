@@ -22,6 +22,7 @@ namespace NesZord.Core
 			this.operations = new Dictionary<OpCode, Action>
 			{
 				{ OpCode.ImmediateAddWithCarry, this.AddWithCarry },
+				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister },
 				{ OpCode.AbsoluteStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.AbsoluteStoreXRegister, this.StoreXRegister },
 				{ OpCode.ImmediateLoadYRegister, this.LoadYRegister },
@@ -94,6 +95,13 @@ namespace NesZord.Core
 			int result = this.Accumulator + this.ReadProgramByte();
 			this.Accumulator = (byte)(result & 0xff);
 			this.Carry = (result >> 8) > 0;
+		}
+
+		private void StoreYRegister()
+		{
+			byte offset = this.ReadProgramByte();
+			byte page = this.ReadProgramByte();
+			this.memory[page][offset] = this.Y;
 		}
 
 		private void StoreAccumulator()
