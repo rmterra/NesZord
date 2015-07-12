@@ -30,6 +30,7 @@ namespace NesZord.Core
 				{ OpCode.TransferFromAccumulatorToX, this.TransferFromAccumulatorToX },
 				{ OpCode.DecrementValueAtX, this.DecrementValueAtX },
 				{ OpCode.BranchIfNotEqual, this.BranchIfNotEqual },
+				{ OpCode.ImmediateCompareYRegister, this.CompareYRegister },
 				{ OpCode.ImmediateCompareXRegister, this.CompareXRegister },
 				{ OpCode.IncrementValueAtY, this.IncrementValueAtY },
 				{ OpCode.IncrementValueAtX, this.IncrementValueAtX }
@@ -148,6 +149,13 @@ namespace NesZord.Core
 
 			int offset = 0xff ^ branchOffset;
 			this.ProgramCounter -= offset;
+		}
+
+		private void CompareYRegister()
+		{
+			int result = this.Y - this.ReadProgramByte();
+			this.Carry = result >= 0;
+			this.Zero = result == 0;
 		}
 
 		private void CompareXRegister()
