@@ -1,0 +1,41 @@
+version: 1.0.0.{build}
+
+skip_tags: true
+
+configuration: Debug
+
+init:
+  - git config --global core.autocrlf true
+
+clone_folder: c:\projects\neszord
+
+shallow_clone: false
+
+clone_depth: 5
+
+before_build:
+  - ps: . .\build.ps1 Setup
+
+
+build_script:
+  - ps: . .\build.ps1 Build
+
+test_script:
+  - ps: . .\build.ps1 Test
+
+artifacts:
+  - path: src
+    name: src
+  - path: bin
+    name: bin
+  - path: log
+    name: log
+
+notifications:
+- provider: Email
+  to:
+  - r.mirandaterra@gmail.com
+  subject: NesZord Build
+  on_build_success: false
+  on_build_failure: true
+  on_build_status_changed: true
