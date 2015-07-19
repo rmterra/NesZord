@@ -39,13 +39,13 @@ Task Build -Depends Clean {
 Task Test {	
 	Write-Host "Testing NesZord.sln" -ForegroundColor Green
 	Exec { & $nspecrunner_dir $testdll_dir } 
-	Exec { & $nspecrunner_dir $testdll_dir --formatter=XUnitFormatter > "$log_dir\xunit-results.xml" } 
+	$testResults = Exec { & $nspecrunner_dir $testdll_dir --formatter=XUnitFormatter } 
+	$testResults = "<?xml version=`"1.0`" encoding=`"utf-8`" standalone=`"no`"?>$testResults"
+	New-Item "$log_dir\xunit-results.xml" -Type File -Value $testResults | Out-Null
 	
 	if($isAppVeyor) {
-		$uri = "https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)"
 		$wc = New-Object 'System.Net.WebClient'
-		$wc.UploadFile($uri, (Resolve-Path "$log_dir\xunit-results.xml"))
-		Write-Host "Test results uploaded to $uri" -ForegroundColor Green
+		$wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$log_dir\xunit-results.xml"))
 	}
 }
 
