@@ -42,8 +42,10 @@ Task Test {
 	Exec { & $nspecrunner_dir $testdll_dir --formatter=XUnitFormatter > "$log_dir\xunit-results.xml" } 
 	
 	if($isAppVeyor) {
+		$uri = "https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)"
 		$wc = New-Object 'System.Net.WebClient'
-		$wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$log_dir\xunit-results.xml"))
+		$wc.UploadFile($uri, (Resolve-Path "$log_dir\xunit-results.xml"))
+		Write-Host "Test results uploaded to $uri" -ForegroundColor Green
 	}
 }
 
