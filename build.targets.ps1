@@ -39,17 +39,7 @@ Task Build -Depends Clean {
 Task Test {	
 	Print "Testing NesZord.sln"
 	Exec { & $nspecrunner_dir $testdll_dir } 
-}
-
-Task PostTestsToAppVeyor -precondition { return $isAppVeyor } {	
-	Print "Posting test results"
-	[xml]$xml = Exec { & $nspecrunner_dir $testdll_dir --formatter=XUnitFormatter } 
-	Foreach($testSuite in $xml.testsuites.testsuite) {
-		Foreach($testCase in $testSuite.testcase) { 
-			$testName = $testSuite.name +" >> "+ $testCase.classname +" >> "+ $testCase.name
-			Add-AppveyorTest -Name $testName -Framework NSpec -FileName $testSuite.name -Outcome Passed
-		}
-	}
+	PostTestsToAppVeyor
 }
 
 function CreateCleanDir($dirName, $dirPath) {
@@ -60,4 +50,17 @@ function CreateCleanDir($dirName, $dirPath) {
 
 function Print($message) {
 	Write-Host $message -ForegroundColor Green
+}
+
+function PostTestsToAppVeyor() {
+	if($isAppVeyor -ne $true) { return }
+
+	Print "Posting test results"
+	[xml]$xml = Exec { & $nspecrunner_dir $testdll_dir --formatter=XUnitFormatter } 
+	Foreach($testSuite in $xml.testsuites.testsuite) {
+		Foreach($testCase in $testSuite.testcase) { 
+			$testName = $testSuite.name +" >> "+ $testCase.classname +" >> "+ $testCase.name
+			Add-AppveyorTest -Name $testName -Framework NSpec -FileName $testSuite.name -Outcome Passed
+		}
+	}
 }
