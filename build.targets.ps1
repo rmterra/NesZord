@@ -45,7 +45,7 @@ Task Test {
 		Foreach($testSuite in $xml.testsuites.testsuite) {
 			Foreach($testCase in $testSuite.testcase) { 
 				$testName = $testSuite.name +" >> "+ $testCase.classname +" >> "+ $testCase.name
-				Add-AppVeyor -Name $testName -Framework NSpec  -Outcome Passed
+				Add-AppveyorTest -Name $testName -Framework NSpec  -Outcome Passed
 			}
 		}	
 	}
