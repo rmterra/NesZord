@@ -41,7 +41,7 @@ Task Test {
 	Exec { & $nspecrunner_dir $testdll_dir } 
 }
 
-Task PostTestsToAppVeyor -precondition { $isAppVeyor } {	
+Task PostTestsToAppVeyor -precondition { $isAppVeyor -eq $true } {	
 	Print "Posting test results"
 	[xml]$xml = Exec { & $nspecrunner_dir $testdll_dir --formatter=XUnitFormatter } 
 	Foreach($testSuite in $xml.testsuites.testsuite) {
