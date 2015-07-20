@@ -21,7 +21,7 @@ build_script:
   - ps: . .\build.ps1 Build
 
 test_script:
-  - ps: . .\build.ps1 Test
+  - ps: . .\build.ps1 Test, PostTestsToAppVeyor
 
 artifacts:
   - path: src

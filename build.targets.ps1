@@ -22,12 +22,12 @@ Task Setup {
 }
 
 Task Clean {
-	Write-Host "Cleaning NesZord.sln" -ForegroundColor Green
+	Print "Cleaning NesZord.sln"
 	Exec { msbuild $solution_dir /t:Clean /p:Configuration=Debug /v:quiet } 
 }
 
 Task Build -Depends Clean {	
-	Write-Host "Building NesZord.sln" -ForegroundColor Green
+	Print "Building NesZord.sln"
 	if($isAppVeyor) {
 		Exec { msbuild $solution_dir /t:Build /p:Configuration=Debug /v:quiet /p:OutDir=$artifacts_dir /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" } 
 	}
@@ -37,22 +37,27 @@ Task Build -Depends Clean {
 }
 
 Task Test {	
-	Write-Host "Testing NesZord.sln" -ForegroundColor Green
+	Print "Testing NesZord.sln"
 	Exec { & $nspecrunner_dir $testdll_dir } 
+}
+
+Task PostTestsToAppVeyor -precondition { $isAppVeyor } {	
+	Print "Posting test results"
 	[xml]$xml = Exec { & $nspecrunner_dir $testdll_dir --formatter=XUnitFormatter } 
-	
-	if($isAppVeyor) {
-		Foreach($testSuite in $xml.testsuites.testsuite) {
-			Foreach($testCase in $testSuite.testcase) { 
-				$testName = $testSuite.name +" >> "+ $testCase.classname +" >> "+ $testCase.name
-				Add-AppveyorTest -Name $testName -Framework NSpec  -Outcome Passed
-			}
-		}	
+	Foreach($testSuite in $xml.testsuites.testsuite) {
+		Foreach($testCase in $testSuite.testcase) { 
+			$testName = $testSuite.name +" >> "+ $testCase.classname +" >> "+ $testCase.name
+			Add-AppveyorTest -Name $testName -Framework NSpec -FileName $testSuite.name -Outcome Passed
+		}
 	}
 }
 
 function CreateCleanDir($dirName, $dirPath) {
-	Write-Host "Creating $dirName directory" -ForegroundColor Green
+	Print "Creating $dirName directory"
 	if (Test-Path $dirPath) { rd $dirPath -rec -force | out-null }
 	mkdir $dirPath | out-null
+}
+
+function Print($message) {
+	Write-Host $message -ForegroundColor Green
 }
