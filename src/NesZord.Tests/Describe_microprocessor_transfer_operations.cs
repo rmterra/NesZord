@@ -30,5 +30,23 @@ namespace NesZord.Tests
 
 			it["x must be equal to accumulator"] = () => { processor.X.should_be(processor.Accumulator); };
 		}
+
+		public void When_transfer_from_x_register_to_accumulator()
+		{
+			Microprocessor processor = null;
+
+			before = () => { processor = new Microprocessor(); };
+
+			act = () =>
+			{
+				processor.RunProgram(new byte[]
+				{
+					(byte)OpCode.ImmediateLoadXRegister, fixture.Create<byte>(),
+					(byte)OpCode.TransferFromXToAccumulator
+				});
+			};
+
+			it["accumulator must be equal to x"] = () => { processor.Accumulator.should_be(processor.X); };
+		}
 	}
 }

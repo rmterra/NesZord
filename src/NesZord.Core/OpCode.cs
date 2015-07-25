@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NesZord.Core
+﻿namespace NesZord.Core
 {
 	public enum OpCode
 	{
 		Break = 0x00,
 
 		ImmediateAddWithCarry = 0x69,
+
+		TransferFromXToAccumulator = 0x8a,
 
 		AbsoluteStoreYRegister = 0x8c,
 
@@ -37,6 +34,6 @@ namespace NesZord.Core
 
 		IncrementValueAtY = 0xc8,
 
-		IncrementValueAtX = 0xe8
+		IncrementValueAtX = 0xe8,
 	}
 }
