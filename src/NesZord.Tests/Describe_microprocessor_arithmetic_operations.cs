@@ -1,13 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NesZord.Core;
+﻿using NesZord.Core;
 using NSpec;
 using Ploeh.AutoFixture;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NesZord.Tests
 {
@@ -15,16 +8,15 @@ namespace NesZord.Tests
 	{
 		private static readonly Fixture fixture = new Fixture();
 
+		private Microprocessor processor;
+
+		public void before_each() { this.processor = new Microprocessor(); }
+
 		public void When_add_with_carry_with_immediate_addressing_mode()
 		{
-			Microprocessor processor = null;
-			byte byteToAdd = default(byte);
+			var byteToAdd = default(byte);
 
-			before = () =>
-			{
-				processor = new Microprocessor();
-				byteToAdd = fixture.Create<byte>();
-			};
+			before = () => { byteToAdd = fixture.Create<byte>(); };
 
 			act = () =>
 			{
@@ -38,7 +30,7 @@ namespace NesZord.Tests
 
 			it["should add the specified value to accumulator"] = () =>
 			{
-				int resultWithCarry = processor.X + byteToAdd;
+				var resultWithCarry = processor.X + byteToAdd;
 				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
 			};
 
@@ -57,10 +49,7 @@ namespace NesZord.Tests
 
 		public void When_compare_y_register_with_memory_with_immediate_addressing_mode()
 		{
-			Microprocessor processor = null;
-			byte byteToCompare = default(byte);
-
-			before = () => { processor = new Microprocessor(); };
+			var byteToCompare = default(byte);
 
 			act = () =>
 			{
@@ -95,10 +84,7 @@ namespace NesZord.Tests
 
 		public void When_compare_x_register_with_memory_with_immediate_addressing_mode()
 		{
-			Microprocessor processor = null;
-			byte byteToCompare = default(byte);
-
-			before = () => { processor = new Microprocessor(); };
+			var byteToCompare = default(byte);
 
 			act = () =>
 			{
