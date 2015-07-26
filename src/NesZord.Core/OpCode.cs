@@ -4,6 +4,8 @@
 	{
 		Break = 0x00,
 
+		SetCarryFlag = 0x38,
+
 		ImmediateAddWithCarry = 0x69,
 
 		TransferFromXToAccumulator = 0x8a,

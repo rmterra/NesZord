@@ -21,6 +21,7 @@ namespace NesZord.Core
 
 			this.operations = new Dictionary<OpCode, Action>
 			{
+				{ OpCode.SetCarryFlag, this.SetCarryFlag },
 				{ OpCode.ImmediateAddWithCarry, this.AddWithCarry },
 				{ OpCode.TransferFromXToAccumulator, this.TransferFromXToAccumulator },
 				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister },
@@ -91,6 +92,11 @@ namespace NesZord.Core
 
 			this.operations[receivedOpCode]();
 			this.ProcessProgramByteWhileNotBreak();
+		}
+
+		private void SetCarryFlag()
+		{
+			this.Carry = true;
 		}
 
 		private void AddWithCarry()

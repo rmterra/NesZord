@@ -66,6 +66,7 @@
     <Compile Include="Describe_microprocessor_decrement_operations.cs" />
     <Compile Include="Describe_microprocessor_increment_operations.cs" />
     <Compile Include="Describe_microprocessor_load_operations.cs" />
+    <Compile Include="Describe_microprocessor_status_flag_opeartions.cs" />
     <Compile Include="Describe_microprocessor_store_operations.cs" />
     <Compile Include="Describe_microprocessor_system_functions.cs" />
     <Compile Include="Describe_microprocessor_transfer_operations.cs" />
