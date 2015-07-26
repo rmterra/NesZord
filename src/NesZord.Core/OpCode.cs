@@ -14,6 +14,8 @@
 
 		AbsoluteStoreXRegister = 0x8e,
 
+		BranchIfCarryIsClear = 0x90,
+
 		ImmediateLoadYRegister = 0xa0,
 
 		ImmediateLoadXRegister = 0xa2,
@@ -34,6 +36,6 @@
 
 		IncrementValueAtY = 0xc8,
 
-		IncrementValueAtX = 0xe8,
+		IncrementValueAtX = 0xe8
 	}
 }

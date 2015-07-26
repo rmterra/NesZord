@@ -26,6 +26,7 @@ namespace NesZord.Core
 				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister },
 				{ OpCode.AbsoluteStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.AbsoluteStoreXRegister, this.StoreXRegister },
+				{ OpCode.BranchIfCarryIsClear, this.BranchIfCarryIsClear },
 				{ OpCode.ImmediateLoadYRegister, this.LoadYRegister },
 				{ OpCode.ImmediateLoadXRegister, this.LoadXRegister },
 				{ OpCode.ImmediateLoadAccumulator, this.LoadAccumulator },
@@ -79,13 +80,12 @@ namespace NesZord.Core
 
 		private void ProcessProgramByteWhileNotBreak()
 		{
-			OpCode receivedOpCode = (OpCode)this.ReadProgramByte();
+			var receivedOpCode = (OpCode)this.ReadProgramByte();
 			if (receivedOpCode == OpCode.Break) { return; }
 
 			if (this.operations.ContainsKey(receivedOpCode) == false)
 			{
-				String error = String.Format(CultureInfo.InvariantCulture, "unknown opcode {0}", receivedOpCode);
-				throw new InvalidOperationException(error);
+				throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "unknown opcode {0}", receivedOpCode));
 			}
 
 			this.operations[receivedOpCode]();
@@ -125,6 +125,11 @@ namespace NesZord.Core
 			this.memory[page][offset] = this.X;
 		}
 
+		private void BranchIfCarryIsClear()
+		{
+			this.BranchIfConditionIsNotSatisfied(() => this.Carry);
+		}
+
 		private void LoadYRegister()
 		{
 			this.Y = this.ReadProgramByte();
@@ -162,13 +167,13 @@ namespace NesZord.Core
 
 		private void BranchIfConditionIsNotSatisfied(Func<bool> condition)
 		{
-			if (condition()) { this.ReadProgramByte(); return; }
+			if (condition.Invoke()) { this.ReadProgramByte(); return; }
 
-			byte memoryPage = (byte)(this.ProgramCounter >> 8);
-			byte memoryOffset = (byte)(this.ProgramCounter & 0xff);
-			byte branchOffset = this.ValueAt(memoryPage, memoryOffset);
+			var memoryPage = (byte)(this.ProgramCounter >> 8);
+			var memoryOffset = (byte)(this.ProgramCounter & 0xff);
+			var branchOffset = this.ValueAt(memoryPage, memoryOffset);
 
-			int offset = 0xff ^ branchOffset;
+			var offset = 0xff ^ branchOffset;
 			this.ProgramCounter -= offset;
 		}
 
@@ -198,9 +203,9 @@ namespace NesZord.Core
 
 		private byte ReadProgramByte()
 		{
-			byte page = (byte)(this.ProgramCounter >> 8);
-			byte offset = (byte)(this.ProgramCounter & 0xff);
-			byte value = this.ValueAt(page, offset);
+			var page = (byte)(this.ProgramCounter >> 8);
+			var offset = (byte)(this.ProgramCounter & 0xff);
+			var value = this.ValueAt(page, offset);
 
 			this.ProgramCounter++;
 
