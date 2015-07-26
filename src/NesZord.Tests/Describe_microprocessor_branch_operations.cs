@@ -62,7 +62,7 @@ namespace NesZord.Tests
 			};
 		}
 
-		public void When_branch_if_carry_clear()
+		public void When_branch_if_carry_is_clear()
 		{
 			context["given that executed program must branch while Carry is clear"] = () =>
 			{
@@ -80,7 +80,8 @@ namespace NesZord.Tests
 					});
 				};
 
-				it["should Accumulator register value be equal 0x00"] = () => { this.processor.Y.should_be(0x00); };
+				it["should X register value be equal 0xf5"] = () => { this.processor.X.should_be(0xf5); };
+				it["should Accumulator register value be equal 0x00"] = () => { this.processor.Accumulator.should_be(0x00); };
 				it["should value at $0200 be equal 0x00"] = () => { this.processor.ValueAt(0x02, 0x00).should_be(0x00); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_true(); };
 			};
