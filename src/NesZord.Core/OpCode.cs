@@ -24,6 +24,8 @@
 
 		TransferFromAccumulatorToX = 0xaa,
 
+		BranchIfCarryIsSet = 0xb0,
+
 		DecrementValueAtX = 0xca,
 
 		BranchIfNotEqual = 0xd0,

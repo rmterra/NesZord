@@ -86,5 +86,30 @@ namespace NesZord.Tests
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_true(); };
 			};
 		}
+
+		public void When_branch_if_carry_is_set()
+		{
+			context["given that executed program must branch while Carry is set"] = () =>
+			{
+				act = () =>
+				{
+					this.processor.RunProgram(new byte[]
+					{
+						(byte) OpCode.ImmediateLoadXRegister, 0x08,
+						(byte) OpCode.DecrementValueAtX,
+						(byte) OpCode.AbsoluteStoreXRegister, 0x00, 0x02,
+						(byte) OpCode.ImmediateCompareXRegister, 0x03,
+						(byte) OpCode.BranchIfCarryIsSet, 0xf8,
+						(byte) OpCode.AbsoluteStoreXRegister, 0x01, 0x02,
+						(byte) OpCode.Break
+					});
+				};
+
+				it["should X register value be equal 0x02"] = () => { this.processor.X.should_be(0x02); };
+				it["should value at $0200 be equal 0x02"] = () => { this.processor.ValueAt(0x02, 0x00).should_be(0x02); };
+				it["should value at $0201 be equal 0x02"] = () => { this.processor.ValueAt(0x02, 0x01).Is(0x02); };
+				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_false(); };
+			};
+		}
 	}
 }

@@ -31,6 +31,7 @@ namespace NesZord.Core
 				{ OpCode.ImmediateLoadXRegister, this.LoadXRegister },
 				{ OpCode.ImmediateLoadAccumulator, this.LoadAccumulator },
 				{ OpCode.TransferFromAccumulatorToX, this.TransferFromAccumulatorToX },
+				{ OpCode.BranchIfCarryIsSet, this.BranchIfCarryIsSet },
 				{ OpCode.DecrementValueAtX, this.DecrementValueAtX },
 				{ OpCode.BranchIfNotEqual, this.BranchIfNotEqual },
 				{ OpCode.BranchIfEqual, this.BranchIfEqual },
@@ -148,6 +149,11 @@ namespace NesZord.Core
 		private void TransferFromAccumulatorToX()
 		{
 			this.X = this.Accumulator;
+		}
+
+		private void BranchIfCarryIsSet()
+		{
+			this.BranchIfConditionIsNotSatisfied(() => this.Carry == false);
 		}
 
 		private void DecrementValueAtX()
