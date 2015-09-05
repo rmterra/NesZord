@@ -47,6 +47,41 @@ namespace NesZord.Tests
 			};
 		}
 
+		public void When_subtract_with_carry_with_immediate_addressing_mode()
+		{
+			var byteToSubtract = default(byte);
+
+			before = () => { byteToSubtract = fixture.Create<byte>(); };
+
+			act = () =>
+			{
+                processor.RunProgram(new byte[]
+				{
+					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
+					(byte)OpCode.TransferFromAccumulatorToX,
+					(byte)OpCode.ImmediateSubtractWithCarry, byteToSubtract
+				});
+			};
+
+			it["should subtract the specified value to accumulator"] = () =>
+			{
+				var resultWithCarry = processor.X - byteToSubtract;
+				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
+			};
+
+			context["given that the subtracted byte is greater than Accumulator value"] = () =>
+			{
+				before = () => { byteToSubtract = 0xff; };
+				it["should keep carry flag clear"] = () => { processor.Carry.should_be_false(); };
+			};
+
+			context["given that the subtracted byte is lower than Accumulator value"] = () =>
+			{
+				before = () => { byteToSubtract = 0x00; };
+				it["should turn carry flag on"] = () => { processor.Carry.should_be_true(); };
+			};
+		}
+
 		public void When_compare_y_register_with_memory_with_immediate_addressing_mode()
 		{
 			var byteToCompare = default(byte);

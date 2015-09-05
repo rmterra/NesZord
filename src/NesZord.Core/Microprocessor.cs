@@ -39,7 +39,8 @@ namespace NesZord.Core
 				{ OpCode.ImmediateCompareYRegister, this.CompareYRegister },
 				{ OpCode.ImmediateCompareXRegister, this.CompareXRegister },
 				{ OpCode.IncrementValueAtY, this.IncrementValueAtY },
-				{ OpCode.IncrementValueAtX, this.IncrementValueAtX }
+				{ OpCode.IncrementValueAtX, this.IncrementValueAtX },
+				{ OpCode.ImmediateSubtractWithCarry, this.ImmediateSubtractWithCarry }
 			};
 		}
 
@@ -211,6 +212,13 @@ namespace NesZord.Core
 		private void IncrementValueAtX()
 		{
 			this.X += 1;
+		}
+
+		private void ImmediateSubtractWithCarry()
+		{
+			var result = this.Accumulator - this.ReadProgramByte();
+			this.Accumulator = (byte)(result & 0xff);
+			this.Carry = (result << 8) > 0;
 		}
 
 		private byte ReadProgramByte()

@@ -40,6 +40,8 @@
 
 		IncrementValueAtY = 0xc8,
 
-		IncrementValueAtX = 0xe8
+		IncrementValueAtX = 0xe8,
+
+		ImmediateSubtractWithCarry = 0xe9
 	}
 }
