@@ -18,6 +18,10 @@
 
 		BranchIfCarryIsClear = 0x90,
 
+		AbsoluteXStoreAccumulator = 0x9d,
+
+		AbsoluteYStoreAccumulator = 0x99,
+
 		ImmediateLoadYRegister = 0xa0,
 
 		ImmediateLoadXRegister = 0xa2,

@@ -25,9 +25,11 @@ namespace NesZord.Core
 				{ OpCode.ImmediateAddWithCarry, this.AddWithCarry },
 				{ OpCode.TransferFromXToAccumulator, this.TransferFromXToAccumulator },
 				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister },
-				{ OpCode.AbsoluteStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.AbsoluteStoreAccumulator, this.AbsoluteStoreAccumulator },
 				{ OpCode.AbsoluteStoreXRegister, this.StoreXRegister },
 				{ OpCode.BranchIfCarryIsClear, this.BranchIfCarryIsClear },
+				{ OpCode.AbsoluteXStoreAccumulator, this.AbsoluteXStoreAccumulator },
+				{ OpCode.AbsoluteYStoreAccumulator, this.AbsoluteYStoreAccumulator },
 				{ OpCode.ImmediateLoadYRegister, this.LoadYRegister },
 				{ OpCode.ImmediateLoadXRegister, this.LoadXRegister },
 				{ OpCode.ImmediateLoadAccumulator, this.LoadAccumulator },
@@ -114,15 +116,34 @@ namespace NesZord.Core
 
 		private void StoreYRegister()
 		{
-			byte offset = this.ReadProgramByte();
-			byte page = this.ReadProgramByte();
+			var offset = this.ReadProgramByte();
+			var page = this.ReadProgramByte();
 			this.memory[page][offset] = this.Y;
 		}
 
-		private void StoreAccumulator()
+		private void AbsoluteYStoreAccumulator()
 		{
-			byte offset = this.ReadProgramByte();
-			byte page = this.ReadProgramByte();
+			var offset = (byte)(this.ReadProgramByte() + this.Y);
+			var page = this.ReadProgramByte();
+			this.StoreAccumulator(page, offset);
+		}
+
+		private void AbsoluteXStoreAccumulator()
+		{
+			var offset = (byte)(this.ReadProgramByte() + this.X);
+			var page = this.ReadProgramByte();
+			this.StoreAccumulator(page, offset);
+		}
+
+		private void AbsoluteStoreAccumulator()
+		{
+			var offset = this.ReadProgramByte();
+			var page = this.ReadProgramByte();
+			this.StoreAccumulator(page, offset);
+		}
+
+		private void StoreAccumulator(byte page, byte offset)
+		{
 			this.memory[page][offset] = this.Accumulator;
 		}
 
