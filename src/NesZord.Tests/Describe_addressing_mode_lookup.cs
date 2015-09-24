@@ -45,7 +45,7 @@ namespace NesZord.Tests
 			{
 				act = () => { received = AddressingModeLookup.For(opCode); };
 
-				it["should found addressing mode be equal AbsoluteX"] = () => { received.should_be(expected); };
+				it[string.Format("should found addressing mode be equal {0}", expected) ] = () => { received.should_be(expected); };
 			};
 		}
 	}
