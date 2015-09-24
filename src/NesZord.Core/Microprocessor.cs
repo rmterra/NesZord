@@ -12,37 +12,43 @@ namespace NesZord.Core
 
 		private readonly byte[][] memory;
 
-		private readonly Dictionary<OpCode, Action> operations;
+		private readonly Dictionary<OpCode, Action<MemoryLocation>> addressedOperations;
+
+		private readonly Dictionary<OpCode, Action> unaddressedOperations;
 
 		public Microprocessor()
 		{
 			this.memory = new byte[Byte.MaxValue][];
 			for (int i = 0; i < Byte.MaxValue; i++) { this.memory[i] = new byte[Byte.MaxValue]; }
 
-			this.operations = new Dictionary<OpCode, Action>
+			this.addressedOperations = new Dictionary<OpCode, Action<MemoryLocation>>
 			{
-				{ OpCode.SetCarryFlag, this.SetCarryFlag },
-				{ OpCode.ImmediateAddWithCarry, this.AddWithCarry },
-				{ OpCode.TransferFromXToAccumulator, this.TransferFromXToAccumulator },
-				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister },
-				{ OpCode.AbsoluteStoreAccumulator, this.AbsoluteStoreAccumulator },
+				{ OpCode.AbsoluteStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.AbsoluteXStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.AbsoluteYStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.AbsoluteStoreXRegister, this.StoreXRegister },
+				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister }
+			};
+
+			this.unaddressedOperations = new Dictionary<OpCode, Action>
+			{
 				{ OpCode.BranchIfCarryIsClear, this.BranchIfCarryIsClear },
-				{ OpCode.AbsoluteXStoreAccumulator, this.AbsoluteXStoreAccumulator },
-				{ OpCode.AbsoluteYStoreAccumulator, this.AbsoluteYStoreAccumulator },
-				{ OpCode.ImmediateLoadYRegister, this.LoadYRegister },
-				{ OpCode.ImmediateLoadXRegister, this.LoadXRegister },
-				{ OpCode.ImmediateLoadAccumulator, this.LoadAccumulator },
-				{ OpCode.TransferFromAccumulatorToX, this.TransferFromAccumulatorToX },
 				{ OpCode.BranchIfCarryIsSet, this.BranchIfCarryIsSet },
-				{ OpCode.DecrementValueAtX, this.DecrementValueAtX },
-				{ OpCode.BranchIfNotEqual, this.BranchIfNotEqual },
 				{ OpCode.BranchIfEqual, this.BranchIfEqual },
-				{ OpCode.ImmediateCompareYRegister, this.CompareYRegister },
-				{ OpCode.ImmediateCompareXRegister, this.CompareXRegister },
-				{ OpCode.IncrementValueAtY, this.IncrementValueAtY },
+				{ OpCode.BranchIfNotEqual, this.BranchIfNotEqual },
+				{ OpCode.DecrementValueAtX, this.DecrementValueAtX },
 				{ OpCode.IncrementValueAtX, this.IncrementValueAtX },
-				{ OpCode.ImmediateSubtractWithCarry, this.ImmediateSubtractWithCarry }
+				{ OpCode.IncrementValueAtY, this.IncrementValueAtY },
+				{ OpCode.ImmediateAddWithCarry, this.ImmediateAddWithCarry },
+				{ OpCode.ImmediateCompareXRegister, this.ImmediateCompareXRegister },
+				{ OpCode.ImmediateCompareYRegister, this.ImmediateCompareYRegister },
+				{ OpCode.ImmediateLoadYRegister, this.ImmediateLoadYRegister },
+				{ OpCode.ImmediateLoadXRegister, this.ImmediateLoadXRegister },
+				{ OpCode.ImmediateLoadAccumulator, this.ImmediateLoadAccumulator },
+				{ OpCode.ImmediateSubtractWithCarry, this.ImmediateSubtractWithCarry },
+                { OpCode.SetCarryFlag, this.SetCarryFlag },
+				{ OpCode.TransferFromAccumulatorToX, this.TransferFromAccumulatorToX },
+				{ OpCode.TransferFromXToAccumulator, this.TransferFromXToAccumulator }
 			};
 		}
 
@@ -85,73 +91,43 @@ namespace NesZord.Core
 
 		private void ProcessProgramByteWhileNotBreak()
 		{
-			var receivedOpCode = (OpCode)this.ReadProgramByte();
-			if (receivedOpCode == OpCode.Break) { return; }
+			var opCode = (OpCode)this.ReadProgramByte();
+			if (opCode == OpCode.Break) { return; }
 
-			if (this.operations.ContainsKey(receivedOpCode) == false)
-			{
-				throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "unknown opcode {0}", receivedOpCode));
-			}
+			this.HandleUnknowOpCode(opCode);
 
-			this.operations[receivedOpCode]();
+			var addressingMode = AddressingModeLookup.For(opCode);
+			
+			if (this.IsUnaddressedOperations(opCode)) { this.unaddressedOperations[opCode](); }
+			else { this.addressedOperations[opCode](MemoryLocationFactory.Create(addressingMode, this)); }
+
 			this.ProcessProgramByteWhileNotBreak();
 		}
 
-		private void SetCarryFlag()
+		private void HandleUnknowOpCode(OpCode opCode)
 		{
-			this.Carry = true;
+			if (this.addressedOperations.ContainsKey(opCode) || this.unaddressedOperations.ContainsKey(opCode)) { return; }
+			throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "unknown opcode {0}", opCode));
 		}
 
-		private void AddWithCarry()
+		private bool IsUnaddressedOperations(OpCode opCode)
 		{
-			var result = this.Accumulator + this.ReadProgramByte();
-			this.Accumulator = (byte)(result & 0xff);
-			this.Carry = (result >> 8) > 0;
+			return this.unaddressedOperations.ContainsKey(opCode);
 		}
 
-		private void TransferFromXToAccumulator()
+		private void StoreAccumulator(MemoryLocation location)
 		{
-			this.Accumulator = this.X;
+			this.memory[location.Page][location.Offset] = this.Accumulator;
 		}
 
-		private void StoreYRegister()
+		private void StoreXRegister(MemoryLocation location)
 		{
-			var offset = this.ReadProgramByte();
-			var page = this.ReadProgramByte();
-			this.memory[page][offset] = this.Y;
+			this.memory[location.Page][location.Offset] = this.X;
 		}
 
-		private void AbsoluteYStoreAccumulator()
+		private void StoreYRegister(MemoryLocation location)
 		{
-			var offset = (byte)(this.ReadProgramByte() + this.Y);
-			var page = this.ReadProgramByte();
-			this.StoreAccumulator(page, offset);
-		}
-
-		private void AbsoluteXStoreAccumulator()
-		{
-			var offset = (byte)(this.ReadProgramByte() + this.X);
-			var page = this.ReadProgramByte();
-			this.StoreAccumulator(page, offset);
-		}
-
-		private void AbsoluteStoreAccumulator()
-		{
-			var offset = this.ReadProgramByte();
-			var page = this.ReadProgramByte();
-			this.StoreAccumulator(page, offset);
-		}
-
-		private void StoreAccumulator(byte page, byte offset)
-		{
-			this.memory[page][offset] = this.Accumulator;
-		}
-
-		private void StoreXRegister()
-		{
-			byte offset = this.ReadProgramByte();
-			byte page = this.ReadProgramByte();
-			this.memory[page][offset] = this.X;
+			this.memory[location.Page][location.Offset] = this.Y;
 		}
 
 		private void BranchIfCarryIsClear()
@@ -159,44 +135,19 @@ namespace NesZord.Core
 			this.BranchIfConditionIsNotSatisfied(() => this.Carry);
 		}
 
-		private void LoadYRegister()
-		{
-			this.Y = this.ReadProgramByte();
-		}
-
-		private void LoadXRegister()
-		{
-			this.X = this.ReadProgramByte();
-		}
-
-		private void LoadAccumulator()
-		{
-			this.Accumulator = this.ReadProgramByte();
-		}
-
-		private void TransferFromAccumulatorToX()
-		{
-			this.X = this.Accumulator;
-		}
-
 		private void BranchIfCarryIsSet()
 		{
 			this.BranchIfConditionIsNotSatisfied(() => this.Carry == false);
 		}
 
-		private void DecrementValueAtX()
+		private void BranchIfEqual()
 		{
-			this.X -= 1;
+			this.BranchIfConditionIsNotSatisfied(() => this.Zero == false);
 		}
 
 		private void BranchIfNotEqual()
 		{
 			this.BranchIfConditionIsNotSatisfied(() => this.Zero);
-		}
-
-		private void BranchIfEqual()
-		{
-			this.BranchIfConditionIsNotSatisfied(() => this.Zero == false);
 		}
 
 		private void BranchIfConditionIsNotSatisfied(Func<bool> condition)
@@ -211,18 +162,14 @@ namespace NesZord.Core
 			this.ProgramCounter -= offset;
 		}
 
-		private void CompareYRegister()
+		private void DecrementValueAtX()
 		{
-			int result = this.Y - this.ReadProgramByte();
-			this.Carry = result >= 0;
-			this.Zero = result == 0;
+			this.X -= 1;
 		}
 
-		private void CompareXRegister()
+		private void IncrementValueAtX()
 		{
-			int result = this.X - this.ReadProgramByte();
-			this.Carry = result >= 0;
-			this.Zero = result == 0;
+			this.X += 1;
 		}
 
 		private void IncrementValueAtY()
@@ -230,9 +177,40 @@ namespace NesZord.Core
 			this.Y += 1;
 		}
 
-		private void IncrementValueAtX()
+		private void ImmediateAddWithCarry()
 		{
-			this.X += 1;
+			var result = this.Accumulator + this.ReadProgramByte();
+			this.Accumulator = (byte)(result & 0xff);
+			this.Carry = (result >> 8) > 0;
+		}
+
+		private void ImmediateCompareXRegister()
+		{
+			int result = this.X - this.ReadProgramByte();
+			this.Carry = result >= 0;
+			this.Zero = result == 0;
+		}
+
+		private void ImmediateCompareYRegister()
+		{
+			int result = this.Y - this.ReadProgramByte();
+			this.Carry = result >= 0;
+			this.Zero = result == 0;
+		}
+
+		private void ImmediateLoadAccumulator()
+		{
+			this.Accumulator = this.ReadProgramByte();
+		}
+
+		private void ImmediateLoadXRegister()
+		{
+			this.X = this.ReadProgramByte();
+		}
+
+		private void ImmediateLoadYRegister()
+		{
+			this.Y = this.ReadProgramByte();
 		}
 
 		private void ImmediateSubtractWithCarry()
@@ -242,7 +220,22 @@ namespace NesZord.Core
 			this.Carry = (result << 8) > 0;
 		}
 
-		private byte ReadProgramByte()
+		private void SetCarryFlag()
+		{
+			this.Carry = true;
+		}
+
+		private void TransferFromAccumulatorToX()
+		{
+			this.X = this.Accumulator;
+		}
+
+		private void TransferFromXToAccumulator()
+		{
+			this.Accumulator = this.X;
+		}
+
+		internal byte ReadProgramByte()
 		{
 			var page = (byte)(this.ProgramCounter >> 8);
 			var offset = (byte)(this.ProgramCounter & 0xff);
