@@ -6,7 +6,21 @@
 
 		SetCarryFlag = 0x38,
 
+		IndexedIndirectAddWithCarry = 0x61,
+
+		ZeroPageAddWithCarry = 0x65,
+
 		ImmediateAddWithCarry = 0x69,
+
+		AbsoluteAddWithCarry = 0x6d,
+
+		IndirectIndexedAddWithCarry = 0x71,
+
+		ZeroPageXAddWithCarry = 0x75,
+
+		AbsoluteYAddWithCarry = 0x79,
+
+		AbsoluteXAddWithCarry = 0x7d,
 
 		TransferFromXToAccumulator = 0x8a,
 
@@ -20,11 +34,15 @@
 
 		AbsoluteXStoreAccumulator = 0x9d,
 
+		TransferFromYToAccumulator = 0x98,
+
 		AbsoluteYStoreAccumulator = 0x99,
 
 		ImmediateLoadYRegister = 0xa0,
 
 		ImmediateLoadXRegister = 0xa2,
+
+		TransferFromAccumulatorToY = 0xa8,
 
 		ImmediateLoadAccumulator = 0xa9,
 

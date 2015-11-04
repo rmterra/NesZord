@@ -14,8 +14,19 @@ namespace NesZord.Core
 		AbsoluteX = 2,
 
 		Implied = 3,
+
 		Immediate = 4,
+
 		Absolute = 5,
+
 		Relative = 6,
+
+		ZeroPage = 7,
+
+		ZeroPageX = 8,
+
+		IndexedIndirect = 9,
+		
+		IndirectIndexed = 10
 	}
 }
