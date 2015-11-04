@@ -7,7 +7,7 @@ Properties {
 	$testdll_dir = "$artifacts_dir\NesZord.Tests.dll"
 	
 	$solution_dir = "$source_dir\NesZord.sln"
-	$nspecrunner_dir = "$source_dir\packages\nspec.0.9.68\tools\nspecrunner.exe"
+	$nspecrunner_dir = "$source_dir\packages\nspec.1.0.1\tools\nspecrunner.exe"
 	
 	$isAppVeyor = $env:APPVEYOR -eq $true
 }
