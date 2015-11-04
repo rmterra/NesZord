@@ -26,17 +26,29 @@ public class DebuggerShim
     //[Test]
     public void debug()
     {
-        var tagOrClassName = "class_or_tag_you_want_to_debug";
-
-        var types = GetType().Assembly.GetTypes(); 
-        // OR
-        // var types = new Type[]{typeof(Some_Type_Containg_some_Specs)};
-        var finder = new SpecFinder(types, "");
-        var builder = new ContextBuilder(finder, new Tags().Parse(tagOrClassName), new DefaultConventions());
-        var runner = new ContextRunner(builder, new ConsoleFormatter(), false);
-        var results = runner.Run(builder.Contexts().Build());
-
-        //assert that there aren't any failures
-        results.Failures().Count().should_be(0);
+		RunTests();
     }
+
+	public static void Main(string[] args)
+	{
+		new DebuggerShim().RunTests();
+	}
+
+	private void RunTests(string className = null)
+	{
+		var types = GetType().Assembly.GetTypes();
+		// OR
+		// var types = new Type[]{typeof(Some_Type_Containg_some_Specs)};
+		var finder = new SpecFinder(types, "");
+
+		var builder = string.IsNullOrWhiteSpace(className)
+			? new ContextBuilder(finder, new DefaultConventions())
+			: new ContextBuilder(finder, new Tags().Parse(className), new DefaultConventions());
+
+		var runner = new ContextRunner(builder, new ConsoleFormatter(), false);
+		var results = runner.Run(builder.Contexts().Build());
+
+		//assert that there aren't any failures
+		results.Failures().Count().should_be(0);
+	}
 }
