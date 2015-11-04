@@ -45,7 +45,6 @@
     <Compile Include="Extensions\ArrayExtension.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="MemoryLocation.cs" />
-    <Compile Include="MemoryLocationFactory.cs" />
     <Compile Include="Microprocessor.cs" />
     <Compile Include="OpCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

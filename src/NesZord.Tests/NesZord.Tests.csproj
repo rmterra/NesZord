@@ -69,6 +69,7 @@
     <Compile Include="DebuggerShim.cs" />
     <Compile Include="Describe_addressing_mode_lookup.cs" />
     <Compile Include="Describe_memory.cs" />
+    <Compile Include="Describe_microprocessor_add_with_carry_operation.cs" />
     <Compile Include="Describe_microprocessor_arithmetic_operations.cs" />
     <Compile Include="Describe_microprocessor_branch_operations.cs" />
     <Compile Include="Describe_microprocessor_decrement_operations.cs" />

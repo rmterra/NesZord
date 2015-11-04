@@ -22,11 +22,18 @@ namespace NesZord.Core
 
 			this.addressedOperations = new Dictionary<OpCode, Action<MemoryLocation>>
 			{
+				{ OpCode.AbsoluteAddWithCarry, this.AddWithCarry },
 				{ OpCode.AbsoluteStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.AbsoluteXAddWithCarry, this.AddWithCarry },
 				{ OpCode.AbsoluteXStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.AbsoluteYAddWithCarry, this.AddWithCarry },
 				{ OpCode.AbsoluteYStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.AbsoluteStoreXRegister, this.StoreXRegister },
-				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister }
+				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister },
+				{ OpCode.IndexedIndirectAddWithCarry, this.AddWithCarry },
+				{ OpCode.IndirectIndexedAddWithCarry, this.AddWithCarry },
+				{ OpCode.ZeroPageAddWithCarry, this.AddWithCarry },
+				{ OpCode.ZeroPageXAddWithCarry, this.AddWithCarry }
 			};
 
 			this.unaddressedOperations = new Dictionary<OpCode, Action>
@@ -108,6 +115,34 @@ namespace NesZord.Core
 			return this.unaddressedOperations.ContainsKey(opCode);
 		}
 
+		private MemoryLocation CreateMemoryLocation(AddressingMode addressingMode)
+		{
+			var offset = default(byte);
+
+			if (addressingMode == AddressingMode.ZeroPage) { return new MemoryLocation(this.ReadProgramByte(), Memory.ZERO_PAGE); }
+			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.X), Memory.ZERO_PAGE); }
+			else if (addressingMode == AddressingMode.Absolute) { offset = this.ReadProgramByte(); }
+			else if (addressingMode == AddressingMode.AbsoluteX) { offset = (byte)(this.ReadProgramByte() + this.X); }
+			else if (addressingMode == AddressingMode.AbsoluteY) { offset = (byte)(this.ReadProgramByte() + this.Y); }
+			else if (addressingMode == AddressingMode.IndexedIndirect) 
+			{
+				offset = (byte)(this.ReadProgramByte() + this.X);
+				var indirectPage = this.memory.Read(Memory.ZERO_PAGE, offset);
+				var indirectOffset = this.memory.Read(Memory.ZERO_PAGE, (byte)(offset + 1));
+				return new MemoryLocation(indirectOffset, indirectPage);
+			}
+			else if (addressingMode == AddressingMode.IndirectIndexed)
+			{
+				offset = this.ReadProgramByte();
+				var indirectPage = this.memory.Read(Memory.ZERO_PAGE, offset);
+				var indirectOffset = this.memory.Read(Memory.ZERO_PAGE, (byte)(offset + 1));
+				return new MemoryLocation(indirectOffset, (byte)(indirectPage + this.Y));
+			}
+
+
+			return new MemoryLocation(offset, this.ReadProgramByte());
+		}
+
 		private void StoreAccumulator(MemoryLocation location)
 		{
 			this.memory.Write(location, this.Accumulator);
@@ -172,7 +207,18 @@ namespace NesZord.Core
 
 		private void ImmediateAddWithCarry()
 		{
-			var result = this.Accumulator + this.ReadProgramByte();
+			this.AddWithCarry(this.ReadProgramByte());
+		}
+
+		private void AddWithCarry(MemoryLocation location)
+		{
+			var byteToAdd = this.memory.Read(location);
+            this.AddWithCarry(byteToAdd);
+		}
+
+		private void AddWithCarry(byte byteToAdd)
+		{
+			var result = this.Accumulator + byteToAdd;
 			this.Accumulator = (byte)(result & 0xff);
 			this.Carry = (result >> 8) > 0;
 		}

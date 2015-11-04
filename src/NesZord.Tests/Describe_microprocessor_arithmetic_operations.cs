@@ -10,42 +10,7 @@ namespace NesZord.Tests
 
 		private Microprocessor processor;
 
-		public void before_each() { this.processor = new Microprocessor(); }
-
-		public void When_add_with_carry_with_immediate_addressing_mode()
-		{
-			var byteToAdd = default(byte);
-
-			before = () => { byteToAdd = fixture.Create<byte>(); };
-
-			act = () =>
-			{
-				processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToX,
-					(byte)OpCode.ImmediateAddWithCarry, byteToAdd
-				});
-			};
-
-			it["should add the specified value to accumulator"] = () =>
-			{
-				var resultWithCarry = processor.X + byteToAdd;
-				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
-			};
-
-			context["given a byte greater than #ff"] = () =>
-			{
-				before = () => { byteToAdd = 0xff; };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
-			};
-
-			context["given a byte lower than #ff"] = () =>
-			{
-				before = () => { byteToAdd = 0x00; };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-			};
-		}
+		public void before_each() { this.processor = new Microprocessor(new Memory()); }
 
 		public void When_subtract_with_carry_with_immediate_addressing_mode()
 		{
