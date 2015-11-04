@@ -5,16 +5,16 @@ using System.Text;
 
 namespace NesZord.Core
 {
-	internal class MemoryLocation
+	public class MemoryLocation
 	{
-		internal MemoryLocation(byte offset, byte page)
+		public MemoryLocation(byte offset, byte page)
 		{
 			this.Offset = offset;
 			this.Page = page;
 		}
 
-		internal byte Offset { get; private set; }
+		public byte Offset { get; private set; }
 
-		internal byte Page { get; private set; }
+		public byte Page { get; private set; }
 	}
 }
