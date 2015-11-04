@@ -45,9 +45,11 @@ namespace NesZord.Core
 				{ OpCode.ImmediateLoadXRegister, this.ImmediateLoadXRegister },
 				{ OpCode.ImmediateLoadAccumulator, this.ImmediateLoadAccumulator },
 				{ OpCode.ImmediateSubtractWithCarry, this.ImmediateSubtractWithCarry },
-                { OpCode.SetCarryFlag, this.SetCarryFlag },
+				{ OpCode.SetCarryFlag, this.SetCarryFlag },
 				{ OpCode.TransferFromAccumulatorToX, this.TransferFromAccumulatorToX },
-				{ OpCode.TransferFromXToAccumulator, this.TransferFromXToAccumulator }
+				{ OpCode.TransferFromAccumulatorToY, this.TransferFromAccumulatorToY },
+				{ OpCode.TransferFromXToAccumulator, this.TransferFromXToAccumulator },
+				{ OpCode.TransferFromYToAccumulator, this.TransferFromYToAccumulator }
 			};
 		}
 
@@ -221,9 +223,19 @@ namespace NesZord.Core
 			this.X = this.Accumulator;
 		}
 
+		private void TransferFromAccumulatorToY()
+		{
+			this.Y = this.Accumulator;
+		}
+
 		private void TransferFromXToAccumulator()
 		{
 			this.Accumulator = this.X;
+		}
+
+		private void TransferFromYToAccumulator()
+		{
+			this.Accumulator = this.Y;
 		}
 
 		internal byte ReadProgramByte()
