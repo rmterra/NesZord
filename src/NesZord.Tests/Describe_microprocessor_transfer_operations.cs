@@ -13,15 +13,15 @@ namespace NesZord.Tests
 	{
 		private static readonly Fixture fixture = new Fixture();
 
+		private Microprocessor processor;
+
+		public void before_each() { this.processor = new Microprocessor(new Memory()); }
+
 		public void When_transfer_from_accumulator_to_x_register()
 		{
-			Microprocessor processor = null;
-
-			before = () => { processor = new Microprocessor(); };
-
 			act = () =>
 			{
-				processor.RunProgram(new byte[]
+				this.processor.RunProgram(new byte[]
 				{
 					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
 					(byte)OpCode.TransferFromAccumulatorToX

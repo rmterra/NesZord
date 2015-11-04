@@ -8,18 +8,17 @@ namespace NesZord.Core
 {
 	public class Microprocessor
 	{
-		private const int PROGRAM_ROM_START = 0x0600;
-
-		private readonly byte[][] memory;
-
 		private readonly Dictionary<OpCode, Action<MemoryLocation>> addressedOperations;
 
 		private readonly Dictionary<OpCode, Action> unaddressedOperations;
 
-		public Microprocessor()
+		private readonly Memory memory;
+
+		public Microprocessor(Memory memory)
 		{
-			this.memory = new byte[Byte.MaxValue][];
-			for (int i = 0; i < Byte.MaxValue; i++) { this.memory[i] = new byte[Byte.MaxValue]; }
+			if (memory == null) { throw new ArgumentNullException("memory"); }
+			
+			this.memory = memory;
 
 			this.addressedOperations = new Dictionary<OpCode, Action<MemoryLocation>>
 			{
@@ -77,17 +76,9 @@ namespace NesZord.Core
 
 		private void LoadProgramToMemory(byte[] program)
 		{
-			this.ProgramCounter = PROGRAM_ROM_START;
-
-			byte page = PROGRAM_ROM_START >> 8;
-			byte offset = PROGRAM_ROM_START & 0xff;
-
-			for (int i = 0; i < program.Length; i++)
-			{
-				memory[page][offset] = program[i];
-				offset++;
-			}
-		}
+			this.ProgramCounter = Memory.PROGRAM_ROM_START;
+			this.memory.LoadMemory(program);
+        }
 
 		private void ProcessProgramByteWhileNotBreak()
 		{
@@ -99,7 +90,7 @@ namespace NesZord.Core
 			var addressingMode = AddressingModeLookup.For(opCode);
 			
 			if (this.IsUnaddressedOperations(opCode)) { this.unaddressedOperations[opCode](); }
-			else { this.addressedOperations[opCode](MemoryLocationFactory.Create(addressingMode, this)); }
+			else { this.addressedOperations[opCode](this.CreateMemoryLocation(addressingMode)); }
 
 			this.ProcessProgramByteWhileNotBreak();
 		}
@@ -117,17 +108,17 @@ namespace NesZord.Core
 
 		private void StoreAccumulator(MemoryLocation location)
 		{
-			this.memory[location.Page][location.Offset] = this.Accumulator;
+			this.memory.Write(location, this.Accumulator);
 		}
 
 		private void StoreXRegister(MemoryLocation location)
 		{
-			this.memory[location.Page][location.Offset] = this.X;
+			this.memory.Write(location, this.X);
 		}
 
 		private void StoreYRegister(MemoryLocation location)
 		{
-			this.memory[location.Page][location.Offset] = this.Y;
+			this.memory.Write(location, this.Y);
 		}
 
 		private void BranchIfCarryIsClear()
@@ -156,7 +147,7 @@ namespace NesZord.Core
 
 			var memoryPage = (byte)(this.ProgramCounter >> 8);
 			var memoryOffset = (byte)(this.ProgramCounter & 0xff);
-			var branchOffset = this.ValueAt(memoryPage, memoryOffset);
+			var branchOffset = this.memory.Read(memoryPage, memoryOffset);
 
 			var offset = 0xff ^ branchOffset;
 			this.ProgramCounter -= offset;
@@ -239,16 +230,11 @@ namespace NesZord.Core
 		{
 			var page = (byte)(this.ProgramCounter >> 8);
 			var offset = (byte)(this.ProgramCounter & 0xff);
-			var value = this.ValueAt(page, offset);
+			var value = this.memory.Read(page, offset);
 
 			this.ProgramCounter++;
 
 			return value;
-		}
-
-		public byte ValueAt(int page, int offset)
-		{
-			return this.memory[page][offset];
 		}
 	}
 }

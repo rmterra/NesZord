@@ -20,7 +20,7 @@ namespace NesZord.Tests
 
 			before = () =>
 			{
-				processor = new Microprocessor();
+				processor = new Microprocessor(new Memory());
 				program = new byte[]
 				{
 					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),

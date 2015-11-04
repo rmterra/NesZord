@@ -14,20 +14,19 @@ namespace NesZord.Tests
 	{
 		private static readonly Fixture fixture = new Fixture();
 
+		private Microprocessor processor;
+
+		public void before_each() { this.processor = new Microprocessor(new Memory()); }
+
 		public void When_load_the_y_register_with_immediate_addressing_mode()
 		{
-			Microprocessor processor = null;
 			byte expectedYValue = 0x00;
 
-			before = () =>
-			{
-				processor = new Microprocessor();
-				expectedYValue = fixture.Create<byte>();
-			};
+			before = () => { expectedYValue = fixture.Create<byte>(); };
 
 			act = () =>
 			{
-				byte operation = (byte)OpCode.ImmediateLoadYRegister;
+				var operation = (byte)OpCode.ImmediateLoadYRegister;
 				processor.RunProgram(new byte[] { operation, expectedYValue });
 			};
 
@@ -36,18 +35,13 @@ namespace NesZord.Tests
 
 		public void When_load_the_x_register_with_immediate_addressing_mode()
 		{
-			Microprocessor processor = null;
 			byte expectedXValue = 0x00;
 
-			before = () =>
-			{
-				processor = new Microprocessor();
-				expectedXValue = fixture.Create<byte>();
-			};
+			before = () => { expectedXValue = fixture.Create<byte>(); };
 
 			act = () =>
 			{
-				byte operation = (byte)OpCode.ImmediateLoadXRegister;
+				var operation = (byte)OpCode.ImmediateLoadXRegister;
 				processor.RunProgram(new byte[] { operation, expectedXValue });
 			};
 
@@ -56,18 +50,13 @@ namespace NesZord.Tests
 
 		public void When_load_the_accumulator_with_immediate_addressing_mode()
 		{
-			Microprocessor processor = null;
 			byte expectedAccumulatorValue = 0x00;
 
-			before = () =>
-			{
-				processor = new Microprocessor();
-				expectedAccumulatorValue = fixture.Create<byte>();
-			};
+			before = () => { expectedAccumulatorValue = fixture.Create<byte>(); };
 
 			act = () =>
 			{
-				byte operation = (byte)OpCode.ImmediateLoadAccumulator;
+				var operation = (byte)OpCode.ImmediateLoadAccumulator;
 				processor.RunProgram(new byte[] { operation, expectedAccumulatorValue });
 			};
 

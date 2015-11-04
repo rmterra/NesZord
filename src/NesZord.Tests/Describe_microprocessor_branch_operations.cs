@@ -8,9 +8,15 @@ namespace NesZord.Tests
 	{
 		private static readonly Fixture fixture = new Fixture();
 
+		private Memory memory;
+
 		private Microprocessor processor;
 
-		public void before_each() { this.processor = new Microprocessor(); }
+		public void before_each()
+		{
+			this.memory = new Memory();
+			this.processor = new Microprocessor(this.memory);
+		}
 
 		public void When_branch_if_not_equal()
 		{
@@ -31,8 +37,8 @@ namespace NesZord.Tests
 				};
 
 				it["should X register value be equal 0x03"] = () => { this.processor.X.should_be(0x03); };
-				it["should value at $0200 be equal 0x03"] = () => { this.processor.ValueAt(0x02, 0x00).should_be(0x03); };
-				it["should value at $0201 be equal 0x03"] = () => { this.processor.ValueAt(0x02, 0x01).Is(0x03); };
+				it["should value at $0200 be equal 0x03"] = () => { this.memory.Read(0x02, 0x00).should_be(0x03); };
+				it["should value at $0201 be equal 0x03"] = () => { this.memory.Read(0x02, 0x01).Is(0x03); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_true(); };
 				it["should Zero flag turn on"] = () => { this.processor.Zero.should_be_true(); };
 			};
@@ -56,7 +62,7 @@ namespace NesZord.Tests
 				};
 
 				it["should Y register value be equal 0x03"] = () => { this.processor.Y.should_be(0x03); };
-				it["should value at $0200 be equal 0x03"] = () => { this.processor.ValueAt(0x02, 0x00).should_be(0x03); };
+				it["should value at $0200 be equal 0x03"] = () => { this.memory.Read(0x02, 0x00).should_be(0x03); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_true(); };
 				it["should Zero flag turn on"] = () => { this.processor.Zero.should_be_false(); };
 			};
@@ -82,7 +88,7 @@ namespace NesZord.Tests
 
 				it["should X register value be equal 0xf5"] = () => { this.processor.X.should_be(0xf5); };
 				it["should Accumulator register value be equal 0x00"] = () => { this.processor.Accumulator.should_be(0x00); };
-				it["should value at $0200 be equal 0x00"] = () => { this.processor.ValueAt(0x02, 0x00).should_be(0x00); };
+				it["should value at $0200 be equal 0x00"] = () => { this.memory.Read(0x02, 0x00).should_be(0x00); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_true(); };
 			};
 		}
@@ -106,8 +112,8 @@ namespace NesZord.Tests
 				};
 
 				it["should X register value be equal 0x02"] = () => { this.processor.X.should_be(0x02); };
-				it["should value at $0200 be equal 0x02"] = () => { this.processor.ValueAt(0x02, 0x00).should_be(0x02); };
-				it["should value at $0201 be equal 0x02"] = () => { this.processor.ValueAt(0x02, 0x01).Is(0x02); };
+				it["should value at $0200 be equal 0x02"] = () => { this.memory.Read(0x02, 0x00).should_be(0x02); };
+				it["should value at $0201 be equal 0x02"] = () => { this.memory.Read(0x02, 0x01).Is(0x02); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_false(); };
 			};
 		}

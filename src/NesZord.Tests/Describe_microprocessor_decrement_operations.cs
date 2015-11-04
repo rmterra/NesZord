@@ -20,7 +20,7 @@ namespace NesZord.Tests
 
 			before = () =>
 			{
-				processor = new Microprocessor();
+				processor = new Microprocessor(new Memory());
 				expectedXRegisterValue = fixture.Create<byte>();
 			};
 

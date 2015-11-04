@@ -7,7 +7,7 @@ namespace NesZord.Tests
 	{
 		private Microprocessor processor;
 
-		public void before_each() { this.processor = new Microprocessor(); }
+		public void before_each() { this.processor = new Microprocessor(new Memory()); }
 
 		public void When_set_carry_flag()
 		{
