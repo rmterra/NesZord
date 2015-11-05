@@ -15,8 +15,8 @@ namespace NesZord.Core
 
 		public Memory()
 		{
-			this.memory = new byte[Byte.MaxValue][];
-			for (int i = 0; i < Byte.MaxValue; i++) { this.memory[i] = new byte[Byte.MaxValue]; }
+			this.memory = new byte[0x100][];
+			for (int i = 0; i <= Byte.MaxValue; i++) { this.memory[i] = new byte[0x100]; }
 		}
 
 		public void LoadMemory(byte[] program)
