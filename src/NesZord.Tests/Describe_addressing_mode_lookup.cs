@@ -11,16 +11,21 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteStoreYRegister, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteStoreAccumulator, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteStoreXRegister, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteSubtractWithCarry, AddressingMode.Absolute);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXAddWithCarry, AddressingMode.AbsoluteX);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXStoreAccumulator, AddressingMode.AbsoluteX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXSubtractWithCarry, AddressingMode.AbsoluteX);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYAddWithCarry, AddressingMode.AbsoluteY);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYStoreAccumulator, AddressingMode.AbsoluteY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYSubtractWithCarry, AddressingMode.AbsoluteY);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectAddWithCarry, AddressingMode.IndexedIndirect);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectSubtractWithCarry, AddressingMode.IndexedIndirect);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedAddWithCarry, AddressingMode.IndirectIndexed);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedSubtractWithCarry, AddressingMode.IndirectIndexed);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateAddWithCarry, AddressingMode.Immediate);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLoadYRegister, AddressingMode.Immediate);
@@ -44,8 +49,10 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BranchIfEqual, AddressingMode.Relative);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageAddWithCarry, AddressingMode.ZeroPage);
-			
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageSubtractWithCarry, AddressingMode.ZeroPage);
+
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXAddWithCarry, AddressingMode.ZeroPageX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXSubtractWithCarry, AddressingMode.ZeroPageX);
 		}
 
 		public void GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode opCode, AddressingMode expected)

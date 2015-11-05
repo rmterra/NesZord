@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NesZord.Tests
+namespace NesZord.Tests.OpCodes
 {
 	public class Describe_microprocessor_add_with_carry_operation : nspec
 	{
@@ -15,11 +15,11 @@ namespace NesZord.Tests
 
 		private Microprocessor processor;
 
-		private Memory memory;
+		private MemoryMock memory;
 
 		public void before_each()
 		{
-			this.memory = new Memory();
+			this.memory = new MemoryMock();
 			this.processor = new Microprocessor(this.memory);
 		}
 
@@ -88,21 +88,13 @@ namespace NesZord.Tests
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0xff;
-					this.memory.WriteZeroPage(randomOffset, byteToAdd);
-				};
+				before = () => { this.memory.WriteZeroPage(randomOffset, 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0x00;
-					this.memory.WriteZeroPage(randomOffset, byteToAdd);
-				};
+				before = () => { this.memory.WriteZeroPage(randomOffset, 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}
@@ -140,21 +132,13 @@ namespace NesZord.Tests
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0xff;
-					this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), byteToAdd);
-				};
+				before = () => { this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0x00;
-					this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), byteToAdd);
-				};
+				before = () => { this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}
@@ -191,21 +175,13 @@ namespace NesZord.Tests
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0xff;
-					this.memory.Write(randomPage, randomOffset, byteToAdd);
-				};
+				before = () => { this.memory.Write(randomPage, randomOffset, 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0x00;
-					this.memory.Write(randomPage, randomOffset, byteToAdd);
-				};
+				before = () => { this.memory.Write(randomPage, randomOffset, 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}
@@ -245,21 +221,13 @@ namespace NesZord.Tests
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0xff;
-					this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), byteToAdd);
-				};
+				before = () => { this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0x00;
-					this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), byteToAdd);
-				};
+				before = () => { this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}
@@ -300,23 +268,13 @@ namespace NesZord.Tests
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0xff;
-					this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), byteToAdd);
-				};
-
+				before = () => { this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0x00;
-					this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), byteToAdd);
-				};
-
+				before = () => { this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}
@@ -325,22 +283,15 @@ namespace NesZord.Tests
 		{
 			var byteToAdd = default(byte);
 			var xRegisterValue = default(byte);
-			var indirectPage = default(byte);
-			var indirectOffset = default(byte);
 			var randomOffset = default(byte);
 
 			before = () =>
 			{
 				byteToAdd = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
-				indirectPage = fixture.Create<byte>();
-				indirectOffset = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 
-				var computedOffset = (byte)(xRegisterValue + randomOffset);
-				this.memory.Write(Memory.ZERO_PAGE, computedOffset, indirectPage);
-				this.memory.Write(Memory.ZERO_PAGE, (byte)(computedOffset + 1), indirectOffset);
-				this.memory.Write(indirectPage, indirectOffset, byteToAdd);
+				this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, byteToAdd);
 			};
 
 			act = () =>
@@ -362,27 +313,13 @@ namespace NesZord.Tests
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0xff;
-
-					this.memory.Write(Memory.ZERO_PAGE, randomOffset, indirectPage);
-					this.memory.Write(Memory.ZERO_PAGE, (byte)(randomOffset + 1), indirectOffset);
-					this.memory.Write(indirectPage, indirectOffset, byteToAdd);
-				};
+				before = () => { this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0x00;
-
-					this.memory.Write(Memory.ZERO_PAGE, randomOffset, indirectPage);
-					this.memory.Write(Memory.ZERO_PAGE, (byte)(randomOffset + 1), indirectOffset);
-					this.memory.Write(indirectPage, indirectOffset, byteToAdd);
-				};
+				before = () => { this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}
@@ -392,20 +329,14 @@ namespace NesZord.Tests
 			var byteToAdd = default(byte);
 			var yRegisterValue = default(byte);
 			var randomOffset = default(byte);
-			var indirectPage = default(byte);
-			var indirectOffset = default(byte);
 
 			before = () =>
 			{
 				byteToAdd = fixture.Create<byte>();
 				yRegisterValue = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
-				indirectPage = fixture.Create<byte>();
-				indirectOffset = fixture.Create<byte>();
 
-				this.memory.Write(Memory.ZERO_PAGE, randomOffset, indirectPage);
-				this.memory.Write(Memory.ZERO_PAGE, (byte)(randomOffset + 1), indirectOffset);
-				this.memory.Write((byte)(indirectPage + yRegisterValue), indirectOffset, byteToAdd);
+				this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, byteToAdd);
 			};
 
 			act = () =>
@@ -427,27 +358,13 @@ namespace NesZord.Tests
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0xff;
-
-					this.memory.Write(Memory.ZERO_PAGE, randomOffset, indirectPage);
-					this.memory.Write(Memory.ZERO_PAGE, (byte)(randomOffset + 1), indirectOffset);
-					this.memory.Write((byte)(indirectPage + yRegisterValue), indirectOffset, byteToAdd);
-				};
+				before = () => { this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () =>
-				{
-					byteToAdd = 0x00;
-
-					this.memory.Write(Memory.ZERO_PAGE, randomOffset, indirectPage);
-					this.memory.Write(Memory.ZERO_PAGE, (byte)(randomOffset + 1), indirectOffset);
-					this.memory.Write((byte)(indirectPage + yRegisterValue), indirectOffset, byteToAdd);
-				};
+				before = () => { this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}

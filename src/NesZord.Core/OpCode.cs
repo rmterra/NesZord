@@ -62,8 +62,22 @@
 
 		IncrementValueAtY = 0xc8,
 
+		IndexedIndirectSubtractWithCarry = 0xe1,
+
+		ZeroPageSubtractWithCarry = 0xe5,
+
 		IncrementValueAtX = 0xe8,
 
-		ImmediateSubtractWithCarry = 0xe9
+		ImmediateSubtractWithCarry = 0xe9,
+
+		AbsoluteSubtractWithCarry = 0xed,
+
+		IndirectIndexedSubtractWithCarry = 0xf1,
+
+		ZeroPageXSubtractWithCarry = 0xf5,
+
+		AbsoluteYSubtractWithCarry = 0xf9,
+
+		AbsoluteXSubtractWithCarry = 0xfd
 	}
 }

@@ -10,21 +10,26 @@
 				case OpCode.AbsoluteStoreYRegister:
 				case OpCode.AbsoluteStoreAccumulator:
 				case OpCode.AbsoluteStoreXRegister:
+				case OpCode.AbsoluteSubtractWithCarry:
 					return AddressingMode.Absolute;
 
 				case OpCode.AbsoluteXAddWithCarry:
 				case OpCode.AbsoluteXStoreAccumulator:
+				case OpCode.AbsoluteXSubtractWithCarry:
 					return AddressingMode.AbsoluteX;
 
 				case OpCode.AbsoluteYAddWithCarry:
 				case OpCode.AbsoluteYStoreAccumulator:
+				case OpCode.AbsoluteYSubtractWithCarry:
 					return AddressingMode.AbsoluteY;
 
 				case OpCode.IndexedIndirectAddWithCarry:
+				case OpCode.IndexedIndirectSubtractWithCarry:
 					return AddressingMode.IndexedIndirect;
 
 				case OpCode.IndirectIndexedAddWithCarry:
-					return AddressingMode.IndirectIndexed;
+				case OpCode.IndirectIndexedSubtractWithCarry:
+                    return AddressingMode.IndirectIndexed;
 
 				case OpCode.ImmediateAddWithCarry:
 				case OpCode.ImmediateLoadYRegister:
@@ -51,9 +56,11 @@
 					return AddressingMode.Relative;
 
 				case OpCode.ZeroPageAddWithCarry:
+				case OpCode.ZeroPageSubtractWithCarry:
 					return AddressingMode.ZeroPage;
 
 				case OpCode.ZeroPageXAddWithCarry:
+				case OpCode.ZeroPageXSubtractWithCarry:
 					return AddressingMode.ZeroPageX;
 
 				default:

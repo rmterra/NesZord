@@ -24,16 +24,23 @@ namespace NesZord.Core
 			{
 				{ OpCode.AbsoluteAddWithCarry, this.AddWithCarry },
 				{ OpCode.AbsoluteStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.AbsoluteSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.AbsoluteXAddWithCarry, this.AddWithCarry },
 				{ OpCode.AbsoluteXStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.AbsoluteXSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.AbsoluteYAddWithCarry, this.AddWithCarry },
 				{ OpCode.AbsoluteYStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.AbsoluteYSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.AbsoluteStoreXRegister, this.StoreXRegister },
 				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister },
 				{ OpCode.IndexedIndirectAddWithCarry, this.AddWithCarry },
+				{ OpCode.IndexedIndirectSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.IndirectIndexedAddWithCarry, this.AddWithCarry },
-				{ OpCode.ZeroPageAddWithCarry, this.AddWithCarry },
-				{ OpCode.ZeroPageXAddWithCarry, this.AddWithCarry }
+				{ OpCode.IndirectIndexedSubtractWithCarry, this.SubtractWithCarry },
+                { OpCode.ZeroPageAddWithCarry, this.AddWithCarry },
+				{ OpCode.ZeroPageSubtractWithCarry, this.SubtractWithCarry },
+				{ OpCode.ZeroPageXAddWithCarry, this.AddWithCarry },
+				{ OpCode.ZeroPageXSubtractWithCarry, this.SubtractWithCarry }
 			};
 
 			this.unaddressedOperations = new Dictionary<OpCode, Action>
@@ -252,16 +259,26 @@ namespace NesZord.Core
 			this.Y = this.ReadProgramByte();
 		}
 
-		private void ImmediateSubtractWithCarry()
-		{
-			var result = this.Accumulator - this.ReadProgramByte();
-			this.Accumulator = (byte)(result & 0xff);
-			this.Carry = (result << 8) > 0;
-		}
-
 		private void SetCarryFlag()
 		{
 			this.Carry = true;
+		}
+
+		private void ImmediateSubtractWithCarry()
+		{
+			this.SubtractWithCarry(this.ReadProgramByte());
+		}
+
+		private void SubtractWithCarry(MemoryLocation location)
+		{
+			this.SubtractWithCarry(this.memory.Read(location));
+		}
+
+		private void SubtractWithCarry(byte byteToSubtract)
+		{
+			var result = this.Accumulator - byteToSubtract;
+			this.Accumulator = (byte)(result & 0xff);
+			this.Carry = (result << 8) > 0;
 		}
 
 		private void TransferFromAccumulatorToX()
