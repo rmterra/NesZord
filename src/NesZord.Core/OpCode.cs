@@ -50,19 +50,23 @@
 
 		BranchIfCarryIsSet = 0xb0,
 
-		DecrementValueAtX = 0xca,
-
-		BranchIfNotEqual = 0xd0,
-
-		BranchIfEqual = 0xf0,
-
 		ImmediateCompareYRegister = 0xc0,
 
-		ImmediateCompareXRegister = 0xe0,
+		ZeroPageCompareYRegister = 0xc4,
 
 		IncrementValueAtY = 0xc8,
 
+		DecrementValueAtX = 0xca,
+
+		AbsoluteCompareYRegister = 0xcc,
+
+		BranchIfNotEqual = 0xd0,
+
+		ImmediateCompareXRegister = 0xe0,
+
 		IndexedIndirectSubtractWithCarry = 0xe1,
+
+		ZeroPageCompareXRegister = 0xe4,
 
 		ZeroPageSubtractWithCarry = 0xe5,
 
@@ -70,7 +74,11 @@
 
 		ImmediateSubtractWithCarry = 0xe9,
 
+		AbsoluteCompareXRegister = 0xec,
+
 		AbsoluteSubtractWithCarry = 0xed,
+
+		BranchIfEqual = 0xf0,
 
 		IndirectIndexedSubtractWithCarry = 0xf1,
 

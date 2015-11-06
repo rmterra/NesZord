@@ -23,6 +23,8 @@ namespace NesZord.Core
 			this.addressedOperations = new Dictionary<OpCode, Action<MemoryLocation>>
 			{
 				{ OpCode.AbsoluteAddWithCarry, this.AddWithCarry },
+				{ OpCode.AbsoluteCompareYRegister, this.CompareYRegister },
+				{ OpCode.AbsoluteCompareXRegister, this.CompareXRegister },
 				{ OpCode.AbsoluteStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.AbsoluteSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.AbsoluteXAddWithCarry, this.AddWithCarry },
@@ -38,6 +40,8 @@ namespace NesZord.Core
 				{ OpCode.IndirectIndexedAddWithCarry, this.AddWithCarry },
 				{ OpCode.IndirectIndexedSubtractWithCarry, this.SubtractWithCarry },
                 { OpCode.ZeroPageAddWithCarry, this.AddWithCarry },
+				{ OpCode.ZeroPageCompareYRegister, this.CompareYRegister },
+				{ OpCode.ZeroPageCompareXRegister, this.CompareXRegister },
 				{ OpCode.ZeroPageSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.ZeroPageXAddWithCarry, this.AddWithCarry },
 				{ OpCode.ZeroPageXSubtractWithCarry, this.SubtractWithCarry }
@@ -232,14 +236,34 @@ namespace NesZord.Core
 
 		private void ImmediateCompareXRegister()
 		{
-			int result = this.X - this.ReadProgramByte();
+			this.CompareXRegister(this.ReadProgramByte());
+		}
+
+		private void CompareXRegister(MemoryLocation location)
+		{
+			this.CompareXRegister(this.memory.Read(location));
+		}
+
+		private void CompareXRegister(byte byteToCompare)
+		{
+			var result = this.X - byteToCompare;
 			this.Carry = result >= 0;
 			this.Zero = result == 0;
 		}
 
 		private void ImmediateCompareYRegister()
 		{
-			int result = this.Y - this.ReadProgramByte();
+			this.CompareYRegister(this.ReadProgramByte());
+		}
+
+		private void CompareYRegister(MemoryLocation location)
+		{
+			this.CompareYRegister(this.memory.Read(location));
+		}
+
+		private void CompareYRegister(byte byteToCompare)
+		{
+			var result = this.Y - byteToCompare;
 			this.Carry = result >= 0;
 			this.Zero = result == 0;
 		}

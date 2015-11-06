@@ -7,6 +7,8 @@
 			switch (opCode)
 			{
 				case OpCode.AbsoluteAddWithCarry:
+				case OpCode.AbsoluteCompareYRegister:
+				case OpCode.AbsoluteCompareXRegister:
 				case OpCode.AbsoluteStoreYRegister:
 				case OpCode.AbsoluteStoreAccumulator:
 				case OpCode.AbsoluteStoreXRegister:
@@ -56,6 +58,8 @@
 					return AddressingMode.Relative;
 
 				case OpCode.ZeroPageAddWithCarry:
+				case OpCode.ZeroPageCompareYRegister:
+				case OpCode.ZeroPageCompareXRegister:
 				case OpCode.ZeroPageSubtractWithCarry:
 					return AddressingMode.ZeroPage;
 

@@ -8,6 +8,8 @@ namespace NesZord.Tests
 		public void When_lookup()
 		{
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteAddWithCarry, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteCompareYRegister, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteCompareXRegister, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteStoreYRegister, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteStoreAccumulator, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteStoreXRegister, AddressingMode.Absolute);
@@ -49,6 +51,8 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BranchIfEqual, AddressingMode.Relative);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageAddWithCarry, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageCompareYRegister, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageCompareXRegister, AddressingMode.ZeroPage);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageSubtractWithCarry, AddressingMode.ZeroPage);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXAddWithCarry, AddressingMode.ZeroPageX);
