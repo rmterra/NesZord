@@ -16,7 +16,7 @@ namespace NesZord.Core
 
 		public Microprocessor(Memory memory)
 		{
-			if (memory == null) { throw new ArgumentNullException("memory"); }
+			if (memory == null) { throw new ArgumentNullException(nameof(memory)); }
 			
 			this.memory = memory;
 
@@ -25,26 +25,41 @@ namespace NesZord.Core
 				{ OpCode.AbsoluteAddWithCarry, this.AddWithCarry },
 				{ OpCode.AbsoluteCompareYRegister, this.CompareYRegister },
 				{ OpCode.AbsoluteCompareXRegister, this.CompareXRegister },
+				{ OpCode.AbsoluteLoadAccumulator, this.LoadAccumulator },
+				{ OpCode.AbsoluteLoadXRegister, this.LoadXRegister },
+				{ OpCode.AbsoluteLoadYRegister, this.LoadYRegister },
 				{ OpCode.AbsoluteStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.AbsoluteSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.AbsoluteXAddWithCarry, this.AddWithCarry },
+				{ OpCode.AbsoluteXLoadAccumulator, this.LoadAccumulator },
+				{ OpCode.AbsoluteXLoadYRegister, this.LoadYRegister },
 				{ OpCode.AbsoluteXStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.AbsoluteXSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.AbsoluteYAddWithCarry, this.AddWithCarry },
+				{ OpCode.AbsoluteYLoadAccumulator, this.LoadAccumulator },
+				{ OpCode.AbsoluteYLoadXRegister, this.LoadXRegister },
 				{ OpCode.AbsoluteYStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.AbsoluteYSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.AbsoluteStoreXRegister, this.StoreXRegister },
 				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister },
 				{ OpCode.IndexedIndirectAddWithCarry, this.AddWithCarry },
+				{ OpCode.IndexedIndirectLoadAccumulator, this.LoadAccumulator },
 				{ OpCode.IndexedIndirectSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.IndirectIndexedAddWithCarry, this.AddWithCarry },
+				{ OpCode.IndirectIndexedLoadAccumulator, this.LoadAccumulator },
 				{ OpCode.IndirectIndexedSubtractWithCarry, this.SubtractWithCarry },
                 { OpCode.ZeroPageAddWithCarry, this.AddWithCarry },
 				{ OpCode.ZeroPageCompareYRegister, this.CompareYRegister },
 				{ OpCode.ZeroPageCompareXRegister, this.CompareXRegister },
+				{ OpCode.ZeroPageLoadAccumulator, this.LoadAccumulator },
+				{ OpCode.ZeroPageLoadXRegister, this.LoadXRegister },
+				{ OpCode.ZeroPageLoadYRegister, this.LoadYRegister },
 				{ OpCode.ZeroPageSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.ZeroPageXAddWithCarry, this.AddWithCarry },
-				{ OpCode.ZeroPageXSubtractWithCarry, this.SubtractWithCarry }
+				{ OpCode.ZeroPageXLoadAccumulator, this.LoadAccumulator },
+				{ OpCode.ZeroPageXLoadYRegister, this.LoadYRegister },
+				{ OpCode.ZeroPageXSubtractWithCarry, this.SubtractWithCarry },
+				{ OpCode.ZeroPageYLoadXRegister, this.LoadXRegister }
 			};
 
 			this.unaddressedOperations = new Dictionary<OpCode, Action>
@@ -54,6 +69,7 @@ namespace NesZord.Core
 				{ OpCode.BranchIfEqual, this.BranchIfEqual },
 				{ OpCode.BranchIfNotEqual, this.BranchIfNotEqual },
 				{ OpCode.DecrementValueAtX, this.DecrementValueAtX },
+				{ OpCode.DecrementValueAtY, this.DecrementValueAtY },
 				{ OpCode.IncrementValueAtX, this.IncrementValueAtX },
 				{ OpCode.IncrementValueAtY, this.IncrementValueAtY },
 				{ OpCode.ImmediateAddWithCarry, this.ImmediateAddWithCarry },
@@ -132,6 +148,7 @@ namespace NesZord.Core
 
 			if (addressingMode == AddressingMode.ZeroPage) { return new MemoryLocation(this.ReadProgramByte(), Memory.ZERO_PAGE); }
 			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.X), Memory.ZERO_PAGE); }
+			else if (addressingMode == AddressingMode.ZeroPageY) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.Y), Memory.ZERO_PAGE); }
 			else if (addressingMode == AddressingMode.Absolute) { offset = this.ReadProgramByte(); }
 			else if (addressingMode == AddressingMode.AbsoluteX) { offset = (byte)(this.ReadProgramByte() + this.X); }
 			else if (addressingMode == AddressingMode.AbsoluteY) { offset = (byte)(this.ReadProgramByte() + this.Y); }
@@ -206,6 +223,11 @@ namespace NesZord.Core
 			this.X -= 1;
 		}
 
+		private void DecrementValueAtY()
+		{
+			this.Y -= 1;
+		}
+
 		private void IncrementValueAtX()
 		{
 			this.X += 1;
@@ -270,17 +292,47 @@ namespace NesZord.Core
 
 		private void ImmediateLoadAccumulator()
 		{
-			this.Accumulator = this.ReadProgramByte();
+			this.LoadAccumulator(this.ReadProgramByte());
+		}
+
+		private void LoadAccumulator(MemoryLocation location)
+		{
+			this.LoadAccumulator(this.memory.Read(location));
+		}
+
+		private void LoadAccumulator(byte value)
+		{
+			this.Accumulator = value;
 		}
 
 		private void ImmediateLoadXRegister()
 		{
-			this.X = this.ReadProgramByte();
+			this.LoadXRegister(this.ReadProgramByte());
+		}
+
+		private void LoadXRegister(MemoryLocation location)
+		{
+			this.LoadXRegister(this.memory.Read(location));
+		}
+
+		private void LoadXRegister(byte value)
+		{
+			this.X = value;
 		}
 
 		private void ImmediateLoadYRegister()
 		{
-			this.Y = this.ReadProgramByte();
+			this.LoadYRegister(this.ReadProgramByte());
+		}
+
+		private void LoadYRegister(MemoryLocation location)
+		{
+			this.LoadYRegister(this.memory.Read(location));
+		}
+
+		private void LoadYRegister(byte value)
+		{
+			this.Y = value;
 		}
 
 		private void SetCarryFlag()

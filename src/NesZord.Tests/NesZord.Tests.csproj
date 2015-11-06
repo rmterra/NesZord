@@ -71,16 +71,18 @@
     <Compile Include="Describe_memory.cs" />
     <Compile Include="MemoryMock.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_add_with_carry_operation.cs" />
-    <Compile Include="Describe_microprocessor_branch_operations.cs" />
-    <Compile Include="Describe_microprocessor_decrement_operations.cs" />
-    <Compile Include="Describe_microprocessor_increment_operations.cs" />
-    <Compile Include="Describe_microprocessor_load_operations.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_branch_operations.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_decrement_operations.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_increment_operations.cs" />
     <Compile Include="Describe_microprocessor_status_flag_opeartions.cs" />
     <Compile Include="Describe_microprocessor_store_operations.cs" />
     <Compile Include="Describe_microprocessor_system_functions.cs" />
     <Compile Include="Describe_microprocessor_transfer_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_compare_x_register_with_memory_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_compare_y_register_with_memory_operation.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_load_y_register_operation.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_load_x_register_operation.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_load_accumulator_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_subtract_with_carry_operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

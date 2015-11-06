@@ -9,6 +9,9 @@
 				case OpCode.AbsoluteAddWithCarry:
 				case OpCode.AbsoluteCompareYRegister:
 				case OpCode.AbsoluteCompareXRegister:
+				case OpCode.AbsoluteLoadAccumulator:
+				case OpCode.AbsoluteLoadXRegister:
+				case OpCode.AbsoluteLoadYRegister:
 				case OpCode.AbsoluteStoreYRegister:
 				case OpCode.AbsoluteStoreAccumulator:
 				case OpCode.AbsoluteStoreXRegister:
@@ -16,20 +19,26 @@
 					return AddressingMode.Absolute;
 
 				case OpCode.AbsoluteXAddWithCarry:
+				case OpCode.AbsoluteXLoadAccumulator:
+				case OpCode.AbsoluteXLoadYRegister:
 				case OpCode.AbsoluteXStoreAccumulator:
 				case OpCode.AbsoluteXSubtractWithCarry:
 					return AddressingMode.AbsoluteX;
 
 				case OpCode.AbsoluteYAddWithCarry:
+				case OpCode.AbsoluteYLoadAccumulator:
+				case OpCode.AbsoluteYLoadXRegister:
 				case OpCode.AbsoluteYStoreAccumulator:
 				case OpCode.AbsoluteYSubtractWithCarry:
 					return AddressingMode.AbsoluteY;
 
 				case OpCode.IndexedIndirectAddWithCarry:
+				case OpCode.IndexedIndirectLoadAccumulator:
 				case OpCode.IndexedIndirectSubtractWithCarry:
 					return AddressingMode.IndexedIndirect;
 
 				case OpCode.IndirectIndexedAddWithCarry:
+				case OpCode.IndirectIndexedLoadAccumulator:
 				case OpCode.IndirectIndexedSubtractWithCarry:
                     return AddressingMode.IndirectIndexed;
 
@@ -60,12 +69,20 @@
 				case OpCode.ZeroPageAddWithCarry:
 				case OpCode.ZeroPageCompareYRegister:
 				case OpCode.ZeroPageCompareXRegister:
+				case OpCode.ZeroPageLoadAccumulator:
+				case OpCode.ZeroPageLoadXRegister:
+				case OpCode.ZeroPageLoadYRegister:
 				case OpCode.ZeroPageSubtractWithCarry:
 					return AddressingMode.ZeroPage;
 
 				case OpCode.ZeroPageXAddWithCarry:
+				case OpCode.ZeroPageXLoadAccumulator:
+				case OpCode.ZeroPageXLoadYRegister:
 				case OpCode.ZeroPageXSubtractWithCarry:
 					return AddressingMode.ZeroPageX;
+
+				case OpCode.ZeroPageYLoadXRegister:
+					return AddressingMode.ZeroPageY;
 
 				default:
 					return AddressingMode.Undefined;

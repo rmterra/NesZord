@@ -2,7 +2,7 @@
 using NSpec;
 using Ploeh.AutoFixture;
 
-namespace NesZord.Tests
+namespace NesZord.Tests.OpCodes
 {
 	public class Describe_microprocessor_branch_operations : nspec
 	{

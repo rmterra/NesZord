@@ -22,6 +22,8 @@
 
 		AbsoluteXAddWithCarry = 0x7d,
 
+		DecrementValueAtY = 0x88,
+
 		TransferFromXToAccumulator = 0x8a,
 
 		AbsoluteStoreYRegister = 0x8c,
@@ -42,13 +44,43 @@
 
 		ImmediateLoadXRegister = 0xa2,
 
+		ZeroPageLoadYRegister = 0xa4,
+
+		ZeroPageLoadXRegister = 0xa6,
+
 		TransferFromAccumulatorToY = 0xa8,
+
+		IndexedIndirectLoadAccumulator = 0xa1,
+
+		ZeroPageLoadAccumulator = 0xa5,
 
 		ImmediateLoadAccumulator = 0xa9,
 
 		TransferFromAccumulatorToX = 0xaa,
 
+		AbsoluteLoadYRegister = 0xac,
+
+		AbsoluteLoadAccumulator = 0xad,
+
+		AbsoluteLoadXRegister = 0xae,
+
 		BranchIfCarryIsSet = 0xb0,
+
+		IndirectIndexedLoadAccumulator = 0xb1,
+
+		ZeroPageXLoadYRegister = 0xb4,
+
+		ZeroPageXLoadAccumulator = 0xb5,
+
+		ZeroPageYLoadXRegister = 0xb6,
+
+		AbsoluteYLoadAccumulator = 0xb9,
+
+		AbsoluteXLoadYRegister = 0xbc,
+
+		AbsoluteXLoadAccumulator = 0xbd,
+
+		AbsoluteYLoadXRegister = 0xbe,
 
 		ImmediateCompareYRegister = 0xc0,
 

@@ -9,24 +9,26 @@ namespace NesZord.Core
 	{
 		Undefined = 0,
 
-		AbsoluteY = 1,
+		Absolute = 1,
 
-		AbsoluteX = 2,
+		AbsoluteY = 2,
 
-		Implied = 3,
+		AbsoluteX = 3,
 
-		Immediate = 4,
+		IndexedIndirect = 4,
 
-		Absolute = 5,
+		IndirectIndexed = 5,
 
-		Relative = 6,
+		Immediate = 6,
 
-		ZeroPage = 7,
+		Implied = 7,
 
-		ZeroPageX = 8,
+		Relative = 8,
 
-		IndexedIndirect = 9,
-		
-		IndirectIndexed = 10
+		ZeroPage = 9,
+
+		ZeroPageX = 10,
+
+		ZeroPageY = 11
 	}
 }
