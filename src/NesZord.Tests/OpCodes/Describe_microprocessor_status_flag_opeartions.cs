@@ -1,7 +1,7 @@
 ﻿using NesZord.Core;
 using NSpec;
 
-namespace NesZord.Tests
+namespace NesZord.Tests.OpCodes
 {
 	public class Describe_microprocessor_status_flag_opeartions : nspec
 	{

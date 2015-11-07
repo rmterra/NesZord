@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NesZord.Tests
+namespace NesZord.Tests.OpCodes
 {
 	public class Describe_microprocessor_transfer_operations : nspec
 	{

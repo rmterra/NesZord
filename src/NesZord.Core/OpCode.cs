@@ -22,6 +22,14 @@
 
 		AbsoluteXAddWithCarry = 0x7d,
 
+		IndexedIndirectStoreAccumulator = 0x81,
+
+		ZeroPageStoreYRegister = 0x84,
+
+		ZeroPageStoreAccumulator = 0x85,
+
+		ZeroPageStoreXRegister = 0x86,
+
 		DecrementValueAtY = 0x88,
 
 		TransferFromXToAccumulator = 0x8a,
@@ -34,7 +42,15 @@
 
 		BranchIfCarryIsClear = 0x90,
 
+		IndirectIndexedStoreAccumulator = 0x91,
+
+		ZeroPageXStoreAccumulator = 0x95,
+
 		AbsoluteXStoreAccumulator = 0x9d,
+
+		ZeroPageXStoreYRegister = 0x94,
+
+		ZeroPageYStoreXRegister = 0x96,
 
 		TransferFromYToAccumulator = 0x98,
 

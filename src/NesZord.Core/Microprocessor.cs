@@ -44,9 +44,11 @@ namespace NesZord.Core
 				{ OpCode.AbsoluteStoreYRegister, this.StoreYRegister },
 				{ OpCode.IndexedIndirectAddWithCarry, this.AddWithCarry },
 				{ OpCode.IndexedIndirectLoadAccumulator, this.LoadAccumulator },
+				{ OpCode.IndexedIndirectStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.IndexedIndirectSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.IndirectIndexedAddWithCarry, this.AddWithCarry },
 				{ OpCode.IndirectIndexedLoadAccumulator, this.LoadAccumulator },
+				{ OpCode.IndirectIndexedStoreAccumulator, this.StoreAccumulator },
 				{ OpCode.IndirectIndexedSubtractWithCarry, this.SubtractWithCarry },
                 { OpCode.ZeroPageAddWithCarry, this.AddWithCarry },
 				{ OpCode.ZeroPageCompareYRegister, this.CompareYRegister },
@@ -54,12 +56,18 @@ namespace NesZord.Core
 				{ OpCode.ZeroPageLoadAccumulator, this.LoadAccumulator },
 				{ OpCode.ZeroPageLoadXRegister, this.LoadXRegister },
 				{ OpCode.ZeroPageLoadYRegister, this.LoadYRegister },
+				{ OpCode.ZeroPageStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.ZeroPageStoreXRegister, this.StoreXRegister },
+				{ OpCode.ZeroPageStoreYRegister, this.StoreYRegister },
 				{ OpCode.ZeroPageSubtractWithCarry, this.SubtractWithCarry },
 				{ OpCode.ZeroPageXAddWithCarry, this.AddWithCarry },
 				{ OpCode.ZeroPageXLoadAccumulator, this.LoadAccumulator },
 				{ OpCode.ZeroPageXLoadYRegister, this.LoadYRegister },
+				{ OpCode.ZeroPageXStoreAccumulator, this.StoreAccumulator },
+				{ OpCode.ZeroPageXStoreYRegister, this.StoreYRegister },
 				{ OpCode.ZeroPageXSubtractWithCarry, this.SubtractWithCarry },
-				{ OpCode.ZeroPageYLoadXRegister, this.LoadXRegister }
+				{ OpCode.ZeroPageYLoadXRegister, this.LoadXRegister },
+                { OpCode.ZeroPageYStoreXRegister, this.StoreXRegister }
 			};
 
 			this.unaddressedOperations = new Dictionary<OpCode, Action>

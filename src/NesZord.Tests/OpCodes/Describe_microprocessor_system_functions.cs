@@ -1,13 +1,8 @@
 ﻿using NesZord.Core;
 using NSpec;
 using Ploeh.AutoFixture;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NesZord.Tests
+namespace NesZord.Tests.OpCodes
 {
 	public class Describe_microprocessor_system_functions : nspec
 	{
@@ -16,7 +11,7 @@ namespace NesZord.Tests
 		public void When_call_break()
 		{
 			Microprocessor processor = null;
-			byte[] program = new byte[0];
+			var program = new byte[0];
 
 			before = () =>
 			{

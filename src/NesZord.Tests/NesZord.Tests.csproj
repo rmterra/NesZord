@@ -74,10 +74,12 @@
     <Compile Include="OpCodes\Describe_microprocessor_branch_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_decrement_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_increment_operations.cs" />
-    <Compile Include="Describe_microprocessor_status_flag_opeartions.cs" />
-    <Compile Include="Describe_microprocessor_store_operations.cs" />
-    <Compile Include="Describe_microprocessor_system_functions.cs" />
-    <Compile Include="Describe_microprocessor_transfer_operations.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_status_flag_opeartions.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_store_y_register_into_memory_operation.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_store_x_register_into_memory_operation.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_store_accumulator_into_memory_operation.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_system_functions.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_transfer_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_compare_x_register_with_memory_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_compare_y_register_with_memory_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_load_y_register_operation.cs" />
