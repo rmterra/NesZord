@@ -26,13 +26,13 @@ namespace NesZord.Tests.OpCodes
 				{
 					this.processor.RunProgram(new byte[]
 					{
-						(byte) OpCode.ImmediateLoadXRegister, 0x08,
-						(byte) OpCode.DecrementValueAtX,
-						(byte) OpCode.AbsoluteStoreXRegister, 0x00, 0x02,
-						(byte) OpCode.ImmediateCompareXRegister, 0x03,
-						(byte) OpCode.BranchIfNotEqual, 0xf8,
-						(byte) OpCode.AbsoluteStoreXRegister, 0x01, 0x02,
-						(byte) OpCode.Break
+						(byte) OpCode.ImmediateLDX, 0x08,
+						(byte) OpCode.DEX,
+						(byte) OpCode.AbsoluteSTX, 0x00, 0x02,
+						(byte) OpCode.ImmediateCPX, 0x03,
+						(byte) OpCode.BNE, 0xf8,
+						(byte) OpCode.AbsoluteSTX, 0x01, 0x02,
+						(byte) OpCode.BRK
 					});
 				};
 
@@ -52,12 +52,12 @@ namespace NesZord.Tests.OpCodes
 				{
 					this.processor.RunProgram(new byte[]
 					{
-						(byte) OpCode.ImmediateLoadYRegister, 0x01,
-						(byte) OpCode.IncrementValueAtY,
-						(byte) OpCode.ImmediateCompareYRegister, 0x02,
-						(byte) OpCode.BranchIfEqual, 0xfb,
-						(byte) OpCode.AbsoluteStoreYRegister, 0x00, 0x02,
-						(byte) OpCode.Break
+						(byte) OpCode.ImmediateLDY, 0x01,
+						(byte) OpCode.INY,
+						(byte) OpCode.ImmediateCPY, 0x02,
+						(byte) OpCode.BEQ, 0xfb,
+						(byte) OpCode.AbsoluteSTY, 0x00, 0x02,
+						(byte) OpCode.BRK
 					});
 				};
 
@@ -76,13 +76,13 @@ namespace NesZord.Tests.OpCodes
 				{
 					this.processor.RunProgram(new byte[]
 					{
-						(byte) OpCode.ImmediateLoadXRegister, 0xf5,
-						(byte) OpCode.TransferFromXToAccumulator,
-						(byte) OpCode.AbsoluteStoreAccumulator, 0x00, 0x20,
-						(byte) OpCode.ImmediateAddWithCarry, 0x01,
-						(byte) OpCode.BranchIfCarryIsClear, 0xf9,
-						(byte) OpCode.AbsoluteStoreAccumulator, 0x00, 0x20,
-						(byte) OpCode.Break
+						(byte) OpCode.ImmediateLDX, 0xf5,
+						(byte) OpCode.TXA,
+						(byte) OpCode.AbsoluteSTA, 0x00, 0x20,
+						(byte) OpCode.ImmediateADC, 0x01,
+						(byte) OpCode.BCC, 0xf9,
+						(byte) OpCode.AbsoluteSTA, 0x00, 0x20,
+						(byte) OpCode.BRK
 					});
 				};
 
@@ -101,13 +101,13 @@ namespace NesZord.Tests.OpCodes
 				{
 					this.processor.RunProgram(new byte[]
 					{
-						(byte) OpCode.ImmediateLoadXRegister, 0x08,
-						(byte) OpCode.DecrementValueAtX,
-						(byte) OpCode.AbsoluteStoreXRegister, 0x00, 0x02,
-						(byte) OpCode.ImmediateCompareXRegister, 0x03,
-						(byte) OpCode.BranchIfCarryIsSet, 0xf8,
-						(byte) OpCode.AbsoluteStoreXRegister, 0x01, 0x02,
-						(byte) OpCode.Break
+						(byte) OpCode.ImmediateLDX, 0x08,
+						(byte) OpCode.DEX,
+						(byte) OpCode.AbsoluteSTX, 0x00, 0x02,
+						(byte) OpCode.ImmediateCPX, 0x03,
+						(byte) OpCode.BCS, 0xf8,
+						(byte) OpCode.AbsoluteSTX, 0x01, 0x02,
+						(byte) OpCode.BRK
 					});
 				};
 

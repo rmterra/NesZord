@@ -18,10 +18,10 @@ namespace NesZord.Tests.OpCodes
 				processor = new Microprocessor(new Memory());
 				program = new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToX,
-					(byte)OpCode.Break,
-					(byte)OpCode.ImmediateAddWithCarry, 0xff
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.TAX,
+					(byte)OpCode.BRK,
+					(byte)OpCode.ImmediateADC, 0xff
 				};
 			};
 

@@ -7,88 +7,88 @@ namespace NesZord.Tests
 	{
 		public void When_lookup()
 		{
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteAddWithCarry, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteBitwiseAnd, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteCompareYRegister, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteCompareXRegister, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteLoadAccumulator, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteLoadXRegister, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteLoadYRegister, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteStoreYRegister, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteStoreAccumulator, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteStoreXRegister, AddressingMode.Absolute);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteSubtractWithCarry, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteADC, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteAND, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteCPY, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteCPX, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteLDA, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteLDX, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteLDY, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteSTY, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteSTA, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteSTX, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteSBC, AddressingMode.Absolute);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXAddWithCarry, AddressingMode.AbsoluteX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXBitwiseAnd, AddressingMode.AbsoluteX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXLoadAccumulator, AddressingMode.AbsoluteX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXLoadYRegister, AddressingMode.AbsoluteX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXStoreAccumulator, AddressingMode.AbsoluteX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXSubtractWithCarry, AddressingMode.AbsoluteX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXADC, AddressingMode.AbsoluteX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXAND, AddressingMode.AbsoluteX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXLDA, AddressingMode.AbsoluteX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXLDY, AddressingMode.AbsoluteX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXSTA, AddressingMode.AbsoluteX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXSBC, AddressingMode.AbsoluteX);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYAddWithCarry, AddressingMode.AbsoluteY);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYBitwiseAnd, AddressingMode.AbsoluteY);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYLoadAccumulator, AddressingMode.AbsoluteY);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYLoadXRegister, AddressingMode.AbsoluteY);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYStoreAccumulator, AddressingMode.AbsoluteY);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYSubtractWithCarry, AddressingMode.AbsoluteY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYADC, AddressingMode.AbsoluteY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYAND, AddressingMode.AbsoluteY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYLDA, AddressingMode.AbsoluteY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYLDX, AddressingMode.AbsoluteY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYSTA, AddressingMode.AbsoluteY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYSBC, AddressingMode.AbsoluteY);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectAddWithCarry, AddressingMode.IndexedIndirect);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectBitwiseAnd, AddressingMode.IndexedIndirect);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectLoadAccumulator, AddressingMode.IndexedIndirect);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectStoreAccumulator, AddressingMode.IndexedIndirect);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectSubtractWithCarry, AddressingMode.IndexedIndirect);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectADC, AddressingMode.IndexedIndirect);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedAND, AddressingMode.IndexedIndirect);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectLDA, AddressingMode.IndexedIndirect);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectSTA, AddressingMode.IndexedIndirect);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectSBC, AddressingMode.IndexedIndirect);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedAddWithCarry, AddressingMode.IndirectIndexed);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedBitwiseAnd, AddressingMode.IndirectIndexed);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedLoadAccumulator, AddressingMode.IndirectIndexed);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedStoreAccumulator, AddressingMode.IndirectIndexed);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedSubtractWithCarry, AddressingMode.IndirectIndexed);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedADC, AddressingMode.IndirectIndexed);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedAND, AddressingMode.IndirectIndexed);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedLDA, AddressingMode.IndirectIndexed);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedSTA, AddressingMode.IndirectIndexed);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedSBC, AddressingMode.IndirectIndexed);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateAddWithCarry, AddressingMode.Immediate);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateBitwiseAnd, AddressingMode.Immediate);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLoadYRegister, AddressingMode.Immediate);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLoadXRegister, AddressingMode.Immediate);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLoadAccumulator, AddressingMode.Immediate);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateCompareYRegister, AddressingMode.Immediate);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateCompareXRegister, AddressingMode.Immediate);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateSubtractWithCarry, AddressingMode.Immediate);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateADC, AddressingMode.Immediate);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateAND, AddressingMode.Immediate);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLDY, AddressingMode.Immediate);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLDX, AddressingMode.Immediate);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLDA, AddressingMode.Immediate);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateCPY, AddressingMode.Immediate);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateCPX, AddressingMode.Immediate);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateSBC, AddressingMode.Immediate);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.Break, AddressingMode.Implied);
-            this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.SetCarryFlag, AddressingMode.Implied);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TransferFromXToAccumulator, AddressingMode.Implied);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TransferFromAccumulatorToX, AddressingMode.Implied);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.DecrementValueAtX, AddressingMode.Implied);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IncrementValueAtY, AddressingMode.Implied);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IncrementValueAtX, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BRK, AddressingMode.Implied);
+            this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.SEC, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TXA, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TAX, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.DEX, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.INY, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.INX, AddressingMode.Implied);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BranchIfCarryIsClear, AddressingMode.Relative);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BranchIfCarryIsSet, AddressingMode.Relative);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BranchIfNotEqual, AddressingMode.Relative);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BranchIfEqual, AddressingMode.Relative);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BCC, AddressingMode.Relative);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BCS, AddressingMode.Relative);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BNE, AddressingMode.Relative);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BEQ, AddressingMode.Relative);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageAddWithCarry, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageBitwiseAnd, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageLoadAccumulator, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageLoadXRegister, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageLoadYRegister, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageCompareYRegister, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageCompareXRegister, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageStoreAccumulator, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageStoreXRegister, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageStoreYRegister, AddressingMode.ZeroPage);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageSubtractWithCarry, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageADC, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageAND, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageLDA, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageLDX, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageLDY, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageCPY, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageCPX, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageSTA, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageSTX, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageSTY, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageSBC, AddressingMode.ZeroPage);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXAddWithCarry, AddressingMode.ZeroPageX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXBitwiseAnd, AddressingMode.ZeroPageX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXLoadAccumulator, AddressingMode.ZeroPageX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXLoadYRegister, AddressingMode.ZeroPageX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXStoreAccumulator, AddressingMode.ZeroPageX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXStoreYRegister, AddressingMode.ZeroPageX);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXSubtractWithCarry, AddressingMode.ZeroPageX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXADC, AddressingMode.ZeroPageX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXAND, AddressingMode.ZeroPageX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXLDA, AddressingMode.ZeroPageX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXLDY, AddressingMode.ZeroPageX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXSTA, AddressingMode.ZeroPageX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXSTY, AddressingMode.ZeroPageX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXSBC, AddressingMode.ZeroPageX);
 
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageYLoadXRegister, AddressingMode.ZeroPageY);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageYStoreXRegister, AddressingMode.ZeroPageY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageYLDX, AddressingMode.ZeroPageY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageYSTX, AddressingMode.ZeroPageY);
 		}
 
 		public void GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode opCode, AddressingMode expected)

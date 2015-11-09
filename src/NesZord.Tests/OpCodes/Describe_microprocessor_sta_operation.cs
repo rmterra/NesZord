@@ -4,7 +4,7 @@ using Ploeh.AutoFixture;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_store_accumulator_into_memory_operation : nspec
+	public class Describe_microprocessor_sta_operation : nspec
 	{
 		private static readonly Fixture fixture = new Fixture();
 
@@ -28,8 +28,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.ZeroPageStoreAccumulator, randomOffset
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.ZeroPageSTA, randomOffset
 				});
 			};
 
@@ -46,9 +46,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, fixture.Create<byte>(),
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.ZeroPageXStoreAccumulator, randomOffset
+					(byte)OpCode.ImmediateLDX, fixture.Create<byte>(),
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.ZeroPageXSTA, randomOffset
 				});
 			};
 
@@ -65,8 +65,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.AbsoluteStoreAccumulator, 0x00, 0x20
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.AbsoluteSTA, 0x00, 0x20
 				});
 			};
 
@@ -82,9 +82,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadYRegister, fixture.Create<byte>(),
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.AbsoluteYStoreAccumulator, 0x00, 0x20
+					(byte)OpCode.ImmediateLDY, fixture.Create<byte>(),
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.AbsoluteYSTA, 0x00, 0x20
 				});
 			};
 
@@ -100,9 +100,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, fixture.Create<byte>(),
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.AbsoluteXStoreAccumulator, 0x00, 0x20
+					(byte)OpCode.ImmediateLDX, fixture.Create<byte>(),
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.AbsoluteXSTA, 0x00, 0x20
 				});
 			};
 
@@ -129,9 +129,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, xRegisterValue,
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.IndexedIndirectStoreAccumulator, randomOffset
+					(byte)OpCode.ImmediateLDX, xRegisterValue,
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.IndexedIndirectSTA, randomOffset
 				});
 			};
 
@@ -158,9 +158,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadYRegister, yRegisterValue,
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.IndirectIndexedStoreAccumulator, randomOffset
+					(byte)OpCode.ImmediateLDY, yRegisterValue,
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.IndirectIndexedSTA, randomOffset
 				});
 			};
 

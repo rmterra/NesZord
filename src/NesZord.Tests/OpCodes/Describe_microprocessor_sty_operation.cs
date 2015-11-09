@@ -4,7 +4,7 @@ using Ploeh.AutoFixture;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_store_y_register_into_memory_operation : nspec
+	public class Describe_microprocessor_sty_operation : nspec
 	{
 		private static readonly Fixture fixture = new Fixture();
 
@@ -28,8 +28,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadYRegister, fixture.Create<byte>(),
-					(byte)OpCode.ZeroPageStoreYRegister, randomOffset
+					(byte)OpCode.ImmediateLDY, fixture.Create<byte>(),
+					(byte)OpCode.ZeroPageSTY, randomOffset
 				});
 			};
 
@@ -46,9 +46,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, fixture.Create<byte>(),
-					(byte)OpCode.ImmediateLoadYRegister, fixture.Create<byte>(),
-					(byte)OpCode.ZeroPageXStoreYRegister, randomOffset
+					(byte)OpCode.ImmediateLDX, fixture.Create<byte>(),
+					(byte)OpCode.ImmediateLDY, fixture.Create<byte>(),
+					(byte)OpCode.ZeroPageXSTY, randomOffset
 				});
 			};
 
@@ -65,8 +65,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadYRegister, fixture.Create<byte>(),
-					(byte)OpCode.AbsoluteStoreYRegister, 0x00, 0x20
+					(byte)OpCode.ImmediateLDY, fixture.Create<byte>(),
+					(byte)OpCode.AbsoluteSTY, 0x00, 0x20
 				});
 			};
 

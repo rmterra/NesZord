@@ -4,7 +4,7 @@ using Ploeh.AutoFixture;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_subtract_with_carry_operation : nspec
+	public class Describe_microprocessor_sbc_operation : nspec
 	{
 		private static readonly Fixture fixture = new Fixture();
 
@@ -28,9 +28,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToX,
-					(byte)OpCode.ImmediateSubtractWithCarry, byteToSubtract
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.TAX,
+					(byte)OpCode.ImmediateSBC, byteToSubtract
 				});
 			};
 
@@ -69,9 +69,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToX,
-					(byte)OpCode.ZeroPageSubtractWithCarry, randomOffset
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.TAX,
+					(byte)OpCode.ZeroPageSBC, randomOffset
 				});
 			};
 
@@ -112,10 +112,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToY,
-					(byte)OpCode.ImmediateLoadXRegister, xRegisterValue,
-					(byte)OpCode.ZeroPageXSubtractWithCarry, randomOffset
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.TAY,
+					(byte)OpCode.ImmediateLDX, xRegisterValue,
+					(byte)OpCode.ZeroPageXSBC, randomOffset
 				});
 			};
 
@@ -156,9 +156,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToY,
-					(byte)OpCode.AbsoluteSubtractWithCarry, randomOffset, randomPage
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.TAY,
+					(byte)OpCode.AbsoluteSBC, randomOffset, randomPage
 				});
 			};
 
@@ -201,10 +201,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToY,
-					(byte)OpCode.ImmediateLoadXRegister, xRegisterValue,
-					(byte)OpCode.AbsoluteXSubtractWithCarry, randomOffset, randomPage
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.TAY,
+					(byte)OpCode.ImmediateLDX, xRegisterValue,
+					(byte)OpCode.AbsoluteXSBC, randomOffset, randomPage
 				});
 			};
 
@@ -247,10 +247,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToX,
-					(byte)OpCode.ImmediateLoadYRegister, yRegisterValue,
-					(byte)OpCode.AbsoluteYSubtractWithCarry, randomOffset, randomPage
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.TAX,
+					(byte)OpCode.ImmediateLDY, yRegisterValue,
+					(byte)OpCode.AbsoluteYSBC, randomOffset, randomPage
 				});
 			};
 
@@ -291,10 +291,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToY,
-					(byte)OpCode.ImmediateLoadXRegister, xRegisterValue,
-					(byte)OpCode.IndexedIndirectSubtractWithCarry, randomOffset
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.TAY,
+					(byte)OpCode.ImmediateLDX, xRegisterValue,
+					(byte)OpCode.IndexedIndirectSBC, randomOffset
 				});
 			};
 
@@ -335,10 +335,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadAccumulator, fixture.Create<byte>(),
-					(byte)OpCode.TransferFromAccumulatorToX,
-					(byte)OpCode.ImmediateLoadYRegister, yRegisterValue,
-					(byte)OpCode.IndirectIndexedSubtractWithCarry, randomOffset
+					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
+					(byte)OpCode.TAX,
+					(byte)OpCode.ImmediateLDY, yRegisterValue,
+					(byte)OpCode.IndirectIndexedSBC, randomOffset
 				});
 			};
 

@@ -4,7 +4,7 @@ using Ploeh.AutoFixture;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_load_y_register_operation : nspec
+	public class Describe_microprocessor_ldy_operation : nspec
 	{
 		private static readonly Fixture fixture = new Fixture();
 
@@ -26,7 +26,7 @@ namespace NesZord.Tests.OpCodes
 
 			act = () =>
 			{
-				var operation = (byte)OpCode.ImmediateLoadYRegister;
+				var operation = (byte)OpCode.ImmediateLDY;
 				processor.RunProgram(new byte[] { operation, expectedYRegisterValue });
 			};
 
@@ -48,7 +48,7 @@ namespace NesZord.Tests.OpCodes
 
 			act = () =>
 			{
-				var operation = (byte)OpCode.ZeroPageLoadYRegister;
+				var operation = (byte)OpCode.ZeroPageLDY;
 				processor.RunProgram(new byte[] { operation, randomOffset });
 			};
 
@@ -74,8 +74,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, xRegisterValue,
-					(byte)OpCode.ZeroPageXLoadYRegister, randomOffset
+					(byte)OpCode.ImmediateLDX, xRegisterValue,
+					(byte)OpCode.ZeroPageXLDY, randomOffset
 				});
 			};
 
@@ -99,7 +99,7 @@ namespace NesZord.Tests.OpCodes
 
 			act = () =>
 			{
-				var operation = (byte)OpCode.AbsoluteLoadYRegister;
+				var operation = (byte)OpCode.AbsoluteLDY;
 				processor.RunProgram(new byte[] { operation, randomOffset, randomPage });
 			};
 
@@ -127,8 +127,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, xRegisterValue,
-					(byte)OpCode.AbsoluteXLoadYRegister, randomOffset, randomPage
+					(byte)OpCode.ImmediateLDX, xRegisterValue,
+					(byte)OpCode.AbsoluteXLDY, randomOffset, randomPage
 				});
 			};
 

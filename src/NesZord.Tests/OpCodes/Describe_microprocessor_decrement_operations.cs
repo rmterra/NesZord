@@ -27,8 +27,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, (byte)(expectedXRegisterValue + 1),
-					(byte)OpCode.DecrementValueAtX
+					(byte)OpCode.ImmediateLDX, (byte)(expectedXRegisterValue + 1),
+					(byte)OpCode.DEX
 				});
 			};
 
@@ -45,8 +45,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadYRegister, (byte)(expectedYRegisterValue + 1),
-					(byte)OpCode.DecrementValueAtY
+					(byte)OpCode.ImmediateLDY, (byte)(expectedYRegisterValue + 1),
+					(byte)OpCode.DEY
 				});
 			};
 

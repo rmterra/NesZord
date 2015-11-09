@@ -6,98 +6,98 @@
 		{
 			switch (opCode)
 			{
-				case OpCode.AbsoluteAddWithCarry:
-				case OpCode.AbsoluteBitwiseAnd:
-				case OpCode.AbsoluteCompareYRegister:
-				case OpCode.AbsoluteCompareXRegister:
-				case OpCode.AbsoluteLoadAccumulator:
-				case OpCode.AbsoluteLoadXRegister:
-				case OpCode.AbsoluteLoadYRegister:
-				case OpCode.AbsoluteStoreYRegister:
-				case OpCode.AbsoluteStoreAccumulator:
-				case OpCode.AbsoluteStoreXRegister:
-				case OpCode.AbsoluteSubtractWithCarry:
+				case OpCode.AbsoluteADC:
+				case OpCode.AbsoluteAND:
+				case OpCode.AbsoluteCPY:
+				case OpCode.AbsoluteCPX:
+				case OpCode.AbsoluteLDA:
+				case OpCode.AbsoluteLDX:
+				case OpCode.AbsoluteLDY:
+				case OpCode.AbsoluteSTY:
+				case OpCode.AbsoluteSTA:
+				case OpCode.AbsoluteSTX:
+				case OpCode.AbsoluteSBC:
 					return AddressingMode.Absolute;
 
-				case OpCode.AbsoluteXAddWithCarry:
-				case OpCode.AbsoluteXBitwiseAnd:
-				case OpCode.AbsoluteXLoadAccumulator:
-				case OpCode.AbsoluteXLoadYRegister:
-				case OpCode.AbsoluteXStoreAccumulator:
-				case OpCode.AbsoluteXSubtractWithCarry:
+				case OpCode.AbsoluteXADC:
+				case OpCode.AbsoluteXAND:
+				case OpCode.AbsoluteXLDA:
+				case OpCode.AbsoluteXLDY:
+				case OpCode.AbsoluteXSTA:
+				case OpCode.AbsoluteXSBC:
 					return AddressingMode.AbsoluteX;
 
-				case OpCode.AbsoluteYAddWithCarry:
-				case OpCode.AbsoluteYBitwiseAnd:
-				case OpCode.AbsoluteYLoadAccumulator:
-				case OpCode.AbsoluteYLoadXRegister:
-				case OpCode.AbsoluteYStoreAccumulator:
-				case OpCode.AbsoluteYSubtractWithCarry:
+				case OpCode.AbsoluteYADC:
+				case OpCode.AbsoluteYAND:
+				case OpCode.AbsoluteYLDA:
+				case OpCode.AbsoluteYLDX:
+				case OpCode.AbsoluteYSTA:
+				case OpCode.AbsoluteYSBC:
 					return AddressingMode.AbsoluteY;
 
-				case OpCode.IndexedIndirectAddWithCarry:
-				case OpCode.IndexedIndirectBitwiseAnd:
-				case OpCode.IndexedIndirectLoadAccumulator:
-				case OpCode.IndexedIndirectStoreAccumulator:
-				case OpCode.IndexedIndirectSubtractWithCarry:
+				case OpCode.IndexedIndirectADC:
+				case OpCode.IndexedAND:
+				case OpCode.IndexedIndirectLDA:
+				case OpCode.IndexedIndirectSTA:
+				case OpCode.IndexedIndirectSBC:
 					return AddressingMode.IndexedIndirect;
 
-				case OpCode.IndirectIndexedAddWithCarry:
-				case OpCode.IndirectIndexedBitwiseAnd:
-				case OpCode.IndirectIndexedLoadAccumulator:
-				case OpCode.IndirectIndexedStoreAccumulator:
-				case OpCode.IndirectIndexedSubtractWithCarry:
+				case OpCode.IndirectIndexedADC:
+				case OpCode.IndirectIndexedAND:
+				case OpCode.IndirectIndexedLDA:
+				case OpCode.IndirectIndexedSTA:
+				case OpCode.IndirectIndexedSBC:
                     return AddressingMode.IndirectIndexed;
 
-				case OpCode.ImmediateAddWithCarry:
-				case OpCode.ImmediateBitwiseAnd:
-				case OpCode.ImmediateLoadYRegister:
-				case OpCode.ImmediateLoadXRegister:
-				case OpCode.ImmediateLoadAccumulator:
-				case OpCode.ImmediateCompareYRegister:
-				case OpCode.ImmediateCompareXRegister:
-				case OpCode.ImmediateSubtractWithCarry:
+				case OpCode.ImmediateADC:
+				case OpCode.ImmediateAND:
+				case OpCode.ImmediateLDY:
+				case OpCode.ImmediateLDX:
+				case OpCode.ImmediateLDA:
+				case OpCode.ImmediateCPY:
+				case OpCode.ImmediateCPX:
+				case OpCode.ImmediateSBC:
 					return AddressingMode.Immediate;
 
-				case OpCode.Break:
-				case OpCode.SetCarryFlag:
-				case OpCode.TransferFromXToAccumulator:
-				case OpCode.TransferFromAccumulatorToX:
-				case OpCode.DecrementValueAtX:
-				case OpCode.IncrementValueAtY:
-				case OpCode.IncrementValueAtX:
+				case OpCode.BRK:
+				case OpCode.SEC:
+				case OpCode.TXA:
+				case OpCode.TAX:
+				case OpCode.DEX:
+				case OpCode.INY:
+				case OpCode.INX:
 					return AddressingMode.Implied;
 
-				case OpCode.BranchIfCarryIsClear:
-				case OpCode.BranchIfCarryIsSet:
-				case OpCode.BranchIfNotEqual:
-				case OpCode.BranchIfEqual:
+				case OpCode.BCC:
+				case OpCode.BCS:
+				case OpCode.BNE:
+				case OpCode.BEQ:
 					return AddressingMode.Relative;
 
-				case OpCode.ZeroPageAddWithCarry:
-				case OpCode.ZeroPageBitwiseAnd:
-				case OpCode.ZeroPageCompareYRegister:
-				case OpCode.ZeroPageCompareXRegister:
-				case OpCode.ZeroPageLoadAccumulator:
-				case OpCode.ZeroPageLoadXRegister:
-				case OpCode.ZeroPageLoadYRegister:
-				case OpCode.ZeroPageStoreAccumulator:
-				case OpCode.ZeroPageStoreXRegister:
-				case OpCode.ZeroPageStoreYRegister:
-				case OpCode.ZeroPageSubtractWithCarry:
+				case OpCode.ZeroPageADC:
+				case OpCode.ZeroPageAND:
+				case OpCode.ZeroPageCPY:
+				case OpCode.ZeroPageCPX:
+				case OpCode.ZeroPageLDA:
+				case OpCode.ZeroPageLDX:
+				case OpCode.ZeroPageLDY:
+				case OpCode.ZeroPageSTA:
+				case OpCode.ZeroPageSTX:
+				case OpCode.ZeroPageSTY:
+				case OpCode.ZeroPageSBC:
 					return AddressingMode.ZeroPage;
 
-				case OpCode.ZeroPageXAddWithCarry:
-				case OpCode.ZeroPageXBitwiseAnd:
-				case OpCode.ZeroPageXLoadAccumulator:
-				case OpCode.ZeroPageXLoadYRegister:
-				case OpCode.ZeroPageXStoreAccumulator:
-				case OpCode.ZeroPageXStoreYRegister:
-				case OpCode.ZeroPageXSubtractWithCarry:
+				case OpCode.ZeroPageXADC:
+				case OpCode.ZeroPageXAND:
+				case OpCode.ZeroPageXLDA:
+				case OpCode.ZeroPageXLDY:
+				case OpCode.ZeroPageXSTA:
+				case OpCode.ZeroPageXSTY:
+				case OpCode.ZeroPageXSBC:
 					return AddressingMode.ZeroPageX;
 
-				case OpCode.ZeroPageYLoadXRegister:
-				case OpCode.ZeroPageYStoreXRegister:
+				case OpCode.ZeroPageYLDX:
+				case OpCode.ZeroPageYSTX:
 					return AddressingMode.ZeroPageY;
 
 				default:

@@ -19,14 +19,14 @@ namespace NesZord.Tests.OpCodes
 
 		public void When_increment_the_value_of_y_register()
 		{
-			act = () => { this.processor.RunProgram(new byte[] { (byte)OpCode.IncrementValueAtY }); };
+			act = () => { this.processor.RunProgram(new byte[] { (byte)OpCode.INY }); };
 
 			it["should increment 1 to y register"] = () => { processor.Y.should_be(0x01); };
 		}
 
 		public void When_increment_the_value_of_x_register()
 		{
-			act = () => { this.processor.RunProgram(new byte[] { (byte)OpCode.IncrementValueAtX }); };
+			act = () => { this.processor.RunProgram(new byte[] { (byte)OpCode.INX }); };
 
 			it["should increment 1 to x register"] = () => { processor.X.should_be(0x01); };
 		}

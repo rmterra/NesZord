@@ -13,7 +13,7 @@ namespace NesZord.Tests.OpCodes
 		{
 			act = () => 
 			{
-				this.processor.RunProgram(new byte[] { (byte) OpCode.SetCarryFlag });
+				this.processor.RunProgram(new byte[] { (byte) OpCode.SEC });
 			};
 
 			it["should turn on Carry flag"] = () => 

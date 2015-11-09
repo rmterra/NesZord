@@ -4,7 +4,7 @@ using Ploeh.AutoFixture;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_compare_x_register_with_memory_operation : nspec
+	public class Describe_microprocessor_cpy_operation : nspec
 	{
 		private static readonly Fixture fixture = new Fixture();
 
@@ -26,26 +26,26 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, 0x05,
-					(byte)OpCode.ImmediateCompareXRegister, byteToCompare
+					(byte)OpCode.ImmediateLDY, 0x05,
+					(byte)OpCode.ImmediateCPY, byteToCompare
 				});
 			};
 
-			context["given that x register value is lower than compared byte"] = () =>
+			context["given that y register value is lower than compared byte"] = () =>
 			{
 				before = () => { byteToCompare = 0xff; };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 
-			context["given that x register value is equal than compared byte"] = () =>
+			context["given that y register value is equal than compared byte"] = () =>
 			{
 				before = () => { byteToCompare = 0x05; };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
 				it["should turn on zero flag"] = () => { processor.Zero.should_be_true(); };
 			};
 
-			context["given that x register value is grater than compared byte"] = () =>
+			context["given that y register value is grater than compared byte"] = () =>
 			{
 				before = () => { byteToCompare = 0x00; };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
@@ -63,26 +63,26 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, 0x05,
-					(byte)OpCode.ZeroPageCompareXRegister, randomOffset
+					(byte)OpCode.ImmediateLDY, 0x05,
+					(byte)OpCode.ZeroPageCPY, randomOffset
 				});
 			};
 
-			context["given that x register value is lower than compared byte"] = () =>
+			context["given that y register value is lower than compared byte"] = () =>
 			{
 				before = () => { this.memory.WriteZeroPage(randomOffset, 0xff); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 
-			context["given that x register value is equal than compared byte"] = () =>
+			context["given that y register value is equal than compared byte"] = () =>
 			{
 				before = () => { this.memory.WriteZeroPage(randomOffset, 0x05); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
 				it["should turn on zero flag"] = () => { processor.Zero.should_be_true(); };
 			};
 
-			context["given that x register value is grater than compared byte"] = () =>
+			context["given that y register value is grater than compared byte"] = () =>
 			{
 				before = () => { this.memory.WriteZeroPage(randomOffset, 0x00); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
@@ -105,26 +105,26 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLoadXRegister, 0x05,
-					(byte)OpCode.AbsoluteCompareXRegister, randomOffset, randomPage
+					(byte)OpCode.ImmediateLDY, 0x05,
+					(byte)OpCode.AbsoluteCPY, randomOffset, randomPage
 				});
 			};
 
-			context["given that x register value is lower than compared byte"] = () =>
+			context["given that y register value is lower than compared byte"] = () =>
 			{
 				before = () => { this.memory.Write(randomOffset, randomPage, 0xff); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 
-			context["given that x register value is equal than compared byte"] = () =>
+			context["given that y register value is equal than compared byte"] = () =>
 			{
 				before = () => { this.memory.Write(randomOffset, randomPage, 0x05); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
 				it["should turn on zero flag"] = () => { processor.Zero.should_be_true(); };
 			};
 
-			context["given that x register value is grater than compared byte"] = () =>
+			context["given that y register value is grater than compared byte"] = () =>
 			{
 				before = () => { this.memory.Write(randomOffset, randomPage, 0x00); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
