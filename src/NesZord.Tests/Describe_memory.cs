@@ -26,8 +26,8 @@ namespace NesZord.Tests
 
 			for (int i = 0; i < randomByteCount - 1; i++)
 			{
-				String spec = String.Format("should memory at at 0x06 0x0{0:x} be 0x{1:x}", i, bytes.ElementAt(i));
-				it[spec] = () => { this.memory.Read(0x06, (byte)i).should_be(bytes.ElementAt(i)); };
+				var spec = String.Format("should memory at at 0x06 0x0{0:x} be 0x{1:x}", i, bytes.ElementAt(i));
+				it[spec] = () => { this.memory.Read((byte)i, 0x06).should_be(bytes.ElementAt(i)); };
 			}
 		}
 	}

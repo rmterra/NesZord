@@ -33,7 +33,7 @@ namespace NesZord.Core
 
 		public void WriteZeroPage(byte offset, byte value)
 		{
-			this.Write(new MemoryLocation(offset, 0x00), value);
+			this.Write(new MemoryLocation(offset, Memory.ZERO_PAGE), value);
 		}
 
 		public void Write(byte page, byte offset, byte value)
@@ -46,7 +46,7 @@ namespace NesZord.Core
 			this.memory[location.Page][location.Offset] = value;
 		}
 
-		public byte Read(byte page, byte offset)
+		public byte Read(byte offset, byte page)
 		{
 			return this.Read(new MemoryLocation(offset, page));
 		}

@@ -33,7 +33,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should store the y register value at memory"] = () => { this.memory.Read(0x00, randomOffset).should_be(processor.Y); };
+			it["should store the y register value at memory"] = () => { this.memory.Read(randomOffset, Memory.ZERO_PAGE).should_be(processor.Y); };
 		}
 
 		public void When_use_zero_page_x_mode()
@@ -55,7 +55,7 @@ namespace NesZord.Tests.OpCodes
 			it["should store the y register value at memory"] = () =>
 			{
 				var offset = (byte)(randomOffset + processor.X);
-				this.memory.Read(0x00, offset).should_be(processor.Y);
+				this.memory.Read(offset, Memory.ZERO_PAGE).should_be(processor.Y);
 			};
 		}
 
@@ -72,7 +72,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the y register value at memory"] = () =>
 			{
-				this.memory.Read(0x20, 0x00).should_be(processor.Y);
+				this.memory.Read(0x00, 0x20).should_be(processor.Y);
 			};
 		}
 	}

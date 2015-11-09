@@ -71,6 +71,7 @@
     <Compile Include="Describe_memory.cs" />
     <Compile Include="MemoryMock.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_add_with_carry_operation.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_and_logical_operator.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_branch_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_decrement_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_increment_operations.cs" />

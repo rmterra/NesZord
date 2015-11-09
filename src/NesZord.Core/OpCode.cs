@@ -4,7 +4,23 @@
 	{
 		Break = 0x00,
 
+		IndexedIndirectBitwiseAnd = 0x21,
+
+		ZeroPageBitwiseAnd = 0x25,
+
+		ImmediateBitwiseAnd = 0x29,
+
+		AbsoluteBitwiseAnd = 0x2d,
+
+		IndirectIndexedBitwiseAnd = 0x31,
+
+		ZeroPageXBitwiseAnd = 0x35,
+
 		SetCarryFlag = 0x38,
+
+		AbsoluteYBitwiseAnd = 0x39,
+
+		AbsoluteXBitwiseAnd = 0x3d,
 
 		IndexedIndirectAddWithCarry = 0x61,
 

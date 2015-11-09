@@ -7,6 +7,7 @@
 			switch (opCode)
 			{
 				case OpCode.AbsoluteAddWithCarry:
+				case OpCode.AbsoluteBitwiseAnd:
 				case OpCode.AbsoluteCompareYRegister:
 				case OpCode.AbsoluteCompareXRegister:
 				case OpCode.AbsoluteLoadAccumulator:
@@ -19,6 +20,7 @@
 					return AddressingMode.Absolute;
 
 				case OpCode.AbsoluteXAddWithCarry:
+				case OpCode.AbsoluteXBitwiseAnd:
 				case OpCode.AbsoluteXLoadAccumulator:
 				case OpCode.AbsoluteXLoadYRegister:
 				case OpCode.AbsoluteXStoreAccumulator:
@@ -26,6 +28,7 @@
 					return AddressingMode.AbsoluteX;
 
 				case OpCode.AbsoluteYAddWithCarry:
+				case OpCode.AbsoluteYBitwiseAnd:
 				case OpCode.AbsoluteYLoadAccumulator:
 				case OpCode.AbsoluteYLoadXRegister:
 				case OpCode.AbsoluteYStoreAccumulator:
@@ -33,18 +36,21 @@
 					return AddressingMode.AbsoluteY;
 
 				case OpCode.IndexedIndirectAddWithCarry:
+				case OpCode.IndexedIndirectBitwiseAnd:
 				case OpCode.IndexedIndirectLoadAccumulator:
 				case OpCode.IndexedIndirectStoreAccumulator:
 				case OpCode.IndexedIndirectSubtractWithCarry:
 					return AddressingMode.IndexedIndirect;
 
 				case OpCode.IndirectIndexedAddWithCarry:
+				case OpCode.IndirectIndexedBitwiseAnd:
 				case OpCode.IndirectIndexedLoadAccumulator:
 				case OpCode.IndirectIndexedStoreAccumulator:
 				case OpCode.IndirectIndexedSubtractWithCarry:
                     return AddressingMode.IndirectIndexed;
 
 				case OpCode.ImmediateAddWithCarry:
+				case OpCode.ImmediateBitwiseAnd:
 				case OpCode.ImmediateLoadYRegister:
 				case OpCode.ImmediateLoadXRegister:
 				case OpCode.ImmediateLoadAccumulator:
@@ -69,6 +75,7 @@
 					return AddressingMode.Relative;
 
 				case OpCode.ZeroPageAddWithCarry:
+				case OpCode.ZeroPageBitwiseAnd:
 				case OpCode.ZeroPageCompareYRegister:
 				case OpCode.ZeroPageCompareXRegister:
 				case OpCode.ZeroPageLoadAccumulator:
@@ -81,6 +88,7 @@
 					return AddressingMode.ZeroPage;
 
 				case OpCode.ZeroPageXAddWithCarry:
+				case OpCode.ZeroPageXBitwiseAnd:
 				case OpCode.ZeroPageXLoadAccumulator:
 				case OpCode.ZeroPageXLoadYRegister:
 				case OpCode.ZeroPageXStoreAccumulator:

@@ -43,6 +43,7 @@
     <Compile Include="AddressingMode.cs" />
     <Compile Include="AddressingModeLookup.cs" />
     <Compile Include="Extensions\ArrayExtension.cs" />
+    <Compile Include="Extensions\ByteExtension.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="MemoryLocation.cs" />
     <Compile Include="Microprocessor.cs" />

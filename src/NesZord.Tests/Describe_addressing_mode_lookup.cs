@@ -8,6 +8,7 @@ namespace NesZord.Tests
 		public void When_lookup()
 		{
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteAddWithCarry, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteBitwiseAnd, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteCompareYRegister, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteCompareXRegister, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteLoadAccumulator, AddressingMode.Absolute);
@@ -19,28 +20,33 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteSubtractWithCarry, AddressingMode.Absolute);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXAddWithCarry, AddressingMode.AbsoluteX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXBitwiseAnd, AddressingMode.AbsoluteX);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXLoadAccumulator, AddressingMode.AbsoluteX);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXLoadYRegister, AddressingMode.AbsoluteX);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXStoreAccumulator, AddressingMode.AbsoluteX);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteXSubtractWithCarry, AddressingMode.AbsoluteX);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYAddWithCarry, AddressingMode.AbsoluteY);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYBitwiseAnd, AddressingMode.AbsoluteY);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYLoadAccumulator, AddressingMode.AbsoluteY);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYLoadXRegister, AddressingMode.AbsoluteY);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYStoreAccumulator, AddressingMode.AbsoluteY);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AbsoluteYSubtractWithCarry, AddressingMode.AbsoluteY);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectAddWithCarry, AddressingMode.IndexedIndirect);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectBitwiseAnd, AddressingMode.IndexedIndirect);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectLoadAccumulator, AddressingMode.IndexedIndirect);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectStoreAccumulator, AddressingMode.IndexedIndirect);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndexedIndirectSubtractWithCarry, AddressingMode.IndexedIndirect);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedAddWithCarry, AddressingMode.IndirectIndexed);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedBitwiseAnd, AddressingMode.IndirectIndexed);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedLoadAccumulator, AddressingMode.IndirectIndexed);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedStoreAccumulator, AddressingMode.IndirectIndexed);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.IndirectIndexedSubtractWithCarry, AddressingMode.IndirectIndexed);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateAddWithCarry, AddressingMode.Immediate);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateBitwiseAnd, AddressingMode.Immediate);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLoadYRegister, AddressingMode.Immediate);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLoadXRegister, AddressingMode.Immediate);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ImmediateLoadAccumulator, AddressingMode.Immediate);
@@ -62,6 +68,7 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BranchIfEqual, AddressingMode.Relative);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageAddWithCarry, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageBitwiseAnd, AddressingMode.ZeroPage);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageLoadAccumulator, AddressingMode.ZeroPage);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageLoadXRegister, AddressingMode.ZeroPage);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageLoadYRegister, AddressingMode.ZeroPage);
@@ -73,6 +80,7 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageSubtractWithCarry, AddressingMode.ZeroPage);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXAddWithCarry, AddressingMode.ZeroPageX);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXBitwiseAnd, AddressingMode.ZeroPageX);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXLoadAccumulator, AddressingMode.ZeroPageX);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXLoadYRegister, AddressingMode.ZeroPageX);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ZeroPageXStoreAccumulator, AddressingMode.ZeroPageX);
