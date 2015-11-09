@@ -94,7 +94,7 @@ namespace NesZord.Tests.OpCodes
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 
-				this.memory.Write(randomPage, randomOffset, expectedAccumulatorValue);
+				this.memory.Write(randomOffset, randomPage, expectedAccumulatorValue);
 			};
 
 			act = () =>
@@ -120,7 +120,7 @@ namespace NesZord.Tests.OpCodes
 				randomOffset = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
 
-				this.memory.Write(randomPage, (byte)(randomOffset + xRegisterValue), expectedAccumulatorValue);
+				this.memory.Write((byte)(randomOffset + xRegisterValue), randomPage, expectedAccumulatorValue);
 			};
 
 			act = () =>
@@ -149,7 +149,7 @@ namespace NesZord.Tests.OpCodes
 				randomOffset = fixture.Create<byte>();
 				yRegisterValue = fixture.Create<byte>();
 
-				this.memory.Write(randomPage, (byte)(randomOffset + yRegisterValue), expectedAccumulatorValue);
+				this.memory.Write((byte)(randomOffset + yRegisterValue), randomPage, expectedAccumulatorValue);
 			};
 
 			act = () =>

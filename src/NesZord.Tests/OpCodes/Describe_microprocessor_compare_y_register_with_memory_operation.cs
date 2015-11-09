@@ -112,21 +112,21 @@ namespace NesZord.Tests.OpCodes
 
 			context["given that y register value is lower than compared byte"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, randomOffset, 0xff); };
+				before = () => { this.memory.Write(randomOffset, randomPage, 0xff); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 
 			context["given that y register value is equal than compared byte"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, randomOffset, 0x05); };
+				before = () => { this.memory.Write(randomOffset, randomPage, 0x05); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
 				it["should turn on zero flag"] = () => { processor.Zero.should_be_true(); };
 			};
 
 			context["given that y register value is grater than compared byte"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, randomOffset, 0x00); };
+				before = () => { this.memory.Write(randomOffset, randomPage, 0x00); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
 				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
 			};

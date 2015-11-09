@@ -154,7 +154,7 @@ namespace NesZord.Tests.OpCodes
 				byteToAdd = fixture.Create<byte>();
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
-				this.memory.Write(randomPage, randomOffset, byteToAdd);
+				this.memory.Write(randomOffset, randomPage, byteToAdd);
 			};
 
 			act = () =>
@@ -175,13 +175,13 @@ namespace NesZord.Tests.OpCodes
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, randomOffset, 0xff); };
+				before = () => { this.memory.Write(randomOffset, randomPage, 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, randomOffset, 0x00); };
+				before = () => { this.memory.Write(randomOffset, randomPage, 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}
@@ -199,7 +199,7 @@ namespace NesZord.Tests.OpCodes
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
-				this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), byteToAdd);
+				this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, byteToAdd);
 			};
 
 			act = () =>
@@ -221,13 +221,13 @@ namespace NesZord.Tests.OpCodes
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), 0xff); };
+				before = () => { this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), 0x00); };
+				before = () => { this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}
@@ -246,7 +246,7 @@ namespace NesZord.Tests.OpCodes
 				randomOffset = fixture.Create<byte>();
 				yRegisterValue = fixture.Create<byte>();
 
-				this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), byteToAdd);
+				this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, byteToAdd);
 			};
 
 			act = () =>
@@ -268,13 +268,13 @@ namespace NesZord.Tests.OpCodes
 
 			context["given a byte greater than #ff"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), 0xff); };
+				before = () => { this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, 0xff); };
 				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
 			};
 
 			context["given a byte lower than #ff"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), 0x00); };
+				before = () => { this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, 0x00); };
 				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
 			};
 		}

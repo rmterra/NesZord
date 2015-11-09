@@ -149,7 +149,7 @@ namespace NesZord.Tests.OpCodes
 				byteToSubtract = fixture.Create<byte>();
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
-				this.memory.Write(randomPage, randomOffset, byteToSubtract);
+				this.memory.Write(randomOffset, randomPage, byteToSubtract);
 			};
 
 			act = () =>
@@ -170,13 +170,13 @@ namespace NesZord.Tests.OpCodes
 
 			context["given that the subtracted byte is greater than Accumulator value"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, randomOffset, 0xff); };
+				before = () => { this.memory.Write(randomOffset, randomPage, 0xff); };
 				it["should keep carry flag clear"] = () => { processor.Carry.should_be_false(); };
 			};
 
 			context["given that the subtracted byte is lower than Accumulator value"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, randomOffset, 0x00); };
+				before = () => { this.memory.Write(randomOffset, randomPage, 0x00); };
 				it["should turn carry flag on"] = () => { processor.Carry.should_be_true(); };
 			};
 		}
@@ -194,7 +194,7 @@ namespace NesZord.Tests.OpCodes
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
-				this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), byteToSubtract);
+				this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, byteToSubtract);
 			};
 
 			act = () =>
@@ -216,13 +216,13 @@ namespace NesZord.Tests.OpCodes
 
 			context["given that the subtracted byte is greater than Accumulator value"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), 0xff); };
+				before = () => { this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, 0xff); };
 				it["should keep carry flag clear"] = () => { processor.Carry.should_be_false(); };
 			};
 
 			context["given that the subtracted byte is lower than Accumulator value"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, (byte)(xRegisterValue + randomOffset), 0x00); };
+				before = () => { this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, 0x00); };
 				it["should turn carry flag on"] = () => { processor.Carry.should_be_true(); };
 			};
 		}
@@ -240,7 +240,7 @@ namespace NesZord.Tests.OpCodes
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 				yRegisterValue = fixture.Create<byte>();
-				this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), byteToSubtract);
+				this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, byteToSubtract);
 			};
 
 			act = () =>
@@ -262,13 +262,13 @@ namespace NesZord.Tests.OpCodes
 
 			context["given that the subtracted byte is greater than Accumulator value"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), 0xff); };
+				before = () => { this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, 0xff); };
 				it["should keep carry flag clear"] = () => { processor.Carry.should_be_false(); };
 			};
 
 			context["given that the subtracted byte is lower than Accumulator value"] = () =>
 			{
-				before = () => { this.memory.Write(randomPage, (byte)(yRegisterValue + randomOffset), 0x00); };
+				before = () => { this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, 0x00); };
 				it["should turn carry flag on"] = () => { processor.Carry.should_be_true(); };
 			};
 		}

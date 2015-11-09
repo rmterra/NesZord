@@ -19,8 +19,8 @@ namespace NesZord.Tests
 			var indirectOffset = fixture.Create<byte>();
 
 			var computedOffset = (byte)(xRegisterValue + offset);
-			this.Write(Memory.ZERO_PAGE, computedOffset, indirectPage);
-			this.Write(Memory.ZERO_PAGE, (byte)(computedOffset + 1), indirectOffset);
+			this.Write(computedOffset, Memory.ZERO_PAGE, indirectPage);
+			this.Write((byte)(computedOffset + 1), Memory.ZERO_PAGE, indirectOffset);
 
 			return new MemoryLocation(indirectOffset, indirectPage);
 		}
@@ -36,8 +36,8 @@ namespace NesZord.Tests
 			var indirectPage = fixture.Create<byte>();
 			var indirectOffset = fixture.Create<byte>();
 
-			this.Write(Memory.ZERO_PAGE, offset, indirectPage);
-			this.Write(Memory.ZERO_PAGE, (byte)(offset + 1), indirectOffset);
+			this.Write(offset, Memory.ZERO_PAGE, indirectPage);
+			this.Write((byte)(offset + 1), Memory.ZERO_PAGE, indirectOffset);
 
 			return new MemoryLocation(indirectOffset, (byte)(indirectPage + yRegisterValue));
 		}
