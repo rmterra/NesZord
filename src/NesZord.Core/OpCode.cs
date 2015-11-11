@@ -12,6 +12,8 @@
 
 		ORA_Immediate = 0x09,
 
+		BPL_Relative = 0x10,
+
 		ASL_Accumulator = 0x0a,
 
 		ORA_Absolute = 0x0d,
@@ -43,6 +45,8 @@
 		BIT_Absolute = 0x2c,
 
 		AND_Absolute = 0x2d,
+
+		BMI_Relative = 0x30,
 
 		AND_IndirectIndexed = 0x31,
 

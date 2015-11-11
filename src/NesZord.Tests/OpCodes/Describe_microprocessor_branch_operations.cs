@@ -117,5 +117,46 @@ namespace NesZord.Tests.OpCodes
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_false(); };
 			};
 		}
+
+		public void When_branch_if_negative_is_clear()
+		{
+			context["given that executed program must branch while Negative is clear"] = () =>
+			{
+				act = () =>
+				{
+					this.processor.RunProgram(new byte[]
+					{
+						(byte) OpCode.LDX_Immediate, 0x03,
+						(byte) OpCode.DEX_Implied,
+						(byte) OpCode.BPL_Relative, 0xfd,
+						(byte) OpCode.BRK_Implied
+					});
+				};
+
+				it["should X register value be equal 0xff"] = () => { this.processor.X.should_be(0xff); };
+				it["should Negative flag turn on"] = () => { this.processor.Negative.should_be_true(); };
+			};
+		}
+
+		public void When_branch_if_negative_is_set()
+		{
+			context["given that executed program must branch while Negative is set"] = () =>
+			{
+				act = () =>
+				{
+					this.processor.RunProgram(new byte[]
+					{
+						(byte) OpCode.LDX_Immediate, 0xfc,
+						(byte) OpCode.INX_Implied,
+						(byte) OpCode.BMI_Relative, 0xfd,
+						(byte) OpCode.BRK_Implied
+					});
+				};
+
+				it["should X register value be equal 0x00"] = () => { this.processor.X.should_be(0x00); };
+				it["should Negative flag turn off"] = () => { this.processor.Negative.should_be_false(); };
+				it["should Zero flag turn on"] = () => { this.processor.Zero.should_be_true(); };
+			};
+		}
 	}
 }
