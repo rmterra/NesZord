@@ -36,12 +36,18 @@ namespace NesZord.Core
 				{ OpCode.BCS_Relative, this.BranchIfCarryIsSet },
 				{ OpCode.BEQ_Relative, this.BranchIfEqual },
 				{ OpCode.BNE_Relative, this.BranchIfNotEqual },
+				{ OpCode.CLC_Implied, this.ClearCarryFlag },
+				{ OpCode.CLD_Implied, this.ClearDecimalFlag },
+				{ OpCode.CLI_Implied, this.ClearInterruptFlag },
+				{ OpCode.CLV_Implied, this.ClearOverflowFlag },
 				{ OpCode.DEX_Implied, this.DecrementValueAtX },
 				{ OpCode.DEY_Implied, this.DecrementValueAtY },
 				{ OpCode.INX_Implied, this.IncrementValueAtX },
 				{ OpCode.INY_Implied, this.IncrementValueAtY },
 				{ OpCode.NOP_Implied, () => { } }, /*yes, this opcode do nothing =x*/
 				{ OpCode.SEC_Implied, this.SetCarryFlag },
+				{ OpCode.SED_Implied, this.SetDecimalFlag },
+				{ OpCode.SEI_Implied, this.SetInterruptFlag },
 				{ OpCode.TAX_Implied, this.TransferFromAccumulatorToX },
 				{ OpCode.TAY_Implied, this.TransferFromAccumulatorToY },
 				{ OpCode.TXA_Implied, this.TransferFromXToAccumulator },
@@ -146,11 +152,15 @@ namespace NesZord.Core
 
 		public bool Carry { get; private set; }
 
+		public bool Decimal { get; private set; }
+
+		public bool Interrupt { get; private set; }
+
 		public bool Negative { get; private set; }
 
-		public bool Zero { get; private set; }
-
 		public bool Overflow { get; private set; }
+
+		public bool Zero { get; private set; }
 
 		public byte X { get; private set; }
 
@@ -381,6 +391,26 @@ namespace NesZord.Core
 			this.Zero = this.Accumulator == 0;
 		}
 
+		private void ClearCarryFlag()
+		{
+			this.Carry = false;
+		}
+
+		private void ClearDecimalFlag()
+		{
+			this.Decimal = false;
+		}
+
+		private void ClearInterruptFlag()
+		{
+			this.Interrupt = false;
+		}
+
+		private void ClearOverflowFlag()
+		{
+			this.Overflow = false;
+		}
+
 		private void CompareXRegister(MemoryLocation location)
 		{
 			this.CompareXRegister(this.memory.Read(location));
@@ -451,6 +481,16 @@ namespace NesZord.Core
 		private void SetCarryFlag()
 		{
 			this.Carry = true;
+		}
+
+		private void SetDecimalFlag()
+		{
+			this.Decimal = true;
+		}
+
+		private void SetInterruptFlag()
+		{
+			this.Interrupt = true;
 		}
 
 		private void SubtractWithCarry(MemoryLocation location)

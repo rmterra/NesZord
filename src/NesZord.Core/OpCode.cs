@@ -24,6 +24,8 @@
 
 		ASL_ZeroPageX = 0x16,
 
+		CLC_Implied = 0x18,
+
 		ORA_AbsoluteY = 0x19,
 
 		ORA_AbsoluteX = 0x1d,
@@ -72,6 +74,8 @@
 
 		LSR_ZeroPageX = 0x56,
 
+		CLI_Implied = 0x58,
+
 		EOR_AbsoluteY = 0x59,
 
 		EOR_AbsoluteX = 0x5d,
@@ -89,6 +93,8 @@
 		ADC_IndirectIndexed = 0x71,
 
 		ADC_ZeroPageX = 0x75,
+
+		SEI_Implied = 0x78,
 
 		ADC_AbsoluteY = 0x79,
 
@@ -162,6 +168,8 @@
 
 		LDX_ZeroPageY = 0xb6,
 
+		CLV_Implied = 0xb8,
+
 		LDA_AbsoluteY = 0xb9,
 
 		LDY_AbsoluteX = 0xbc,
@@ -181,6 +189,8 @@
 		CPY_Absolute = 0xcc,
 
 		BNE_Relative = 0xd0,
+
+		CLD_Implied = 0xd8,
 
 		CPX_Immediate = 0xe0,
 
@@ -205,6 +215,8 @@
 		SBC_IndirectIndexed = 0xf1,
 
 		SBC_ZeroPageX = 0xf5,
+
+		SED_Implied = 0xf8,
 
 		SBC_AbsoluteY = 0xf9,
 
