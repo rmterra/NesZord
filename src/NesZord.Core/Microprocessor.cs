@@ -52,6 +52,7 @@ namespace NesZord.Core
 				{ OpCode.LDY_Immediate, this.LoadYRegister },
 				{ OpCode.LDX_Immediate, this.LoadXRegister },
 				{ OpCode.LDA_Immediate, this.LoadAccumulator },
+				{ OpCode.ORA_Immediate, this.BitwiseOrOperation },
 				{ OpCode.SBC_Immediate, this.SubtractWithCarry }
 			};
 
@@ -65,6 +66,7 @@ namespace NesZord.Core
 				{ OpCode.LDA_Absolute, this.LoadAccumulator },
 				{ OpCode.LDX_Absolute, this.LoadXRegister },
 				{ OpCode.LDY_Absolute, this.LoadYRegister },
+				{ OpCode.ORA_Absolute, this.BitwiseOrOperation },
 				{ OpCode.STA_Absolute, this.StoreAccumulator },
 				{ OpCode.SBC_Absolute, this.SubtractWithCarry },
 				{ OpCode.ADC_AbsoluteX, this.AddWithCarry },
@@ -72,12 +74,14 @@ namespace NesZord.Core
 				{ OpCode.ASL_AbsoluteX, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.LDA_AbsoluteX, this.LoadAccumulator },
 				{ OpCode.LDY_AbsoluteX, this.LoadYRegister },
+				{ OpCode.ORA_AbsoluteX, this.BitwiseOrOperation },
 				{ OpCode.STA_AbsoluteX, this.StoreAccumulator },
 				{ OpCode.SBC_AbsoluteX, this.SubtractWithCarry },
 				{ OpCode.ADC_AbsoluteY, this.AddWithCarry },
 				{ OpCode.AND_AbsoluteY, this.BitwiseAndOperation },
 				{ OpCode.LDA_AbsoluteY, this.LoadAccumulator },
 				{ OpCode.LDX_AbsoluteY, this.LoadXRegister },
+				{ OpCode.ORA_AbsoluteY, this.BitwiseOrOperation },
 				{ OpCode.STA_AbsoluteY, this.StoreAccumulator },
 				{ OpCode.SBC_AbsoluteY, this.SubtractWithCarry },
 				{ OpCode.STX_Absolute, this.StoreXRegister },
@@ -85,11 +89,13 @@ namespace NesZord.Core
 				{ OpCode.ADC_IndexedIndirect, this.AddWithCarry },
 				{ OpCode.AND_IndexedIndirect, this.BitwiseAndOperation },
 				{ OpCode.LDA_IndexedIndirect, this.LoadAccumulator },
+				{ OpCode.ORA_IndexedIndirect, this.BitwiseOrOperation },
 				{ OpCode.STA_IndexedIndirect, this.StoreAccumulator },
 				{ OpCode.SBC_IndexedIndirect, this.SubtractWithCarry },
 				{ OpCode.ADC_IndirectIndexed, this.AddWithCarry },
 				{ OpCode.AND_IndirectIndexed, this.BitwiseAndOperation },
 				{ OpCode.LDA_IndirectIndexed, this.LoadAccumulator },
+				{ OpCode.ORA_IndirectIndexed, this.BitwiseOrOperation },
 				{ OpCode.STA_IndirectIndexed, this.StoreAccumulator },
 				{ OpCode.SBC_IndirectIndexed, this.SubtractWithCarry },
 				{ OpCode.ADC_ZeroPage, this.AddWithCarry },
@@ -100,6 +106,7 @@ namespace NesZord.Core
 				{ OpCode.LDA_ZeroPage, this.LoadAccumulator },
 				{ OpCode.LDX_ZeroPage, this.LoadXRegister },
 				{ OpCode.LDY_ZeroPage, this.LoadYRegister },
+				{ OpCode.ORA_ZeroPage, this.BitwiseOrOperation },
 				{ OpCode.STA_ZeroPage, this.StoreAccumulator },
 				{ OpCode.STX_ZeroPage, this.StoreXRegister },
 				{ OpCode.STY_ZeroPage, this.StoreYRegister },
@@ -109,6 +116,7 @@ namespace NesZord.Core
 				{ OpCode.ASL_ZeroPageX, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.LDA_ZeroPageX, this.LoadAccumulator },
 				{ OpCode.LDY_ZeroPageX, this.LoadYRegister },
+				{ OpCode.ORA_ZeroPageX, this.BitwiseOrOperation },
 				{ OpCode.STA_ZeroPageX, this.StoreAccumulator },
 				{ OpCode.STY_ZeroPageX, this.StoreYRegister },
 				{ OpCode.SBC_ZeroPageX, this.SubtractWithCarry },
@@ -315,6 +323,18 @@ namespace NesZord.Core
 		private void BitwiseAndOperation(byte byteToCompare)
 		{
 			this.Accumulator = (byte)(this.Accumulator & byteToCompare);
+			this.Negative = this.Accumulator.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+			this.Zero = this.Accumulator == 0;
+		}
+
+		private void BitwiseOrOperation(MemoryLocation location)
+		{
+			this.BitwiseOrOperation(this.memory.Read(location));
+		}
+
+		private void BitwiseOrOperation(byte byteToCompare)
+		{
+			this.Accumulator = (byte)(this.Accumulator | byteToCompare);
 			this.Negative = this.Accumulator.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
 			this.Zero = this.Accumulator == 0;
 		}

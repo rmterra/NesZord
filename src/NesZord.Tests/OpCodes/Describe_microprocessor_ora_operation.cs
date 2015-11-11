@@ -5,7 +5,7 @@ using NesZord.Core.Extensions;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_and_operation : nspec
+	public class Describe_microprocessor_ora_operation : nspec
 	{
 		private static readonly Fixture fixture = new Fixture();
 
@@ -31,13 +31,13 @@ namespace NesZord.Tests.OpCodes
 				{
 					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
 					(byte) OpCode.TAX_Implied,
-					(byte) OpCode.AND_Immediate, byteToCompare
+					(byte) OpCode.ORA_Immediate, byteToCompare
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
+			it["should set bitwise 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X & byteToCompare);
+				this.processor.Accumulator.should_be(this.processor.X | byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
@@ -69,13 +69,13 @@ namespace NesZord.Tests.OpCodes
 				{
 					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
 					(byte) OpCode.TAX_Implied,
-					(byte) OpCode.AND_ZeroPage, randomOffset
+					(byte) OpCode.ORA_ZeroPage, randomOffset
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
+			it["should set bitwise 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X & byteToCompare);
+				this.processor.Accumulator.should_be(this.processor.X | byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
@@ -110,13 +110,13 @@ namespace NesZord.Tests.OpCodes
 					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
 					(byte) OpCode.TAY_Implied,
 					(byte) OpCode.LDX_Immediate, xRegisterValue,
-					(byte) OpCode.AND_ZeroPageX, randomOffset
+					(byte) OpCode.ORA_ZeroPageX, randomOffset
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
+			it["should set bitwise 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.Y & byteToCompare);
+				this.processor.Accumulator.should_be(this.processor.Y | byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
@@ -150,13 +150,13 @@ namespace NesZord.Tests.OpCodes
 				{
 					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
 					(byte) OpCode.TAX_Implied,
-					(byte) OpCode.AND_Absolute, randomOffset, randomPage
+					(byte) OpCode.ORA_Absolute, randomOffset, randomPage
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
+			it["should set bitwise 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X & byteToCompare);
+				this.processor.Accumulator.should_be(this.processor.X | byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
@@ -193,13 +193,13 @@ namespace NesZord.Tests.OpCodes
 					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
 					(byte) OpCode.TAY_Implied,
 					(byte) OpCode.LDX_Immediate, xRegisterValue,
-					(byte) OpCode.AND_AbsoluteX, randomOffset, randomPage
+					(byte) OpCode.ORA_AbsoluteX, randomOffset, randomPage
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
+			it["should set bitwise 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.Y & byteToCompare);
+				this.processor.Accumulator.should_be(this.processor.Y | byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
@@ -236,13 +236,13 @@ namespace NesZord.Tests.OpCodes
 					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
 					(byte) OpCode.TAX_Implied,
 					(byte) OpCode.LDY_Immediate, yRegisterValue,
-					(byte) OpCode.AND_AbsoluteY, randomOffset, randomPage
+					(byte) OpCode.ORA_AbsoluteY, randomOffset, randomPage
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
+			it["should set bitwise 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X & byteToCompare);
+				this.processor.Accumulator.should_be(this.processor.X | byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
@@ -277,13 +277,13 @@ namespace NesZord.Tests.OpCodes
 					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
 					(byte) OpCode.TAY_Implied,
 					(byte) OpCode.LDX_Immediate, xRegisterValue,
-					(byte) OpCode.AND_IndexedIndirect, randomOffset
+					(byte) OpCode.ORA_IndexedIndirect, randomOffset
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
+			it["should set bitwise 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.Y & byteToCompare);
+				this.processor.Accumulator.should_be(this.processor.Y | byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
@@ -318,13 +318,13 @@ namespace NesZord.Tests.OpCodes
 					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
 					(byte) OpCode.TAX_Implied,
 					(byte) OpCode.LDY_Immediate, yRegisterValue,
-					(byte) OpCode.AND_IndirectIndexed, randomOffset
+					(byte) OpCode.ORA_IndirectIndexed, randomOffset
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
+			it["should set bitwise 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X & byteToCompare);
+				this.processor.Accumulator.should_be(this.processor.X | byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>

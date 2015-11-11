@@ -14,6 +14,7 @@
 				case OpCode.LDA_Absolute:
 				case OpCode.LDX_Absolute:
 				case OpCode.LDY_Absolute:
+				case OpCode.ORA_Absolute:
 				case OpCode.STY_Absolute:
 				case OpCode.STA_Absolute:
 				case OpCode.STX_Absolute:
@@ -25,6 +26,7 @@
 				case OpCode.ASL_AbsoluteX:
 				case OpCode.LDA_AbsoluteX:
 				case OpCode.LDY_AbsoluteX:
+				case OpCode.ORA_AbsoluteX:
 				case OpCode.STA_AbsoluteX:
 				case OpCode.SBC_AbsoluteX:
 					return AddressingMode.AbsoluteX;
@@ -33,7 +35,8 @@
 				case OpCode.AND_AbsoluteY:
 				case OpCode.LDA_AbsoluteY:
 				case OpCode.LDX_AbsoluteY:
-				case OpCode.STA_AbsoluteY:
+                case OpCode.ORA_AbsoluteY:
+                case OpCode.STA_AbsoluteY:
 				case OpCode.SBC_AbsoluteY:
 					return AddressingMode.AbsoluteY;
 
@@ -43,6 +46,7 @@
 				case OpCode.ADC_IndexedIndirect:
 				case OpCode.AND_IndexedIndirect:
 				case OpCode.LDA_IndexedIndirect:
+				case OpCode.ORA_IndexedIndirect:
 				case OpCode.STA_IndexedIndirect:
 				case OpCode.SBC_IndexedIndirect:
 					return AddressingMode.IndexedIndirect;
@@ -50,6 +54,7 @@
 				case OpCode.ADC_IndirectIndexed:
 				case OpCode.AND_IndirectIndexed:
 				case OpCode.LDA_IndirectIndexed:
+				case OpCode.ORA_IndirectIndexed:
 				case OpCode.STA_IndirectIndexed:
 				case OpCode.SBC_IndirectIndexed:
                     return AddressingMode.IndirectIndexed;
@@ -61,6 +66,7 @@
 				case OpCode.LDA_Immediate:
 				case OpCode.CPY_Immediate:
 				case OpCode.CPX_Immediate:
+				case OpCode.ORA_Immediate:
 				case OpCode.SBC_Immediate:
 					return AddressingMode.Immediate;
 
@@ -87,6 +93,7 @@
 				case OpCode.LDA_ZeroPage:
 				case OpCode.LDX_ZeroPage:
 				case OpCode.LDY_ZeroPage:
+				case OpCode.ORA_ZeroPage:
 				case OpCode.STA_ZeroPage:
 				case OpCode.STX_ZeroPage:
 				case OpCode.STY_ZeroPage:
@@ -98,6 +105,7 @@
 				case OpCode.ASL_ZeroPageX:
 				case OpCode.LDA_ZeroPageX:
 				case OpCode.LDY_ZeroPageX:
+				case OpCode.ORA_ZeroPageX:
 				case OpCode.STA_ZeroPageX:
 				case OpCode.STY_ZeroPageX:
 				case OpCode.SBC_ZeroPageX:

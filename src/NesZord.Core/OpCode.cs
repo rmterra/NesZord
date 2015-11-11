@@ -4,13 +4,29 @@
 	{
 		BRK_Implied = 0x00,
 
+		ORA_IndexedIndirect = 0x01,
+
+		ORA_ZeroPage = 0x05,
+
 		ASL_ZeroPage = 0x06,
+
+		ORA_Immediate = 0x09,
 
 		ASL_Accumulator = 0x0a,
 
+		ORA_Absolute = 0x0d,
+
 		ASL_Absolute = 0x0e,
 
+		ORA_IndirectIndexed = 0x11,
+
+		ORA_ZeroPageX = 0x15,
+
 		ASL_ZeroPageX = 0x16,
+
+		ORA_AbsoluteY = 0x19,
+
+		ORA_AbsoluteX = 0x1d,
 
 		ASL_AbsoluteX = 0x1e,
 
