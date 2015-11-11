@@ -1,11 +1,7 @@
 ﻿using NesZord.Core;
+using NesZord.Core.Extensions;
 using NSpec;
 using Ploeh.AutoFixture;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NesZord.Tests.OpCodes
 {
@@ -33,6 +29,16 @@ namespace NesZord.Tests.OpCodes
 			};
 
 			it["should decrement 1 to x register"] = () => { processor.X.should_be(expectedXRegisterValue); };
+
+			it["should set zero flag when x register value os 0x00"] = () =>
+			{
+				processor.Zero.should_be(this.processor.X == 0);
+			};
+
+			it["should set negative flag with last x register bit value"] = () => 
+			{
+				processor.Negative.should_be(this.processor.X.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+			};
 		}
 
 		public void When_decrement_the_value_of_y_register()
@@ -51,6 +57,16 @@ namespace NesZord.Tests.OpCodes
 			};
 
 			it["should decrement 1 to y register"] = () => { processor.Y.should_be(expectedYRegisterValue); };
+
+			it["should set zero flag when y register value os 0x00"] = () =>
+			{
+				processor.Zero.should_be(this.processor.Y == 0);
+			};
+
+			it["should set negative flag with last y register bit value"] = () =>
+			{
+				processor.Negative.should_be(this.processor.Y.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+			};
 		}
 	}
 }
