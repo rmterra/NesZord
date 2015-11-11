@@ -32,9 +32,13 @@
 
 		AND_IndexedIndirect = 0x21,
 
+		BIT_ZeroPage = 0x24,
+
 		AND_ZeroPage = 0x25,
 
 		AND_Immediate = 0x29,
+
+		BIT_Absolute = 0x2c,
 
 		AND_Absolute = 0x2d,
 

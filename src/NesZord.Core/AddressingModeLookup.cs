@@ -9,6 +9,7 @@
 				case OpCode.ADC_Absolute:
 				case OpCode.AND_Absolute:
 				case OpCode.ASL_Absolute:
+				case OpCode.BIT_Absolute:
 				case OpCode.CPY_Absolute:
 				case OpCode.CPX_Absolute:
 				case OpCode.EOR_Absolute:
@@ -97,6 +98,7 @@
 				case OpCode.ADC_ZeroPage:
 				case OpCode.AND_ZeroPage:
 				case OpCode.ASL_ZeroPage:
+				case OpCode.BIT_ZeroPage:
 				case OpCode.EOR_ZeroPage:
 				case OpCode.CPY_ZeroPage:
 				case OpCode.CPX_ZeroPage:

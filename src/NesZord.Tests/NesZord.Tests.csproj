@@ -71,6 +71,7 @@
     <Compile Include="Describe_memory.cs" />
     <Compile Include="MemoryMock.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_adc_operation.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_bit_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_lsr_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_eor_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_ora_operation.cs" />

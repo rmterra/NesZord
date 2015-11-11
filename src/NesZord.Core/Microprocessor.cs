@@ -8,9 +8,11 @@ namespace NesZord.Core
 {
 	public class Microprocessor
 	{
-		public const int SIGN_BIT_POSITION = 8;
-
 		public const int FIRST_BIT_POSITION = 1;
+
+		public const int OVERFLOW_BIT_POSITION = 7;
+
+		public const int SIGN_BIT_POSITION = 8;
 
 		private readonly Dictionary<OpCode, Action> unadressedOperations;
 
@@ -65,6 +67,7 @@ namespace NesZord.Core
 				{ OpCode.ADC_Absolute, this.AddWithCarry },
 				{ OpCode.AND_Absolute, this.BitwiseAndOperation },
 				{ OpCode.ASL_Absolute, this.ArithmeticShiftLeftOnMemory },
+				{ OpCode.BIT_Absolute, this.TestBitsInAccumulator },
 				{ OpCode.EOR_Absolute, this.BitwiseExclusiveOrOperation },
 				{ OpCode.CPY_Absolute, this.CompareYRegister },
 				{ OpCode.CPX_Absolute, this.CompareXRegister },
@@ -112,6 +115,7 @@ namespace NesZord.Core
 				{ OpCode.ADC_ZeroPage, this.AddWithCarry },
 				{ OpCode.AND_ZeroPage, this.BitwiseAndOperation },
 				{ OpCode.ASL_ZeroPage, this.ArithmeticShiftLeftOnMemory },
+				{ OpCode.BIT_ZeroPage, this.TestBitsInAccumulator },
 				{ OpCode.CPY_ZeroPage, this.CompareYRegister },
 				{ OpCode.CPX_ZeroPage, this.CompareXRegister },
 				{ OpCode.EOR_ZeroPage, this.BitwiseExclusiveOrOperation },
@@ -145,6 +149,8 @@ namespace NesZord.Core
 		public bool Negative { get; private set; }
 
 		public bool Zero { get; private set; }
+
+		public bool Overflow { get; private set; }
 
 		public byte X { get; private set; }
 
@@ -457,6 +463,16 @@ namespace NesZord.Core
 			var result = this.Accumulator - byteToSubtract;
 			this.Accumulator = (byte)(result & 0xff);
 			this.Carry = (result << 8) > 0;
+		}
+
+		private void TestBitsInAccumulator(MemoryLocation location)
+		{
+			var memoryValue = this.memory.Read(location);
+			var testResult = (byte)(this.Accumulator & memoryValue);
+
+			this.Negative = testResult.GetBitAt(SIGN_BIT_POSITION);
+			this.Overflow = testResult.GetBitAt(OVERFLOW_BIT_POSITION);
+			this.Zero = testResult == 0;
 		}
 
 		private void TransferFromAccumulatorToX()

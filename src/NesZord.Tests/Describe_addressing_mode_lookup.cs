@@ -10,6 +10,7 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ADC_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AND_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ASL_Absolute, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BIT_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.CPY_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.CPX_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.EOR_Absolute, AddressingMode.Absolute);
@@ -89,6 +90,7 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ADC_ZeroPage, AddressingMode.ZeroPage);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AND_ZeroPage, AddressingMode.ZeroPage);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ASL_ZeroPage, AddressingMode.ZeroPage);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BIT_ZeroPage, AddressingMode.ZeroPage);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.EOR_ZeroPage, AddressingMode.ZeroPage);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.LDA_ZeroPage, AddressingMode.ZeroPage);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.LDX_ZeroPage, AddressingMode.ZeroPage);
