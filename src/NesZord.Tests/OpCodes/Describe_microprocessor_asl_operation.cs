@@ -43,12 +43,12 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set negative flag equal to seventh shifted value bit"] = () =>
 			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
@@ -84,12 +84,12 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to seventh memory value bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set negative flag equal to seventh shifted value bit"] = () =>
 			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
@@ -131,12 +131,12 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to seventh memory value bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set negative flag equal to seventh shifted value bit"] = () =>
 			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
@@ -174,12 +174,12 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to seventh memory value bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set negative flag equal to seventh shifted value bit"] = () =>
 			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
@@ -223,12 +223,12 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to seventh memory value bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set negative flag equal to seventh shifted value bit"] = () =>
 			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>

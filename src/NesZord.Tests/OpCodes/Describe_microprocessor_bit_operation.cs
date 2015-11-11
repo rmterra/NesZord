@@ -46,12 +46,12 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to last test result bit"] = () =>
 			{
-				this.processor.Negative.should_be(testResult.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Negative.should_be(testResult.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set negative flag equal to last test result bit"] = () =>
 			{
-				this.processor.Overflow.should_be(testResult.GetBitAt(Microprocessor.OVERFLOW_BIT_POSITION));
+				this.processor.Overflow.should_be(testResult.GetBitAt(Microprocessor.OVERFLOW_BIT_INDEX));
 			};
 
 			it["should set zero flag when test result is 0"] = () => { this.processor.Zero.should_be(testResult == 0); };
@@ -86,12 +86,12 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to last test result bit"] = () =>
 			{
-				this.processor.Negative.should_be(testResult.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
+				this.processor.Negative.should_be(testResult.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
 			};
 
 			it["should set negative flag equal to last test result bit"] = () =>
 			{
-				this.processor.Overflow.should_be(testResult.GetBitAt(Microprocessor.OVERFLOW_BIT_POSITION));
+				this.processor.Overflow.should_be(testResult.GetBitAt(Microprocessor.OVERFLOW_BIT_INDEX));
 			};
 
 			it["should set zero flag when test result is 0"] = () => { this.processor.Zero.should_be(testResult == 0); };

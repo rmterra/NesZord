@@ -45,7 +45,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to first accumulator bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
@@ -83,7 +83,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to first memory value bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
@@ -130,7 +130,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to first memory value bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
@@ -173,7 +173,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to first memory value bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
@@ -222,7 +222,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set carry flag equal to first memory value bit"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_POSITION));
+				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
 			};
 
 			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>

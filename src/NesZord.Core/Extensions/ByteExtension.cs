@@ -2,9 +2,9 @@
 {
 	public static class ByteExtension
 	{
-		public static bool GetBitAt(this byte value, int position)
+		public static bool GetBitAt(this byte value, int index)
 		{
-			return (value & (1 << position - 1)) != 0;
+			return (value & (1 << index)) != 0;
 		}
 	}
 }
