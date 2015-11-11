@@ -495,7 +495,7 @@ namespace NesZord.Core
 			this.Accumulator = this.Y;
 		}
 
-		internal byte ReadProgramByte()
+		private byte ReadProgramByte()
 		{
 			var page = (byte)(this.ProgramCounter >> 8);
 			var offset = (byte)(this.ProgramCounter & 0xff);
