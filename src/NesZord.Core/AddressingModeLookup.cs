@@ -11,6 +11,7 @@
 				case OpCode.ASL_Absolute:
 				case OpCode.CPY_Absolute:
 				case OpCode.CPX_Absolute:
+				case OpCode.EOR_Absolute:
 				case OpCode.LDA_Absolute:
 				case OpCode.LDX_Absolute:
 				case OpCode.LDY_Absolute:
@@ -25,6 +26,7 @@
 				case OpCode.ADC_AbsoluteX:
 				case OpCode.AND_AbsoluteX:
 				case OpCode.ASL_AbsoluteX:
+				case OpCode.EOR_AbsoluteX:
 				case OpCode.LDA_AbsoluteX:
 				case OpCode.LDY_AbsoluteX:
 				case OpCode.LSR_AbsoluteX:
@@ -35,6 +37,7 @@
 
 				case OpCode.ADC_AbsoluteY:
 				case OpCode.AND_AbsoluteY:
+				case OpCode.EOR_AbsoluteY:
 				case OpCode.LDA_AbsoluteY:
 				case OpCode.LDX_AbsoluteY:
                 case OpCode.ORA_AbsoluteY:
@@ -48,6 +51,7 @@
 
 				case OpCode.ADC_IndexedIndirect:
 				case OpCode.AND_IndexedIndirect:
+				case OpCode.EOR_IndexedIndirect:
 				case OpCode.LDA_IndexedIndirect:
 				case OpCode.ORA_IndexedIndirect:
 				case OpCode.STA_IndexedIndirect:
@@ -56,6 +60,7 @@
 
 				case OpCode.ADC_IndirectIndexed:
 				case OpCode.AND_IndirectIndexed:
+				case OpCode.EOR_IndirectIndexed:
 				case OpCode.LDA_IndirectIndexed:
 				case OpCode.ORA_IndirectIndexed:
 				case OpCode.STA_IndirectIndexed:
@@ -64,6 +69,7 @@
 
 				case OpCode.ADC_Immediate:
 				case OpCode.AND_Immediate:
+				case OpCode.EOR_Immediate:
 				case OpCode.LDY_Immediate:
 				case OpCode.LDX_Immediate:
 				case OpCode.LDA_Immediate:
@@ -91,6 +97,7 @@
 				case OpCode.ADC_ZeroPage:
 				case OpCode.AND_ZeroPage:
 				case OpCode.ASL_ZeroPage:
+				case OpCode.EOR_ZeroPage:
 				case OpCode.CPY_ZeroPage:
 				case OpCode.CPX_ZeroPage:
 				case OpCode.LDA_ZeroPage:
@@ -107,6 +114,7 @@
 				case OpCode.ADC_ZeroPageX:
 				case OpCode.AND_ZeroPageX:
 				case OpCode.ASL_ZeroPageX:
+				case OpCode.EOR_ZeroPageX:
 				case OpCode.LDA_ZeroPageX:
 				case OpCode.LDY_ZeroPageX:
 				case OpCode.LSR_ZeroPageX:

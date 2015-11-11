@@ -48,13 +48,29 @@
 
 		AND_AbsoluteX = 0x3d,
 
+		EOR_IndexedIndirect = 0x41,
+
+		EOR_ZeroPage = 0x45,
+
 		LSR_ZeroPage = 0x46,
+
+		EOR_Immediate = 0x49,
 
 		LSR_Accumulator = 0x4a,
 
+		EOR_Absolute = 0x4d,
+
 		LSR_Absolute = 0x4e,
 
+		EOR_IndirectIndexed = 0x51,
+
+		EOR_ZeroPageX = 0x55,
+
 		LSR_ZeroPageX = 0x56,
+
+		EOR_AbsoluteY = 0x59,
+
+		EOR_AbsoluteX = 0x5d,
 
 		LSR_AbsoluteX = 0x5e,
 
