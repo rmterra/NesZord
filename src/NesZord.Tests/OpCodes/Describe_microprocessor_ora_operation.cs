@@ -42,7 +42,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.NEGATIVE_FLAG_BYTE_POSITION));
+				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
@@ -80,7 +80,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.NEGATIVE_FLAG_BYTE_POSITION));
+				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
@@ -121,7 +121,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.NEGATIVE_FLAG_BYTE_POSITION));
+				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
@@ -161,7 +161,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.NEGATIVE_FLAG_BYTE_POSITION));
+				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
@@ -204,7 +204,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.NEGATIVE_FLAG_BYTE_POSITION));
+				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
@@ -247,7 +247,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.NEGATIVE_FLAG_BYTE_POSITION));
+				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
@@ -288,7 +288,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.NEGATIVE_FLAG_BYTE_POSITION));
+				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
@@ -329,7 +329,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.NEGATIVE_FLAG_BYTE_POSITION));
+				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_POSITION));
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>

@@ -48,6 +48,16 @@
 
 		AND_AbsoluteX = 0x3d,
 
+		LSR_ZeroPage = 0x46,
+
+		LSR_Accumulator = 0x4a,
+
+		LSR_Absolute = 0x4e,
+
+		LSR_ZeroPageX = 0x56,
+
+		LSR_AbsoluteX = 0x5e,
+
 		ADC_IndexedIndirect = 0x61,
 
 		ADC_ZeroPage = 0x65,

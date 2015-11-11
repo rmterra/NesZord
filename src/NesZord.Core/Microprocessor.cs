@@ -8,7 +8,9 @@ namespace NesZord.Core
 {
 	public class Microprocessor
 	{
-		public const int NEGATIVE_FLAG_BYTE_POSITION = 7;
+		public const int SIGN_BIT_POSITION = 8;
+
+		public const int FIRST_BIT_POSITION = 1;
 
 		private readonly Dictionary<OpCode, Action> unadressedOperations;
 
@@ -27,6 +29,7 @@ namespace NesZord.Core
 			this.unadressedOperations = new Dictionary<OpCode, Action>
 			{
 				{ OpCode.ASL_Accumulator, this.ArithmeticShiftLeftOnAccumulator },
+				{ OpCode.LSR_Accumulator, this.LogicalShiftRightOnAccumulator },
 				{ OpCode.BCC_Relative, this.BranchIfCarryIsClear },
 				{ OpCode.BCS_Relative, this.BranchIfCarryIsSet },
 				{ OpCode.BEQ_Relative, this.BranchIfEqual },
@@ -66,6 +69,7 @@ namespace NesZord.Core
 				{ OpCode.LDA_Absolute, this.LoadAccumulator },
 				{ OpCode.LDX_Absolute, this.LoadXRegister },
 				{ OpCode.LDY_Absolute, this.LoadYRegister },
+				{ OpCode.LSR_Absolute, this.LogicalShiftRightOnMemory },
 				{ OpCode.ORA_Absolute, this.BitwiseOrOperation },
 				{ OpCode.STA_Absolute, this.StoreAccumulator },
 				{ OpCode.SBC_Absolute, this.SubtractWithCarry },
@@ -74,6 +78,7 @@ namespace NesZord.Core
 				{ OpCode.ASL_AbsoluteX, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.LDA_AbsoluteX, this.LoadAccumulator },
 				{ OpCode.LDY_AbsoluteX, this.LoadYRegister },
+				{ OpCode.LSR_AbsoluteX, this.LogicalShiftRightOnMemory },
 				{ OpCode.ORA_AbsoluteX, this.BitwiseOrOperation },
 				{ OpCode.STA_AbsoluteX, this.StoreAccumulator },
 				{ OpCode.SBC_AbsoluteX, this.SubtractWithCarry },
@@ -106,6 +111,7 @@ namespace NesZord.Core
 				{ OpCode.LDA_ZeroPage, this.LoadAccumulator },
 				{ OpCode.LDX_ZeroPage, this.LoadXRegister },
 				{ OpCode.LDY_ZeroPage, this.LoadYRegister },
+				{ OpCode.LSR_ZeroPage, this.LogicalShiftRightOnMemory },
 				{ OpCode.ORA_ZeroPage, this.BitwiseOrOperation },
 				{ OpCode.STA_ZeroPage, this.StoreAccumulator },
 				{ OpCode.STX_ZeroPage, this.StoreXRegister },
@@ -116,6 +122,7 @@ namespace NesZord.Core
 				{ OpCode.ASL_ZeroPageX, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.LDA_ZeroPageX, this.LoadAccumulator },
 				{ OpCode.LDY_ZeroPageX, this.LoadYRegister },
+				{ OpCode.LSR_ZeroPageX, this.LogicalShiftRightOnMemory },
 				{ OpCode.ORA_ZeroPageX, this.BitwiseOrOperation },
 				{ OpCode.STA_ZeroPageX, this.StoreAccumulator },
 				{ OpCode.STY_ZeroPageX, this.StoreYRegister },
@@ -228,11 +235,11 @@ namespace NesZord.Core
 
 		private void ArithmeticShiftLeftOnAccumulator()
 		{
-			this.Carry = this.Accumulator.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+			this.Carry = this.Accumulator.GetBitAt(SIGN_BIT_POSITION);
 
 			this.Accumulator = (byte)(this.Accumulator << 1);
 
-			this.Negative = this.Accumulator.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_POSITION);
 			this.Zero = (this.Accumulator & 0xff) == 0;
 		}
 
@@ -288,6 +295,15 @@ namespace NesZord.Core
 			this.Y += 1;
 		}
 
+		private void LogicalShiftRightOnAccumulator()
+		{
+			this.Negative = false;
+			this.Carry = this.Accumulator.GetBitAt(FIRST_BIT_POSITION);
+
+			this.Accumulator = (byte)(this.Accumulator >> 1);
+			this.Zero = (this.Accumulator & 0xff) == 0;
+		}
+
 		private void AddWithCarry(MemoryLocation location)
 		{
 			var byteToAdd = this.memory.Read(location);
@@ -305,11 +321,11 @@ namespace NesZord.Core
 		{
 			var memoryValue = this.memory.Read(location);
 
-			this.Carry = memoryValue.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+			this.Carry = memoryValue.GetBitAt(SIGN_BIT_POSITION);
 
 			var shiftedValue = (byte)(memoryValue << 1);
 
-			this.Negative = shiftedValue.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+			this.Negative = shiftedValue.GetBitAt(SIGN_BIT_POSITION);
 			this.Zero = (shiftedValue & 0xff) == 0;
 
 			this.memory.Write(location, shiftedValue);
@@ -323,7 +339,7 @@ namespace NesZord.Core
 		private void BitwiseAndOperation(byte byteToCompare)
 		{
 			this.Accumulator = (byte)(this.Accumulator & byteToCompare);
-			this.Negative = this.Accumulator.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_POSITION);
 			this.Zero = this.Accumulator == 0;
 		}
 
@@ -335,7 +351,7 @@ namespace NesZord.Core
 		private void BitwiseOrOperation(byte byteToCompare)
 		{
 			this.Accumulator = (byte)(this.Accumulator | byteToCompare);
-			this.Negative = this.Accumulator.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_POSITION);
 			this.Zero = this.Accumulator == 0;
 		}
 
@@ -391,6 +407,19 @@ namespace NesZord.Core
 		private void LoadYRegister(byte value)
 		{
 			this.Y = value;
+		}
+
+		private void LogicalShiftRightOnMemory(MemoryLocation location)
+		{
+			var memoryValue = this.memory.Read(location);
+
+			this.Negative = false;
+			this.Carry = memoryValue.GetBitAt(FIRST_BIT_POSITION);
+
+			var shiftedValue = (byte)(memoryValue >> 1);
+			this.Zero = (shiftedValue & 0xff) == 0;
+
+			this.memory.Write(location, shiftedValue);
 		}
 
 		private void SetCarryFlag()
