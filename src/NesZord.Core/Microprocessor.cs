@@ -302,25 +302,29 @@ namespace NesZord.Core
 		private void DecrementValueAtX()
 		{
 			this.X -= 1;
-			this.Negative = this.X == 0;
+			this.Zero = this.X == 0;
 			this.Negative = this.X.GetBitAt(SIGN_BIT_INDEX);
 		}
 
 		private void DecrementValueAtY()
 		{
 			this.Y -= 1;
-			this.Negative = this.Y == 0;
+			this.Zero = this.Y == 0;
 			this.Negative = this.Y.GetBitAt(SIGN_BIT_INDEX);
 		}
 
 		private void IncrementValueAtX()
 		{
 			this.X += 1;
+			this.Zero = this.X == 0;
+			this.Negative = this.X.GetBitAt(SIGN_BIT_INDEX);
 		}
 
 		private void IncrementValueAtY()
 		{
 			this.Y += 1;
+			this.Zero = this.Y == 0;
+			this.Negative = this.Y.GetBitAt(SIGN_BIT_INDEX);
 		}
 
 		private void LogicalShiftRightOnAccumulator()
