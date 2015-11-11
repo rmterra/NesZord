@@ -26,6 +26,7 @@ namespace NesZord.Core
 
 			this.unadressedOperations = new Dictionary<OpCode, Action>
 			{
+				{ OpCode.ASL_Accumulator, this.ArithmeticShiftLeftOnAccumulator },
 				{ OpCode.BCC_Relative, this.BranchIfCarryIsClear },
 				{ OpCode.BCS_Relative, this.BranchIfCarryIsSet },
 				{ OpCode.BEQ_Relative, this.BranchIfEqual },
@@ -57,6 +58,7 @@ namespace NesZord.Core
 			{
 				{ OpCode.ADC_Absolute, this.AddWithCarry },
 				{ OpCode.AND_Absolute, this.BitwiseAndOperation },
+				{ OpCode.ASL_Absolute, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.CPY_Absolute, this.CompareYRegister },
 				{ OpCode.CPX_Absolute, this.CompareXRegister },
 				{ OpCode.LDA_Absolute, this.LoadAccumulator },
@@ -66,6 +68,7 @@ namespace NesZord.Core
 				{ OpCode.SBC_Absolute, this.SubtractWithCarry },
 				{ OpCode.ADC_AbsoluteX, this.AddWithCarry },
 				{ OpCode.AND_AbsoluteX, this.BitwiseAndOperation },
+				{ OpCode.ASL_AbsoluteX, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.LDA_AbsoluteX, this.LoadAccumulator },
 				{ OpCode.LDY_AbsoluteX, this.LoadYRegister },
 				{ OpCode.STA_AbsoluteX, this.StoreAccumulator },
@@ -90,6 +93,7 @@ namespace NesZord.Core
 				{ OpCode.SBC_IndirectIndexed, this.SubtractWithCarry },
 				{ OpCode.ADC_ZeroPage, this.AddWithCarry },
 				{ OpCode.AND_ZeroPage, this.BitwiseAndOperation },
+				{ OpCode.ASL_ZeroPage, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.CPY_ZeroPage, this.CompareYRegister },
 				{ OpCode.CPX_ZeroPage, this.CompareXRegister },
 				{ OpCode.LDA_ZeroPage, this.LoadAccumulator },
@@ -101,6 +105,7 @@ namespace NesZord.Core
 				{ OpCode.SBC_ZeroPage, this.SubtractWithCarry },
 				{ OpCode.ADC_ZeroPageX, this.AddWithCarry },
 				{ OpCode.AND_ZeroPageX, this.BitwiseAndOperation },
+				{ OpCode.ASL_ZeroPageX, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.LDA_ZeroPageX, this.LoadAccumulator },
 				{ OpCode.LDY_ZeroPageX, this.LoadYRegister },
 				{ OpCode.STA_ZeroPageX, this.StoreAccumulator },
@@ -212,6 +217,16 @@ namespace NesZord.Core
 			this.memory.Write(location, this.Y);
 		}
 
+		private void ArithmeticShiftLeftOnAccumulator()
+		{
+			this.Carry = this.Accumulator.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+
+			this.Accumulator = (byte)(this.Accumulator << 1);
+
+			this.Negative = this.Accumulator.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+			this.Zero = (this.Accumulator & 0xff) == 0;
+		}
+
 		private void BranchIfCarryIsClear()
 		{
 			this.BranchIfConditionIsNotSatisfied(() => this.Carry);
@@ -275,6 +290,20 @@ namespace NesZord.Core
 			var result = this.Accumulator + byteToAdd;
 			this.Accumulator = (byte)(result & 0xff);
 			this.Carry = (result >> 8) > 0;
+		}
+
+		private void ArithmeticShiftLeftOnMemory(MemoryLocation location)
+		{
+			var memoryValue = this.memory.Read(location);
+
+			this.Carry = memoryValue.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+
+			var shiftedValue = (byte)(memoryValue << 1);
+
+			this.Negative = shiftedValue.GetBitAt(NEGATIVE_FLAG_BYTE_POSITION);
+			this.Zero = (shiftedValue & 0xff) == 0;
+
+			this.memory.Write(location, shiftedValue);
 		}
 
 		private void BitwiseAndOperation(MemoryLocation location)

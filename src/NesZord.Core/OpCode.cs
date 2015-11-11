@@ -4,6 +4,16 @@
 	{
 		BRK_Implied = 0x00,
 
+		ASL_ZeroPage = 0x06,
+
+		ASL_Accumulator = 0x0a,
+
+		ASL_Absolute = 0x0e,
+
+		ASL_ZeroPageX = 0x16,
+
+		ASL_AbsoluteX = 0x1e,
+
 		AND_IndexedIndirect = 0x21,
 
 		AND_ZeroPage = 0x25,

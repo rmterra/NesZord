@@ -39,7 +39,7 @@ public class DebuggerShim
 		var types = GetType().Assembly.GetTypes();
 		// OR
 		// var types = new Type[]{typeof(Some_Type_Containg_some_Specs)};
-		var finder = new SpecFinder(types, "");
+		var finder = new SpecFinder(types);
 
 		var builder = string.IsNullOrWhiteSpace(className)
 			? new ContextBuilder(finder, new DefaultConventions())

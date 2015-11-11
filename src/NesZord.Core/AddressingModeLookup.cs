@@ -8,6 +8,7 @@
 			{
 				case OpCode.ADC_Absolute:
 				case OpCode.AND_Absolute:
+				case OpCode.ASL_Absolute:
 				case OpCode.CPY_Absolute:
 				case OpCode.CPX_Absolute:
 				case OpCode.LDA_Absolute:
@@ -21,6 +22,7 @@
 
 				case OpCode.ADC_AbsoluteX:
 				case OpCode.AND_AbsoluteX:
+				case OpCode.ASL_AbsoluteX:
 				case OpCode.LDA_AbsoluteX:
 				case OpCode.LDY_AbsoluteX:
 				case OpCode.STA_AbsoluteX:
@@ -34,6 +36,9 @@
 				case OpCode.STA_AbsoluteY:
 				case OpCode.SBC_AbsoluteY:
 					return AddressingMode.AbsoluteY;
+
+				case OpCode.ASL_Accumulator:
+					return AddressingMode.Accumulator;
 
 				case OpCode.ADC_IndexedIndirect:
 				case OpCode.AND_IndexedIndirect:
@@ -76,6 +81,7 @@
 
 				case OpCode.ADC_ZeroPage:
 				case OpCode.AND_ZeroPage:
+				case OpCode.ASL_ZeroPage:
 				case OpCode.CPY_ZeroPage:
 				case OpCode.CPX_ZeroPage:
 				case OpCode.LDA_ZeroPage:
@@ -89,6 +95,7 @@
 
 				case OpCode.ADC_ZeroPageX:
 				case OpCode.AND_ZeroPageX:
+				case OpCode.ASL_ZeroPageX:
 				case OpCode.LDA_ZeroPageX:
 				case OpCode.LDY_ZeroPageX:
 				case OpCode.STA_ZeroPageX:

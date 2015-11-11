@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NesZord.Core
+﻿namespace NesZord.Core
 {
 	public enum AddressingMode
 	{
@@ -15,20 +10,22 @@ namespace NesZord.Core
 
 		AbsoluteX = 3,
 
-		IndexedIndirect = 4,
+		Accumulator = 4,
 
-		IndirectIndexed = 5,
+		IndexedIndirect = 5,
 
-		Immediate = 6,
+		IndirectIndexed = 6,
 
-		Implied = 7,
+		Immediate = 7,
 
-		Relative = 8,
+		Implied = 8,
 
-		ZeroPage = 9,
+		Relative = 9,
 
-		ZeroPageX = 10,
+		ZeroPage = 10,
 
-		ZeroPageY = 11
+		ZeroPageX = 11,
+
+		ZeroPageY = 12
 	}
 }
