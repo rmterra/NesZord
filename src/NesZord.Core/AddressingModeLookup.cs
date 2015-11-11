@@ -6,98 +6,98 @@
 		{
 			switch (opCode)
 			{
-				case OpCode.AbsoluteADC:
-				case OpCode.AbsoluteAND:
-				case OpCode.AbsoluteCPY:
-				case OpCode.AbsoluteCPX:
-				case OpCode.AbsoluteLDA:
-				case OpCode.AbsoluteLDX:
-				case OpCode.AbsoluteLDY:
-				case OpCode.AbsoluteSTY:
-				case OpCode.AbsoluteSTA:
-				case OpCode.AbsoluteSTX:
-				case OpCode.AbsoluteSBC:
+				case OpCode.ADC_Absolute:
+				case OpCode.AND_Absolute:
+				case OpCode.CPY_Absolute:
+				case OpCode.CPX_Absolute:
+				case OpCode.LDA_Absolute:
+				case OpCode.LDX_Absolute:
+				case OpCode.LDY_Absolute:
+				case OpCode.STY_Absolute:
+				case OpCode.STA_Absolute:
+				case OpCode.STX_Absolute:
+				case OpCode.SBC_Absolute:
 					return AddressingMode.Absolute;
 
-				case OpCode.AbsoluteXADC:
-				case OpCode.AbsoluteXAND:
-				case OpCode.AbsoluteXLDA:
-				case OpCode.AbsoluteXLDY:
-				case OpCode.AbsoluteXSTA:
-				case OpCode.AbsoluteXSBC:
+				case OpCode.ADC_AbsoluteX:
+				case OpCode.AND_AbsoluteX:
+				case OpCode.LDA_AbsoluteX:
+				case OpCode.LDY_AbsoluteX:
+				case OpCode.STA_AbsoluteX:
+				case OpCode.SBC_AbsoluteX:
 					return AddressingMode.AbsoluteX;
 
-				case OpCode.AbsoluteYADC:
-				case OpCode.AbsoluteYAND:
-				case OpCode.AbsoluteYLDA:
-				case OpCode.AbsoluteYLDX:
-				case OpCode.AbsoluteYSTA:
-				case OpCode.AbsoluteYSBC:
+				case OpCode.ADC_AbsoluteY:
+				case OpCode.AND_AbsoluteY:
+				case OpCode.LDA_AbsoluteY:
+				case OpCode.LDX_AbsoluteY:
+				case OpCode.STA_AbsoluteY:
+				case OpCode.SBC_AbsoluteY:
 					return AddressingMode.AbsoluteY;
 
-				case OpCode.IndexedIndirectADC:
-				case OpCode.IndexedAND:
-				case OpCode.IndexedIndirectLDA:
-				case OpCode.IndexedIndirectSTA:
-				case OpCode.IndexedIndirectSBC:
+				case OpCode.ADC_IndexedIndirect:
+				case OpCode.AND_IndexedIndirect:
+				case OpCode.LDA_IndexedIndirect:
+				case OpCode.STA_IndexedIndirect:
+				case OpCode.SBC_IndexedIndirect:
 					return AddressingMode.IndexedIndirect;
 
-				case OpCode.IndirectIndexedADC:
-				case OpCode.IndirectIndexedAND:
-				case OpCode.IndirectIndexedLDA:
-				case OpCode.IndirectIndexedSTA:
-				case OpCode.IndirectIndexedSBC:
+				case OpCode.ADC_IndirectIndexed:
+				case OpCode.AND_IndirectIndexed:
+				case OpCode.LDA_IndirectIndexed:
+				case OpCode.STA_IndirectIndexed:
+				case OpCode.SBC_IndirectIndexed:
                     return AddressingMode.IndirectIndexed;
 
-				case OpCode.ImmediateADC:
-				case OpCode.ImmediateAND:
-				case OpCode.ImmediateLDY:
-				case OpCode.ImmediateLDX:
-				case OpCode.ImmediateLDA:
-				case OpCode.ImmediateCPY:
-				case OpCode.ImmediateCPX:
-				case OpCode.ImmediateSBC:
+				case OpCode.ADC_Immediate:
+				case OpCode.AND_Immediate:
+				case OpCode.LDY_Immediate:
+				case OpCode.LDX_Immediate:
+				case OpCode.LDA_Immediate:
+				case OpCode.CPY_Immediate:
+				case OpCode.CPX_Immediate:
+				case OpCode.SBC_Immediate:
 					return AddressingMode.Immediate;
 
-				case OpCode.BRK:
-				case OpCode.SEC:
-				case OpCode.TXA:
-				case OpCode.TAX:
-				case OpCode.DEX:
-				case OpCode.INY:
-				case OpCode.INX:
+				case OpCode.BRK_Implied:
+				case OpCode.SEC_Implied:
+				case OpCode.TXA_Implied:
+				case OpCode.TAX_Implied:
+				case OpCode.DEX_Implied:
+				case OpCode.INY_Implied:
+				case OpCode.INX_Implied:
 					return AddressingMode.Implied;
 
-				case OpCode.BCC:
-				case OpCode.BCS:
-				case OpCode.BNE:
-				case OpCode.BEQ:
+				case OpCode.BCC_Relative:
+				case OpCode.BCS_Relative:
+				case OpCode.BNE_Relative:
+				case OpCode.BEQ_Relative:
 					return AddressingMode.Relative;
 
-				case OpCode.ZeroPageADC:
-				case OpCode.ZeroPageAND:
-				case OpCode.ZeroPageCPY:
-				case OpCode.ZeroPageCPX:
-				case OpCode.ZeroPageLDA:
-				case OpCode.ZeroPageLDX:
-				case OpCode.ZeroPageLDY:
-				case OpCode.ZeroPageSTA:
-				case OpCode.ZeroPageSTX:
-				case OpCode.ZeroPageSTY:
-				case OpCode.ZeroPageSBC:
+				case OpCode.ADC_ZeroPage:
+				case OpCode.AND_ZeroPage:
+				case OpCode.CPY_ZeroPage:
+				case OpCode.CPX_ZeroPage:
+				case OpCode.LDA_ZeroPage:
+				case OpCode.LDX_ZeroPage:
+				case OpCode.LDY_ZeroPage:
+				case OpCode.STA_ZeroPage:
+				case OpCode.STX_ZeroPage:
+				case OpCode.STY_ZeroPage:
+				case OpCode.SBC_ZeroPage:
 					return AddressingMode.ZeroPage;
 
-				case OpCode.ZeroPageXADC:
-				case OpCode.ZeroPageXAND:
-				case OpCode.ZeroPageXLDA:
-				case OpCode.ZeroPageXLDY:
-				case OpCode.ZeroPageXSTA:
-				case OpCode.ZeroPageXSTY:
-				case OpCode.ZeroPageXSBC:
+				case OpCode.ADC_ZeroPageX:
+				case OpCode.AND_ZeroPageX:
+				case OpCode.LDA_ZeroPageX:
+				case OpCode.LDY_ZeroPageX:
+				case OpCode.STA_ZeroPageX:
+				case OpCode.STY_ZeroPageX:
+				case OpCode.SBC_ZeroPageX:
 					return AddressingMode.ZeroPageX;
 
-				case OpCode.ZeroPageYLDX:
-				case OpCode.ZeroPageYSTX:
+				case OpCode.LDX_ZeroPageY:
+				case OpCode.STX_ZeroPageY:
 					return AddressingMode.ZeroPageY;
 
 				default:

@@ -2,154 +2,154 @@
 {
 	public enum OpCode
 	{
-		BRK = 0x00,
+		BRK_Implied = 0x00,
 
-		IndexedAND = 0x21,
+		AND_IndexedIndirect = 0x21,
 
-		ZeroPageAND = 0x25,
+		AND_ZeroPage = 0x25,
 
-		ImmediateAND = 0x29,
+		AND_Immediate = 0x29,
 
-		AbsoluteAND = 0x2d,
+		AND_Absolute = 0x2d,
 
-		IndirectIndexedAND = 0x31,
+		AND_IndirectIndexed = 0x31,
 
-		ZeroPageXAND = 0x35,
+		AND_ZeroPageX = 0x35,
 
-		SEC = 0x38,
+		SEC_Implied = 0x38,
 
-		AbsoluteYAND = 0x39,
+		AND_AbsoluteY = 0x39,
 
-		AbsoluteXAND = 0x3d,
+		AND_AbsoluteX = 0x3d,
 
-		IndexedIndirectADC = 0x61,
+		ADC_IndexedIndirect = 0x61,
 
-		ZeroPageADC = 0x65,
+		ADC_ZeroPage = 0x65,
 
-		ImmediateADC = 0x69,
+		ADC_Immediate = 0x69,
 
-		AbsoluteADC = 0x6d,
+		ADC_Absolute = 0x6d,
 
-		IndirectIndexedADC = 0x71,
+		ADC_IndirectIndexed = 0x71,
 
-		ZeroPageXADC = 0x75,
+		ADC_ZeroPageX = 0x75,
 
-		AbsoluteYADC = 0x79,
+		ADC_AbsoluteY = 0x79,
 
-		AbsoluteXADC = 0x7d,
+		ADC_AbsoluteX = 0x7d,
 
-		IndexedIndirectSTA = 0x81,
+		STA_IndexedIndirect = 0x81,
 
-		ZeroPageSTY = 0x84,
+		STY_ZeroPage = 0x84,
 
-		ZeroPageSTA = 0x85,
+		STA_ZeroPage = 0x85,
 
-		ZeroPageSTX = 0x86,
+		STX_ZeroPage = 0x86,
 
-		DEY = 0x88,
+		DEY_Implied = 0x88,
 
-		TXA = 0x8a,
+		TXA_Implied = 0x8a,
 
-		AbsoluteSTY = 0x8c,
+		STY_Absolute = 0x8c,
 
-		AbsoluteSTA = 0x8d,
+		STA_Absolute = 0x8d,
 
-		AbsoluteSTX = 0x8e,
+		STX_Absolute = 0x8e,
 
-		BCC = 0x90,
+		BCC_Relative = 0x90,
 
-		IndirectIndexedSTA = 0x91,
+		STA_IndirectIndexed = 0x91,
 
-		ZeroPageXSTA = 0x95,
+		STA_ZeroPageX = 0x95,
 
-		AbsoluteXSTA = 0x9d,
+		STA_AbsoluteX = 0x9d,
 
-		ZeroPageXSTY = 0x94,
+		STY_ZeroPageX = 0x94,
 
-		ZeroPageYSTX = 0x96,
+		STX_ZeroPageY = 0x96,
 
-		TYA = 0x98,
+		TYA_Implied = 0x98,
 
-		AbsoluteYSTA = 0x99,
+		STA_AbsoluteY = 0x99,
 
-		ImmediateLDY = 0xa0,
+		LDY_Immediate = 0xa0,
 
-		ImmediateLDX = 0xa2,
+		LDX_Immediate = 0xa2,
 
-		ZeroPageLDY = 0xa4,
+		LDY_ZeroPage = 0xa4,
 
-		ZeroPageLDX = 0xa6,
+		LDX_ZeroPage = 0xa6,
 
-		TAY = 0xa8,
+		TAY_Implied = 0xa8,
 
-		IndexedIndirectLDA = 0xa1,
+		LDA_IndexedIndirect = 0xa1,
 
-		ZeroPageLDA = 0xa5,
+		LDA_ZeroPage = 0xa5,
 
-		ImmediateLDA = 0xa9,
+		LDA_Immediate = 0xa9,
 
-		TAX = 0xaa,
+		TAX_Implied = 0xaa,
 
-		AbsoluteLDY = 0xac,
+		LDY_Absolute = 0xac,
 
-		AbsoluteLDA = 0xad,
+		LDA_Absolute = 0xad,
 
-		AbsoluteLDX = 0xae,
+		LDX_Absolute = 0xae,
 
-		BCS = 0xb0,
+		BCS_Relative = 0xb0,
 
-		IndirectIndexedLDA = 0xb1,
+		LDA_IndirectIndexed = 0xb1,
 
-		ZeroPageXLDY = 0xb4,
+		LDY_ZeroPageX = 0xb4,
 
-		ZeroPageXLDA = 0xb5,
+		LDA_ZeroPageX = 0xb5,
 
-		ZeroPageYLDX = 0xb6,
+		LDX_ZeroPageY = 0xb6,
 
-		AbsoluteYLDA = 0xb9,
+		LDA_AbsoluteY = 0xb9,
 
-		AbsoluteXLDY = 0xbc,
+		LDY_AbsoluteX = 0xbc,
 
-		AbsoluteXLDA = 0xbd,
+		LDA_AbsoluteX = 0xbd,
 
-		AbsoluteYLDX = 0xbe,
+		LDX_AbsoluteY = 0xbe,
 
-		ImmediateCPY = 0xc0,
+		CPY_Immediate = 0xc0,
 
-		ZeroPageCPY = 0xc4,
+		CPY_ZeroPage = 0xc4,
 
-		INY = 0xc8,
+		INY_Implied = 0xc8,
 
-		DEX = 0xca,
+		DEX_Implied = 0xca,
 
-		AbsoluteCPY = 0xcc,
+		CPY_Absolute = 0xcc,
 
-		BNE = 0xd0,
+		BNE_Relative = 0xd0,
 
-		ImmediateCPX = 0xe0,
+		CPX_Immediate = 0xe0,
 
-		IndexedIndirectSBC = 0xe1,
+		SBC_IndexedIndirect = 0xe1,
 
-		ZeroPageCPX = 0xe4,
+		CPX_ZeroPage = 0xe4,
 
-		ZeroPageSBC = 0xe5,
+		SBC_ZeroPage = 0xe5,
 
-		INX = 0xe8,
+		INX_Implied = 0xe8,
 
-		ImmediateSBC = 0xe9,
+		SBC_Immediate = 0xe9,
 
-		AbsoluteCPX = 0xec,
+		CPX_Absolute = 0xec,
 
-		AbsoluteSBC = 0xed,
+		SBC_Absolute = 0xed,
 
-		BEQ = 0xf0,
+		BEQ_Relative = 0xf0,
 
-		IndirectIndexedSBC = 0xf1,
+		SBC_IndirectIndexed = 0xf1,
 
-		ZeroPageXSBC = 0xf5,
+		SBC_ZeroPageX = 0xf5,
 
-		AbsoluteYSBC = 0xf9,
+		SBC_AbsoluteY = 0xf9,
 
-		AbsoluteXSBC = 0xfd
+		SBC_AbsoluteX = 0xfd
 	}
 }

@@ -28,9 +28,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
-					(byte)OpCode.TAX,
-					(byte)OpCode.ImmediateSBC, byteToSubtract
+					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.TAX_Implied,
+					(byte)OpCode.SBC_Immediate, byteToSubtract
 				});
 			};
 
@@ -69,9 +69,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
-					(byte)OpCode.TAX,
-					(byte)OpCode.ZeroPageSBC, randomOffset
+					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.TAX_Implied,
+					(byte)OpCode.SBC_ZeroPage, randomOffset
 				});
 			};
 
@@ -112,10 +112,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
-					(byte)OpCode.TAY,
-					(byte)OpCode.ImmediateLDX, xRegisterValue,
-					(byte)OpCode.ZeroPageXSBC, randomOffset
+					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.TAY_Implied,
+					(byte)OpCode.LDX_Immediate, xRegisterValue,
+					(byte)OpCode.SBC_ZeroPageX, randomOffset
 				});
 			};
 
@@ -156,9 +156,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
-					(byte)OpCode.TAY,
-					(byte)OpCode.AbsoluteSBC, randomOffset, randomPage
+					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.TAY_Implied,
+					(byte)OpCode.SBC_Absolute, randomOffset, randomPage
 				});
 			};
 
@@ -201,10 +201,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
-					(byte)OpCode.TAY,
-					(byte)OpCode.ImmediateLDX, xRegisterValue,
-					(byte)OpCode.AbsoluteXSBC, randomOffset, randomPage
+					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.TAY_Implied,
+					(byte)OpCode.LDX_Immediate, xRegisterValue,
+					(byte)OpCode.SBC_AbsoluteX, randomOffset, randomPage
 				});
 			};
 
@@ -247,10 +247,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
-					(byte)OpCode.TAX,
-					(byte)OpCode.ImmediateLDY, yRegisterValue,
-					(byte)OpCode.AbsoluteYSBC, randomOffset, randomPage
+					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.TAX_Implied,
+					(byte)OpCode.LDY_Immediate, yRegisterValue,
+					(byte)OpCode.SBC_AbsoluteY, randomOffset, randomPage
 				});
 			};
 
@@ -291,10 +291,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
-					(byte)OpCode.TAY,
-					(byte)OpCode.ImmediateLDX, xRegisterValue,
-					(byte)OpCode.IndexedIndirectSBC, randomOffset
+					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.TAY_Implied,
+					(byte)OpCode.LDX_Immediate, xRegisterValue,
+					(byte)OpCode.SBC_IndexedIndirect, randomOffset
 				});
 			};
 
@@ -335,10 +335,10 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDA, fixture.Create<byte>(),
-					(byte)OpCode.TAX,
-					(byte)OpCode.ImmediateLDY, yRegisterValue,
-					(byte)OpCode.IndirectIndexedSBC, randomOffset
+					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.TAX_Implied,
+					(byte)OpCode.LDY_Immediate, yRegisterValue,
+					(byte)OpCode.SBC_IndirectIndexed, randomOffset
 				});
 			};
 

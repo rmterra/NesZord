@@ -26,13 +26,13 @@ namespace NesZord.Tests.OpCodes
 				{
 					this.processor.RunProgram(new byte[]
 					{
-						(byte) OpCode.ImmediateLDX, 0x08,
-						(byte) OpCode.DEX,
-						(byte) OpCode.AbsoluteSTX, 0x00, 0x02,
-						(byte) OpCode.ImmediateCPX, 0x03,
-						(byte) OpCode.BNE, 0xf8,
-						(byte) OpCode.AbsoluteSTX, 0x01, 0x02,
-						(byte) OpCode.BRK
+						(byte) OpCode.LDX_Immediate, 0x08,
+						(byte) OpCode.DEX_Implied,
+						(byte) OpCode.STX_Absolute, 0x00, 0x02,
+						(byte) OpCode.CPX_Immediate, 0x03,
+						(byte) OpCode.BNE_Relative, 0xf8,
+						(byte) OpCode.STX_Absolute, 0x01, 0x02,
+						(byte) OpCode.BRK_Implied
 					});
 				};
 
@@ -52,12 +52,12 @@ namespace NesZord.Tests.OpCodes
 				{
 					this.processor.RunProgram(new byte[]
 					{
-						(byte) OpCode.ImmediateLDY, 0x01,
-						(byte) OpCode.INY,
-						(byte) OpCode.ImmediateCPY, 0x02,
-						(byte) OpCode.BEQ, 0xfb,
-						(byte) OpCode.AbsoluteSTY, 0x00, 0x02,
-						(byte) OpCode.BRK
+						(byte) OpCode.LDY_Immediate, 0x01,
+						(byte) OpCode.INY_Implied,
+						(byte) OpCode.CPY_Immediate, 0x02,
+						(byte) OpCode.BEQ_Relative, 0xfb,
+						(byte) OpCode.STY_Absolute, 0x00, 0x02,
+						(byte) OpCode.BRK_Implied
 					});
 				};
 
@@ -76,13 +76,13 @@ namespace NesZord.Tests.OpCodes
 				{
 					this.processor.RunProgram(new byte[]
 					{
-						(byte) OpCode.ImmediateLDX, 0xf5,
-						(byte) OpCode.TXA,
-						(byte) OpCode.AbsoluteSTA, 0x00, 0x20,
-						(byte) OpCode.ImmediateADC, 0x01,
-						(byte) OpCode.BCC, 0xf9,
-						(byte) OpCode.AbsoluteSTA, 0x00, 0x20,
-						(byte) OpCode.BRK
+						(byte) OpCode.LDX_Immediate, 0xf5,
+						(byte) OpCode.TXA_Implied,
+						(byte) OpCode.STA_Absolute, 0x00, 0x20,
+						(byte) OpCode.ADC_Immediate, 0x01,
+						(byte) OpCode.BCC_Relative, 0xf9,
+						(byte) OpCode.STA_Absolute, 0x00, 0x20,
+						(byte) OpCode.BRK_Implied
 					});
 				};
 
@@ -101,13 +101,13 @@ namespace NesZord.Tests.OpCodes
 				{
 					this.processor.RunProgram(new byte[]
 					{
-						(byte) OpCode.ImmediateLDX, 0x08,
-						(byte) OpCode.DEX,
-						(byte) OpCode.AbsoluteSTX, 0x00, 0x02,
-						(byte) OpCode.ImmediateCPX, 0x03,
-						(byte) OpCode.BCS, 0xf8,
-						(byte) OpCode.AbsoluteSTX, 0x01, 0x02,
-						(byte) OpCode.BRK
+						(byte) OpCode.LDX_Immediate, 0x08,
+						(byte) OpCode.DEX_Implied,
+						(byte) OpCode.STX_Absolute, 0x00, 0x02,
+						(byte) OpCode.CPX_Immediate, 0x03,
+						(byte) OpCode.BCS_Relative, 0xf8,
+						(byte) OpCode.STX_Absolute, 0x01, 0x02,
+						(byte) OpCode.BRK_Implied
 					});
 				};
 

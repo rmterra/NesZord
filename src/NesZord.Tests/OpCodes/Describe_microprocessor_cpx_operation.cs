@@ -26,8 +26,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDX, 0x05,
-					(byte)OpCode.ImmediateCPX, byteToCompare
+					(byte)OpCode.LDX_Immediate, 0x05,
+					(byte)OpCode.CPX_Immediate, byteToCompare
 				});
 			};
 
@@ -63,8 +63,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDX, 0x05,
-					(byte)OpCode.ZeroPageCPX, randomOffset
+					(byte)OpCode.LDX_Immediate, 0x05,
+					(byte)OpCode.CPX_ZeroPage, randomOffset
 				});
 			};
 
@@ -105,8 +105,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDX, 0x05,
-					(byte)OpCode.AbsoluteCPX, randomOffset, randomPage
+					(byte)OpCode.LDX_Immediate, 0x05,
+					(byte)OpCode.CPX_Absolute, randomOffset, randomPage
 				});
 			};
 

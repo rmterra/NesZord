@@ -28,8 +28,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDY, fixture.Create<byte>(),
-					(byte)OpCode.ZeroPageSTY, randomOffset
+					(byte)OpCode.LDY_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.STY_ZeroPage, randomOffset
 				});
 			};
 
@@ -46,9 +46,9 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDX, fixture.Create<byte>(),
-					(byte)OpCode.ImmediateLDY, fixture.Create<byte>(),
-					(byte)OpCode.ZeroPageXSTY, randomOffset
+					(byte)OpCode.LDX_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.LDY_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.STY_ZeroPageX, randomOffset
 				});
 			};
 
@@ -65,8 +65,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				this.processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.ImmediateLDY, fixture.Create<byte>(),
-					(byte)OpCode.AbsoluteSTY, 0x00, 0x20
+					(byte)OpCode.LDY_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.STY_Absolute, 0x00, 0x20
 				});
 			};
 
