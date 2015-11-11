@@ -148,6 +148,8 @@
 
 		SBC_Immediate = 0xe9,
 
+		NOP_Implied = 0xea,
+
 		CPX_Absolute = 0xec,
 
 		SBC_Absolute = 0xed,

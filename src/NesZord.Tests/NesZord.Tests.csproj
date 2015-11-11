@@ -76,6 +76,7 @@
     <Compile Include="OpCodes\Describe_microprocessor_branch_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_decrement_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_increment_operations.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_nop_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_status_flag_opeartions.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_sty_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_stx_operation.cs" />

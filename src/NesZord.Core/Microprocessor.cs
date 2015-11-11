@@ -35,6 +35,7 @@ namespace NesZord.Core
 				{ OpCode.DEY_Implied, this.DecrementValueAtY },
 				{ OpCode.INX_Implied, this.IncrementValueAtX },
 				{ OpCode.INY_Implied, this.IncrementValueAtY },
+				{ OpCode.NOP_Implied, () => { } }, /*yes, this opcode do nothing =x*/
 				{ OpCode.SEC_Implied, this.SetCarryFlag },
 				{ OpCode.TAX_Implied, this.TransferFromAccumulatorToX },
 				{ OpCode.TAY_Implied, this.TransferFromAccumulatorToY },
