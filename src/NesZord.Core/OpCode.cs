@@ -184,17 +184,33 @@
 
 		CPY_Immediate = 0xc0,
 
+		CMP_IndexedIndirect = 0xc1,
+
 		CPY_ZeroPage = 0xc4,
 
+		CMP_ZeroPage = 0xc5,
+
 		INY_Implied = 0xc8,
+
+		CMP_Immediate = 0xc9,
 
 		DEX_Implied = 0xca,
 
 		CPY_Absolute = 0xcc,
 
+		CMP_Absolute = 0xcd,
+
 		BNE_Relative = 0xd0,
 
+		CMP_IndirectIndexed = 0xd1,
+
+		CMP_ZeroPageX = 0xd5,
+
 		CLD_Implied = 0xd8,
+
+		CMP_AbsoluteY = 0xd9,
+
+		CMP_AbsoluteX = 0xdd,
 
 		CPX_Immediate = 0xe0,
 
