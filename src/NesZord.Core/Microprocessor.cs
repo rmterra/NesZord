@@ -80,6 +80,7 @@ namespace NesZord.Core
 				{ OpCode.CMP_Absolute, this.CompareAccumulator },
 				{ OpCode.CPY_Absolute, this.CompareYRegister },
 				{ OpCode.CPX_Absolute, this.CompareXRegister },
+				{ OpCode.DEC_Absolute, this.DecrementValueAtMemory },
 				{ OpCode.EOR_Absolute, this.BitwiseExclusiveOrOperation },
 				{ OpCode.LDA_Absolute, this.LoadAccumulator },
 				{ OpCode.LDX_Absolute, this.LoadXRegister },
@@ -92,6 +93,7 @@ namespace NesZord.Core
 				{ OpCode.AND_AbsoluteX, this.BitwiseAndOperation },
 				{ OpCode.ASL_AbsoluteX, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.CMP_AbsoluteX, this.CompareAccumulator },
+				{ OpCode.DEC_AbsoluteX, this.DecrementValueAtMemory },
 				{ OpCode.EOR_AbsoluteX, this.BitwiseExclusiveOrOperation },
 				{ OpCode.LDA_AbsoluteX, this.LoadAccumulator },
 				{ OpCode.LDY_AbsoluteX, this.LoadYRegister },
@@ -133,6 +135,7 @@ namespace NesZord.Core
 				{ OpCode.CMP_ZeroPage, this.CompareAccumulator },
 				{ OpCode.CPY_ZeroPage, this.CompareYRegister },
 				{ OpCode.CPX_ZeroPage, this.CompareXRegister },
+				{ OpCode.DEC_ZeroPage, this.DecrementValueAtMemory },
 				{ OpCode.EOR_ZeroPage, this.BitwiseExclusiveOrOperation },
 				{ OpCode.LDA_ZeroPage, this.LoadAccumulator },
 				{ OpCode.LDX_ZeroPage, this.LoadXRegister },
@@ -147,6 +150,7 @@ namespace NesZord.Core
 				{ OpCode.AND_ZeroPageX, this.BitwiseAndOperation },
 				{ OpCode.ASL_ZeroPageX, this.ArithmeticShiftLeftOnMemory },
 				{ OpCode.CMP_ZeroPageX, this.CompareAccumulator },
+				{ OpCode.DEC_ZeroPageX, this.DecrementValueAtMemory },
 				{ OpCode.EOR_ZeroPageX, this.BitwiseExclusiveOrOperation },
 				{ OpCode.LDA_ZeroPageX, this.LoadAccumulator },
 				{ OpCode.LDY_ZeroPageX, this.LoadYRegister },
@@ -317,6 +321,15 @@ namespace NesZord.Core
 
 			var offset = 0xff ^ branchOffset;
 			this.ProgramCounter -= offset;
+		}
+
+		private void DecrementValueAtMemory(MemoryLocation location)
+		{
+			var memoryValue = (byte)(this.memory.Read(location) - 1);
+			this.Zero = memoryValue == 0;
+			this.Negative = memoryValue.GetBitAt(SIGN_BIT_INDEX);
+
+			this.memory.Write(location, memoryValue);
 		}
 
 		private void DecrementValueAtX()

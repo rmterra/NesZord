@@ -190,6 +190,8 @@
 
 		CMP_ZeroPage = 0xc5,
 
+		DEC_ZeroPage = 0xc6,
+
 		INY_Implied = 0xc8,
 
 		CMP_Immediate = 0xc9,
@@ -200,17 +202,23 @@
 
 		CMP_Absolute = 0xcd,
 
+		DEC_Absolute = 0xce,
+
 		BNE_Relative = 0xd0,
 
 		CMP_IndirectIndexed = 0xd1,
 
 		CMP_ZeroPageX = 0xd5,
 
+		DEC_ZeroPageX = 0xd6,
+
 		CLD_Implied = 0xd8,
 
 		CMP_AbsoluteY = 0xd9,
 
 		CMP_AbsoluteX = 0xdd,
+
+		DEC_AbsoluteX = 0xde,
 
 		CPX_Immediate = 0xe0,
 

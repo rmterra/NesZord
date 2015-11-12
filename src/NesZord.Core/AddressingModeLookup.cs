@@ -13,6 +13,7 @@
 				case OpCode.BIT_Absolute:
 				case OpCode.CPY_Absolute:
 				case OpCode.CPX_Absolute:
+				case OpCode.DEC_Absolute:
 				case OpCode.EOR_Absolute:
 				case OpCode.LDA_Absolute:
 				case OpCode.LDX_Absolute:
@@ -29,6 +30,7 @@
 				case OpCode.AND_AbsoluteX:
 				case OpCode.ASL_AbsoluteX:
 				case OpCode.CMP_AbsoluteX:
+				case OpCode.DEC_AbsoluteX:
 				case OpCode.EOR_AbsoluteX:
 				case OpCode.LDA_AbsoluteX:
 				case OpCode.LDY_AbsoluteX:
@@ -106,6 +108,7 @@
 				case OpCode.ASL_ZeroPage:
 				case OpCode.CMP_ZeroPage:
 				case OpCode.BIT_ZeroPage:
+				case OpCode.DEC_ZeroPage:
 				case OpCode.EOR_ZeroPage:
 				case OpCode.CPY_ZeroPage:
 				case OpCode.CPX_ZeroPage:
@@ -124,6 +127,7 @@
 				case OpCode.AND_ZeroPageX:
 				case OpCode.ASL_ZeroPageX:
 				case OpCode.CMP_ZeroPageX:
+				case OpCode.DEC_ZeroPageX:
 				case OpCode.EOR_ZeroPageX:
 				case OpCode.LDA_ZeroPageX:
 				case OpCode.LDY_ZeroPageX:
