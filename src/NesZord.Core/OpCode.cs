@@ -228,6 +228,8 @@
 
 		SBC_ZeroPage = 0xe5,
 
+		INC_ZeroPage = 0xe6,
+
 		INX_Implied = 0xe8,
 
 		SBC_Immediate = 0xe9,
@@ -238,16 +240,22 @@
 
 		SBC_Absolute = 0xed,
 
+		INC_Absolute = 0xee,
+
 		BEQ_Relative = 0xf0,
 
 		SBC_IndirectIndexed = 0xf1,
 
 		SBC_ZeroPageX = 0xf5,
 
+		INC_ZeroPageX = 0xf6,
+
 		SED_Implied = 0xf8,
 
 		SBC_AbsoluteY = 0xf9,
 
-		SBC_AbsoluteX = 0xfd
+		SBC_AbsoluteX = 0xfd,
+
+		INC_AbsoluteX = 0xfe
 	}
 }

@@ -82,6 +82,7 @@ namespace NesZord.Core
 				{ OpCode.CPX_Absolute, this.CompareXRegister },
 				{ OpCode.DEC_Absolute, this.DecrementValueAtMemory },
 				{ OpCode.EOR_Absolute, this.BitwiseExclusiveOrOperation },
+				{ OpCode.INC_Absolute, this.IncrementValueAtMemory },
 				{ OpCode.LDA_Absolute, this.LoadAccumulator },
 				{ OpCode.LDX_Absolute, this.LoadXRegister },
 				{ OpCode.LDY_Absolute, this.LoadYRegister },
@@ -95,6 +96,7 @@ namespace NesZord.Core
 				{ OpCode.CMP_AbsoluteX, this.CompareAccumulator },
 				{ OpCode.DEC_AbsoluteX, this.DecrementValueAtMemory },
 				{ OpCode.EOR_AbsoluteX, this.BitwiseExclusiveOrOperation },
+				{ OpCode.INC_AbsoluteX, this.IncrementValueAtMemory },
 				{ OpCode.LDA_AbsoluteX, this.LoadAccumulator },
 				{ OpCode.LDY_AbsoluteX, this.LoadYRegister },
 				{ OpCode.LSR_AbsoluteX, this.LogicalShiftRightOnMemory },
@@ -137,6 +139,7 @@ namespace NesZord.Core
 				{ OpCode.CPX_ZeroPage, this.CompareXRegister },
 				{ OpCode.DEC_ZeroPage, this.DecrementValueAtMemory },
 				{ OpCode.EOR_ZeroPage, this.BitwiseExclusiveOrOperation },
+				{ OpCode.INC_ZeroPage, this.IncrementValueAtMemory },
 				{ OpCode.LDA_ZeroPage, this.LoadAccumulator },
 				{ OpCode.LDX_ZeroPage, this.LoadXRegister },
 				{ OpCode.LDY_ZeroPage, this.LoadYRegister },
@@ -152,6 +155,7 @@ namespace NesZord.Core
 				{ OpCode.CMP_ZeroPageX, this.CompareAccumulator },
 				{ OpCode.DEC_ZeroPageX, this.DecrementValueAtMemory },
 				{ OpCode.EOR_ZeroPageX, this.BitwiseExclusiveOrOperation },
+				{ OpCode.INC_ZeroPageX, this.IncrementValueAtMemory },
 				{ OpCode.LDA_ZeroPageX, this.LoadAccumulator },
 				{ OpCode.LDY_ZeroPageX, this.LoadYRegister },
 				{ OpCode.LSR_ZeroPageX, this.LogicalShiftRightOnMemory },
@@ -344,6 +348,15 @@ namespace NesZord.Core
 			this.Y -= 1;
 			this.Zero = this.Y == 0;
 			this.Negative = this.Y.GetBitAt(SIGN_BIT_INDEX);
+		}
+
+		private void IncrementValueAtMemory(MemoryLocation location)
+		{
+			var memoryValue = (byte)(this.memory.Read(location) + 1);
+			this.Zero = memoryValue == 0;
+			this.Negative = memoryValue.GetBitAt(SIGN_BIT_INDEX);
+
+			this.memory.Write(location, memoryValue);
 		}
 
 		private void IncrementValueAtX()
