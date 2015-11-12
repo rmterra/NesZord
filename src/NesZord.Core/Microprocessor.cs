@@ -438,8 +438,9 @@ namespace NesZord.Core
 
 		private void CompareXRegister(byte byteToCompare)
 		{
-			var result = this.X - byteToCompare;
-			this.Carry = result >= 0;
+			var result = (byte)(this.X - byteToCompare);
+			this.Negative = result.GetBitAt(SIGN_BIT_INDEX);
+			this.Carry = this.X >= byteToCompare;
 			this.Zero = result == 0;
 		}
 
@@ -450,8 +451,9 @@ namespace NesZord.Core
 
 		private void CompareYRegister(byte byteToCompare)
 		{
-			var result = this.Y - byteToCompare;
-			this.Carry = result >= 0;
+			var result = (byte)(this.Y - byteToCompare);
+			this.Negative = result.GetBitAt(SIGN_BIT_INDEX);
+			this.Carry = this.Y >= byteToCompare;
 			this.Zero = result == 0;
 		}
 

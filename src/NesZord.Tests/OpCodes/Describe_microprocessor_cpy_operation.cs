@@ -34,22 +34,25 @@ namespace NesZord.Tests.OpCodes
 			context["given that y register value is lower than compared byte"] = () =>
 			{
 				before = () => { byteToCompare = 0xff; };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
+				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
+				it["should not set carry flag"] = () => { processor.Carry.should_be_false(); };
+				it["should not set zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 
 			context["given that y register value is equal than compared byte"] = () =>
 			{
 				before = () => { byteToCompare = 0x05; };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should turn on zero flag"] = () => { processor.Zero.should_be_true(); };
+				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
+				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
+				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
 			};
 
 			context["given that y register value is grater than compared byte"] = () =>
 			{
 				before = () => { byteToCompare = 0x00; };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
+				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
+				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
+				it["should not set zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 		}
 
@@ -71,22 +74,25 @@ namespace NesZord.Tests.OpCodes
 			context["given that y register value is lower than compared byte"] = () =>
 			{
 				before = () => { this.memory.WriteZeroPage(randomOffset, 0xff); };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
+				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
+				it["should not set carry flag"] = () => { processor.Carry.should_be_false(); };
+				it["should not set zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 
 			context["given that y register value is equal than compared byte"] = () =>
 			{
 				before = () => { this.memory.WriteZeroPage(randomOffset, 0x05); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should turn on zero flag"] = () => { processor.Zero.should_be_true(); };
+				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
+				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
+				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
 			};
 
 			context["given that y register value is grater than compared byte"] = () =>
 			{
 				before = () => { this.memory.WriteZeroPage(randomOffset, 0x00); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
+				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
+				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
+				it["should not set zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 		}
 
@@ -113,22 +119,25 @@ namespace NesZord.Tests.OpCodes
 			context["given that y register value is lower than compared byte"] = () =>
 			{
 				before = () => { this.memory.Write(randomOffset, randomPage, 0xff); };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
+				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
+				it["should not set carry flag"] = () => { processor.Carry.should_be_false(); };
+				it["should not set zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 
 			context["given that y register value is equal than compared byte"] = () =>
 			{
 				before = () => { this.memory.Write(randomOffset, randomPage, 0x05); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should turn on zero flag"] = () => { processor.Zero.should_be_true(); };
+				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
+				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
+				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
 			};
 
 			context["given that y register value is grater than compared byte"] = () =>
 			{
 				before = () => { this.memory.Write(randomOffset, randomPage, 0x00); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not turn on zero flag"] = () => { processor.Zero.should_be_false(); };
+				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
+				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
+				it["should not set zero flag"] = () => { processor.Zero.should_be_false(); };
 			};
 		}
 	}
