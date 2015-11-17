@@ -14,6 +14,8 @@ namespace NesZord.Core
 
 		public const int SIGN_BIT_INDEX = 7;
 
+		public const int BCD_MAX_VALUE = 99;
+
 		private readonly Dictionary<OpCode, Action> unadressedOperations;
 
 		private readonly Dictionary<OpCode, Action<byte>> immediateOperations;
@@ -390,9 +392,21 @@ namespace NesZord.Core
 
 		private void AddWithCarry(byte byteToAdd)
 		{
-			var result = this.Accumulator + byteToAdd;
-			this.Accumulator = (byte)(result & 0xff);
-			this.Carry = (result >> 8) > 0;
+			var result = this.Accumulator + byteToAdd + Convert.ToInt32(this.Carry);
+			this.Overflow = this.Accumulator.GetBitAt(SIGN_BIT_INDEX) != ((byte)result).GetBitAt(SIGN_BIT_INDEX);
+			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+
+			if (this.Decimal)
+			{
+				result = this.Accumulator.ConvertToBcd() + byteToAdd.ConvertToBcd() + Convert.ToInt32(this.Carry);
+				this.Carry = result > BCD_MAX_VALUE;
+			}
+			else
+			{
+				this.Carry = result > Byte.MaxValue;
+			}
+
+            this.Accumulator = (byte)(result & 0xff);
 		}
 
 		private void ArithmeticShiftLeftOnMemory(MemoryLocation location)

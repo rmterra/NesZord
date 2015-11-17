@@ -2,10 +2,6 @@
 using NSpec;
 using Ploeh.AutoFixture;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NesZord.Tests.OpCodes
 {
@@ -13,101 +9,61 @@ namespace NesZord.Tests.OpCodes
 	{
 		private static readonly Fixture fixture = new Fixture();
 
+		private byte accumulatorValue;
+
+		private byte byteToAdd;
+
 		private Microprocessor processor;
 
 		private MemoryMock memory;
 
 		public void before_each()
 		{
+			this.accumulatorValue = 0x05;
+			this.byteToAdd = 0x05;
 			this.memory = new MemoryMock();
 			this.processor = new Microprocessor(this.memory);
 		}
 
 		public void When_use_immediate_addressing_mode()
 		{
-			var byteToAdd = default(byte);
-
-			before = () => { byteToAdd = fixture.Create<byte>(); };
-
 			act = () =>
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.TAX_Implied,
+					(byte)OpCode.LDA_Immediate, accumulatorValue,
 					(byte)OpCode.ADC_Immediate, byteToAdd
 				});
 			};
 
-			it["should add the specified value to accumulator"] = () =>
-			{
-				var resultWithCarry = processor.X + byteToAdd;
-				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
-			};
-
-			context["given a byte greater than #ff"] = () =>
-			{
-				before = () => { byteToAdd = 0xff; };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
-			};
-
-			context["given a byte lower than #ff"] = () =>
-			{
-				before = () => { byteToAdd = 0x00; };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-			};
+			this.DefineSpecs(b => this.byteToAdd = b);
 		}
 
 		public void When_use_zero_page_addressing_mode()
 		{
-			var byteToAdd = default(byte);
 			var randomOffset = default(byte);
 
-			before = () =>
-			{
-				byteToAdd = fixture.Create<byte>();
-				randomOffset = fixture.Create<byte>();
-				this.memory.WriteZeroPage(randomOffset, byteToAdd);
-			};
+			before = () => this.memory.WriteZeroPage(randomOffset, byteToAdd);
 
 			act = () =>
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.TAX_Implied,
+					(byte)OpCode.LDA_Immediate, this.accumulatorValue,
 					(byte)OpCode.ADC_ZeroPage, randomOffset
 				});
 			};
 
-			it["should add the specified value to accumulator"] = () =>
-			{
-				var resultWithCarry = processor.X + byteToAdd;
-				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
-			};
-
-			context["given a byte greater than #ff"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage(randomOffset, 0xff); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
-			};
-
-			context["given a byte lower than #ff"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage(randomOffset, 0x00); };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-			};
+			this.DefineSpecs(b => this.memory.WriteZeroPage(randomOffset, b));
 		}
 
 		public void When_use_zero_page_x_addressing_mode()
 		{
-			var byteToAdd = default(byte);
 			var xRegisterValue = default(byte);
 			var randomOffset = default(byte);
 
 			before = () =>
 			{
-				byteToAdd = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 				this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), byteToAdd);
@@ -117,41 +73,22 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.TAY_Implied,
+					(byte)OpCode.LDA_Immediate, this.accumulatorValue,
 					(byte)OpCode.LDX_Immediate, xRegisterValue,
 					(byte)OpCode.ADC_ZeroPageX, randomOffset
 				});
 			};
 
-			it["should add the specified value to accumulator"] = () =>
-			{
-				var resultWithCarry = processor.Y + byteToAdd;
-				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
-			};
-
-			context["given a byte greater than #ff"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), 0xff); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
-			};
-
-			context["given a byte lower than #ff"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), 0x00); };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-			};
+			this.DefineSpecs((b) => this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), b));
 		}
 
 		public void When_use_absolute_addressing_mode()
 		{
-			var byteToAdd = default(byte);
 			var randomPage = default(byte);
 			var randomOffset = default(byte);
 
 			before = () =>
 			{
-				byteToAdd = fixture.Create<byte>();
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 				this.memory.Write(randomOffset, randomPage, byteToAdd);
@@ -161,41 +98,22 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.TAY_Implied,
+					(byte)OpCode.LDA_Immediate, this.accumulatorValue,
 					(byte)OpCode.ADC_Absolute, randomOffset, randomPage
 				});
 			};
 
-			it["should add the specified value to accumulator"] = () =>
-			{
-				var resultWithCarry = processor.Y + byteToAdd;
-				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
-			};
-
-			context["given a byte greater than #ff"] = () =>
-			{
-				before = () => { this.memory.Write(randomOffset, randomPage, 0xff); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
-			};
-
-			context["given a byte lower than #ff"] = () =>
-			{
-				before = () => { this.memory.Write(randomOffset, randomPage, 0x00); };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-			};
+			this.DefineSpecs((b) => this.memory.Write(randomOffset, randomPage, b));
 		}
 
 		public void When_use_absolute_x_addressing_mode()
 		{
-			var byteToAdd = default(byte);
 			var randomPage = default(byte);
 			var randomOffset = default(byte);
 			var xRegisterValue = default(byte);
 
 			before = () =>
 			{
-				byteToAdd = fixture.Create<byte>();
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
@@ -206,42 +124,23 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.TAY_Implied,
+					(byte)OpCode.LDA_Immediate, this.accumulatorValue,
 					(byte)OpCode.LDX_Immediate, xRegisterValue,
 					(byte)OpCode.ADC_AbsoluteX, randomOffset, randomPage
 				});
 			};
 
-			it["should add the specified value to accumulator"] = () =>
-			{
-				var resultWithCarry = processor.Y + byteToAdd;
-				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
-			};
-
-			context["given a byte greater than #ff"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, 0xff); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
-			};
-
-			context["given a byte lower than #ff"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, 0x00); };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-			};
+			this.DefineSpecs((b) => this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, b));
 		}
 
 		public void When_use_absolute_y_addressing_mode()
 		{
-			var byteToAdd = default(byte);
 			var randomPage = default(byte);
 			var randomOffset = default(byte);
 			var yRegisterValue = default(byte);
 
 			before = () =>
 			{
-				byteToAdd = fixture.Create<byte>();
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 				yRegisterValue = fixture.Create<byte>();
@@ -253,41 +152,22 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.TAX_Implied,
+					(byte)OpCode.LDA_Immediate, this.accumulatorValue,
 					(byte)OpCode.LDY_Immediate, yRegisterValue,
 					(byte)OpCode.ADC_AbsoluteY, randomOffset, randomPage
 				});
 			};
 
-			it["should add the specified value to accumulator"] = () =>
-			{
-				var resultWithCarry = processor.X + byteToAdd;
-				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
-			};
-
-			context["given a byte greater than #ff"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, 0xff); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
-			};
-
-			context["given a byte lower than #ff"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, 0x00); };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-			};
+			this.DefineSpecs((b) => this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, b));
 		}
 
 		public void When_use_indexed_indirect_addressing_mode()
 		{
-			var byteToAdd = default(byte);
 			var xRegisterValue = default(byte);
 			var randomOffset = default(byte);
 
 			before = () =>
 			{
-				byteToAdd = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 
@@ -298,41 +178,22 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.TAY_Implied,
+					(byte)OpCode.LDA_Immediate, this.accumulatorValue,
 					(byte)OpCode.LDX_Immediate, xRegisterValue,
 					(byte)OpCode.ADC_IndexedIndirect, randomOffset
 				});
 			};
 
-			it["should add the specified value to accumulator"] = () =>
-			{
-				var resultWithCarry = processor.Y + byteToAdd;
-				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
-			};
-
-			context["given a byte greater than #ff"] = () =>
-			{
-				before = () => { this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, 0xff); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
-			};
-
-			context["given a byte lower than #ff"] = () =>
-			{
-				before = () => { this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, 0x00); };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
-			};
+			this.DefineSpecs((b) => this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, b));
 		}
 
 		public void When_use_indirect_indexed_addressing_mode()
 		{
-			var byteToAdd = default(byte);
 			var yRegisterValue = default(byte);
 			var randomOffset = default(byte);
 
 			before = () =>
 			{
-				byteToAdd = fixture.Create<byte>();
 				yRegisterValue = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 
@@ -343,29 +204,65 @@ namespace NesZord.Tests.OpCodes
 			{
 				processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.TAX_Implied,
+					(byte)OpCode.LDA_Immediate, this.accumulatorValue,
 					(byte)OpCode.LDY_Immediate, yRegisterValue,
 					(byte)OpCode.ADC_IndirectIndexed, randomOffset
 				});
 			};
 
-			it["should add the specified value to accumulator"] = () =>
+			this.DefineSpecs((b) => this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, b));
+		}
+
+		private void DefineSpecs(Action<byte> setByteToAdd)
+		{
+			it["should add the specified value to accumulator"] = () => { processor.Accumulator.should_be(0x0a); };
+			it["should keep initial value on carry flag"] = () => { processor.Carry.should_be_false(); };
+			it["should keep initial value on overflow flag"] = () => { processor.Overflow.should_be_false(); };
+			it["should keep initial value on negative flag"] = () => { processor.Negative.should_be_false(); };
+
+			context["given that carry flag is set"] = () =>
 			{
-				var resultWithCarry = processor.X + byteToAdd;
-				processor.Accumulator.should_be((byte)resultWithCarry & 0xff);
+				before = () => { this.processor.RunProgram(new byte[] { (byte)OpCode.SEC_Implied }); };
+				it["should add it to the final result"] = () => { this.processor.Accumulator.should_be(0x0b); };
 			};
 
-			context["given a byte greater than #ff"] = () =>
+			context["given that accumulator sign bit is set"] = () =>
 			{
-				before = () => { this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, 0xff); };
-				it["should turn on carry flag"] = () => { processor.Carry.should_be(true); };
+				before = () => { this.accumulatorValue = 0xff; };
+				it["should set overflow flag"] = () => { this.processor.Overflow.should_be_true(); };
+				it["should set negative flag"] = () => { this.processor.Negative.should_be_true(); };
 			};
 
-			context["given a byte lower than #ff"] = () =>
+			context["given that decimal flag is set"] = () =>
 			{
-				before = () => { this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, 0x00); };
-				it["should not turn on carry flag"] = () => { processor.Carry.should_be_false(); };
+				before = () => { this.processor.RunProgram(new byte[] { (byte)OpCode.SED_Implied }); };
+
+				context["and added byte is 0x95"] = () =>
+				{
+					before = () => { setByteToAdd?.Invoke(0x95); };
+					it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
+				};
+
+				context["and added byte is 0x02"] = () =>
+				{
+					before = () => { setByteToAdd?.Invoke(0x02); };
+					it["should not set carry flag"] = () => { processor.Carry.should_be_false(); };
+				};
+			};
+
+			context["given that decimal flag is not set"] = () =>
+			{
+				context["and added byte is 0xff"] = () =>
+				{
+					before = () => { setByteToAdd?.Invoke(0xff); };
+					it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
+				};
+
+				context["and added byte is 0x00"] = () =>
+				{
+					before = () => { setByteToAdd?.Invoke(0x00); };
+					it["should not set carry flag"] = () => { processor.Carry.should_be_false(); };
+				};
 			};
 		}
 	}
