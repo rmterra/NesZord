@@ -10,6 +10,10 @@ namespace NesZord.Core
 	{
 		public const int FIRST_BIT_INDEX = 0;
 
+		public const int MAX_NEGATIVE_VALUE = -128;
+
+		public const int MAX_POSITIVE_VALUE = 127;
+
 		public const int OVERFLOW_BIT_INDEX = 6;
 
 		public const int SIGN_BIT_INDEX = 7;
@@ -584,9 +588,19 @@ namespace NesZord.Core
 
 		private void SubtractWithCarry(byte byteToSubtract)
 		{
-			var result = this.Accumulator - byteToSubtract;
+			var result = this.Decimal
+				? this.Accumulator.ConvertToBcd() - byteToSubtract.ConvertToBcd() - Convert.ToInt32(!this.Carry)
+				: this.Accumulator - byteToSubtract - Convert.ToInt32(!this.Carry);
+
+			this.Overflow = this.Decimal
+				? result < 0
+				: result > MAX_POSITIVE_VALUE || result < MAX_NEGATIVE_VALUE;
+
+			this.Carry = result >= 0;
+			this.Negative = ((byte)result).GetBitAt(SIGN_BIT_INDEX);
+			this.Zero = result == 0;
+
 			this.Accumulator = (byte)(result & 0xff);
-			this.Carry = (result << 8) > 0;
 		}
 
 		private void TestBitsInAccumulator(MemoryLocation location)
