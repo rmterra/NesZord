@@ -158,5 +158,46 @@ namespace NesZord.Tests.OpCodes
 				it["should Zero flag turn on"] = () => { this.processor.Zero.should_be_true(); };
 			};
 		}
+
+		public void When_branch_if_overflow_is_clear()
+		{
+			context["given that executed program must branch while Overflow is clear"] = () =>
+			{
+				act = () =>
+				{
+					this.processor.RunProgram(new byte[]
+					{
+						(byte) OpCode.LDA_Immediate, 0xfd,
+						(byte) OpCode.ADC_Immediate, 0x01,
+						(byte) OpCode.BVC_Relative, 0xfc,
+						(byte) OpCode.BRK_Implied
+					});
+				};
+
+				it["should accumulator value be equal 0x00"] = () => { this.processor.Accumulator.should_be(0x00); };
+				it["should set Overflow flag"] = () => { this.processor.Overflow.should_be_true(); };
+			};
+		}
+
+		public void When_branch_if_overflow_is_set()
+		{
+			context["given that executed program must branch while Overflow is set"] = () =>
+			{
+				act = () =>
+				{
+					this.processor.RunProgram(new byte[]
+					{
+						(byte) OpCode.LDA_Immediate, 0x7f,
+						(byte) OpCode.ADC_Immediate, 0x01,
+						(byte) OpCode.BVS_Relative, 0xfc,
+						(byte) OpCode.BRK_Implied
+					});
+				};
+
+				it["should accumulator value be equal 0x81"] = () => { this.processor.Accumulator.should_be(0x81); };
+				it["should not set Negative flag"] = () => { this.processor.Negative.should_be_true(); };
+				it["should not set Overflow flag"] = () => { this.processor.Overflow.should_be_false(); };
+			};
+		}
 	}
 }

@@ -44,6 +44,8 @@ namespace NesZord.Core
 				{ OpCode.BMI_Relative, this.BranchIfNegativeIsSet },
 				{ OpCode.BNE_Relative, this.BranchIfNotEqual },
 				{ OpCode.BPL_Relative, this.BranchIfNegativeIsClear },
+				{ OpCode.BVC_Relative, this.BranchIfOverflowIsClear },
+				{ OpCode.BVS_Relative, this.BranchIfOverflowIsSet },
 				{ OpCode.CLC_Implied, this.ClearCarryFlag },
 				{ OpCode.CLD_Implied, this.ClearDecimalFlag },
 				{ OpCode.CLI_Implied, this.ClearInterruptFlag },
@@ -319,6 +321,16 @@ namespace NesZord.Core
 		private void BranchIfNegativeIsSet()
 		{
 			this.BranchIfConditionIsNotSatisfied(() => this.Negative == false);
+		}
+
+		private void BranchIfOverflowIsClear()
+		{
+			this.BranchIfConditionIsNotSatisfied(() => this.Overflow);
+		}
+
+		private void BranchIfOverflowIsSet()
+		{
+			this.BranchIfConditionIsNotSatisfied(() => this.Overflow == false);
 		}
 
 		private void BranchIfConditionIsNotSatisfied(Func<bool> condition)

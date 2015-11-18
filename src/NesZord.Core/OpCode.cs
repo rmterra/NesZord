@@ -72,6 +72,8 @@
 
 		LSR_Absolute = 0x4e,
 
+		BVC_Relative = 0x50,
+
 		EOR_IndirectIndexed = 0x51,
 
 		EOR_ZeroPageX = 0x55,
@@ -93,6 +95,8 @@
 		ADC_Immediate = 0x69,
 
 		ADC_Absolute = 0x6d,
+
+		BVS_Relative = 0x70,
 
 		ADC_IndirectIndexed = 0x71,
 
