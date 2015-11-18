@@ -219,6 +219,7 @@ namespace NesZord.Tests.OpCodes
 			it["should keep initial value on carry flag"] = () => { processor.Carry.should_be_false(); };
 			it["should keep initial value on overflow flag"] = () => { processor.Overflow.should_be_false(); };
 			it["should keep initial value on negative flag"] = () => { processor.Negative.should_be_false(); };
+			it["should keep initial value on zero flag"] = () => { processor.Zero.should_be_false(); };
 
 			context["given that carry flag is set"] = () =>
 			{
@@ -231,6 +232,23 @@ namespace NesZord.Tests.OpCodes
 				before = () => { this.accumulatorValue = 0xff; };
 				it["should set overflow flag"] = () => { this.processor.Overflow.should_be_true(); };
 				it["should set negative flag"] = () => { this.processor.Negative.should_be_true(); };
+			};
+
+			context["given that result on accumulator is 0x00"] = () =>
+			{
+				before = () => 
+				{
+					this.accumulatorValue = 0x00;
+					setByteToAdd?.Invoke(0x00);
+				};
+
+				it["should set zero flag"] = () => { this.processor.Zero.should_be_true(); };
+			};
+
+			context["given that calculated result is negative"] = () =>
+			{
+				before = () => { setByteToAdd?.Invoke(0xff); };
+				it["should set carry flag"] = () => { this.processor.Carry.should_be_true(); };
 			};
 
 			context["given that decimal flag is set"] = () =>

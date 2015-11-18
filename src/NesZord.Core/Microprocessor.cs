@@ -395,6 +395,7 @@ namespace NesZord.Core
 			var result = this.Accumulator + byteToAdd + Convert.ToInt32(this.Carry);
 			this.Overflow = this.Accumulator.GetBitAt(SIGN_BIT_INDEX) != ((byte)result).GetBitAt(SIGN_BIT_INDEX);
 			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+			this.Zero = result == 0;
 
 			if (this.Decimal)
 			{
