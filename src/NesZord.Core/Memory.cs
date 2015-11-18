@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NesZord.Core
 {
 	public class Memory
 	{
+		public const byte INITIAL_STACK_OFFSET = 0xff;
+
+		public const byte STACK_PAGE = 0x01;
+
 		public const byte ZERO_PAGE = 0x00;
 
 		public const int PROGRAM_ROM_START = 0x0600;

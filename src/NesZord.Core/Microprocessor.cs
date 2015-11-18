@@ -8,7 +8,17 @@ namespace NesZord.Core
 {
 	public class Microprocessor
 	{
+		public const int BCD_MAX_VALUE = 99;
+
+		public const int BREAK_BIT_INDEX = 4;
+
+		public const int CARRY_BIT_INDEX = 0;
+
+		public const int DECIMAL_BIT_INDEX = 3;
+
 		public const int FIRST_BIT_INDEX = 0;
+
+		public const int INTERRUPT_BIT_INDEX = 2;
 
 		public const int MAX_NEGATIVE_VALUE = -128;
 
@@ -18,7 +28,7 @@ namespace NesZord.Core
 
 		public const int SIGN_BIT_INDEX = 7;
 
-		public const int BCD_MAX_VALUE = 99;
+		public const int ZERO_BIT_INDEX = 1;
 
 		private readonly Dictionary<OpCode, Action> unadressedOperations;
 
@@ -33,6 +43,7 @@ namespace NesZord.Core
 			if (memory == null) { throw new ArgumentNullException(nameof(memory)); }
 
 			this.memory = memory;
+			this.StackPointer = Memory.INITIAL_STACK_OFFSET;
 
 			this.unadressedOperations = new Dictionary<OpCode, Action>
 			{
@@ -55,6 +66,10 @@ namespace NesZord.Core
 				{ OpCode.INX_Implied, this.IncrementValueAtX },
 				{ OpCode.INY_Implied, this.IncrementValueAtY },
 				{ OpCode.NOP_Implied, () => { } }, /*yes, this opcode do nothing =x*/
+				{ OpCode.PHA_Implied, this.PushAccumulatorToStack },
+				{ OpCode.PHP_Implied, this.PushProcessorStatusToStack },
+				{ OpCode.PLA_Implied, this.PullFromStackToAccumulator },
+				{ OpCode.PLP_Implied, this.PullFromStackToStatusFlags },
 				{ OpCode.SEC_Implied, this.SetCarryFlag },
 				{ OpCode.SED_Implied, this.SetDecimalFlag },
 				{ OpCode.SEI_Implied, this.SetInterruptFlag },
@@ -176,6 +191,8 @@ namespace NesZord.Core
 			};
 		}
 
+		public bool Break { get; private set; }
+
 		public bool Carry { get; private set; }
 
 		public bool Decimal { get; private set; }
@@ -193,6 +210,8 @@ namespace NesZord.Core
 		public byte Y { get; private set; }
 
 		public byte Accumulator { get; private set; }
+
+		public byte StackPointer { get; private set; }
 
 		public int ProgramCounter { get; private set; }
 
@@ -576,6 +595,51 @@ namespace NesZord.Core
 			this.Zero = (shiftedValue & 0xff) == 0;
 
 			this.memory.Write(location, shiftedValue);
+		}
+
+		private void PullFromStackToAccumulator()
+		{
+			this.StackPointer += 1;
+			this.Accumulator = this.memory.Read(this.StackPointer, Memory.STACK_PAGE);
+			this.Zero = this.Accumulator == 0;
+			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+		}
+
+		private void PullFromStackToStatusFlags()
+		{
+			this.StackPointer += 1;
+			var status = this.memory.Read(this.StackPointer, Memory.STACK_PAGE);
+
+			this.Carry = status.GetBitAt(CARRY_BIT_INDEX);
+			this.Zero = status.GetBitAt(ZERO_BIT_INDEX);
+			this.Interrupt = status.GetBitAt(INTERRUPT_BIT_INDEX);
+			this.Decimal = status.GetBitAt(DECIMAL_BIT_INDEX);
+			this.Break = status.GetBitAt(BREAK_BIT_INDEX);
+			this.Overflow = status.GetBitAt(OVERFLOW_BIT_INDEX);
+			this.Negative = status.GetBitAt(SIGN_BIT_INDEX);
+		}
+
+		private void PushAccumulatorToStack()
+		{
+			this.memory.Write(this.StackPointer, Memory.STACK_PAGE, this.Accumulator);
+			this.StackPointer -= 1;
+		}
+
+		private void PushProcessorStatusToStack()
+		{
+			var status = default(byte);
+
+			status = status.SetBitAt(CARRY_BIT_INDEX, this.Carry);
+			status = status.SetBitAt(ZERO_BIT_INDEX, this.Zero);
+			status = status.SetBitAt(INTERRUPT_BIT_INDEX, this.Interrupt);
+			status = status.SetBitAt(DECIMAL_BIT_INDEX, this.Decimal);
+			status = status.SetBitAt(BREAK_BIT_INDEX, this.Break);
+			status = status.SetBitAt(OVERFLOW_BIT_INDEX, this.Overflow);
+			status = status.SetBitAt(SIGN_BIT_INDEX, this.Negative);
+
+			this.memory.Write(this.StackPointer, Memory.STACK_PAGE, status);
+
+			this.StackPointer -= 1;
 		}
 
 		private void SetCarryFlag()

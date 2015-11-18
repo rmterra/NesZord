@@ -13,6 +13,13 @@ namespace NesZord.Core.Extensions
 			return (value & (1 << index)) != 0;
 		}
 
+		public static byte SetBitAt(this byte value, int index, bool bitValue)
+		{
+			return bitValue
+				? (byte)(value | (1 << index))
+				: (byte)(value & (byte)(Byte.MaxValue ^ (1 << index)));
+		}
+
 		public static byte ConvertToBcd(this byte value)
 		{
 			var tenColumn = value >> HALF_BYTE;

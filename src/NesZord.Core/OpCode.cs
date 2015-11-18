@@ -10,6 +10,8 @@
 
 		ASL_ZeroPage = 0x06,
 
+		PHP_Implied = 0x08,
+
 		ORA_Immediate = 0x09,
 
 		BPL_Relative = 0x10,
@@ -40,6 +42,8 @@
 
 		AND_ZeroPage = 0x25,
 
+		PLP_Implied = 0x28,
+
 		AND_Immediate = 0x29,
 
 		BIT_Absolute = 0x2c,
@@ -63,6 +67,8 @@
 		EOR_ZeroPage = 0x45,
 
 		LSR_ZeroPage = 0x46,
+
+		PHA_Implied = 0x48,
 
 		EOR_Immediate = 0x49,
 
@@ -91,6 +97,8 @@
 		ADC_IndexedIndirect = 0x61,
 
 		ADC_ZeroPage = 0x65,
+
+		PLA_Implied = 0x68,
 
 		ADC_Immediate = 0x69,
 
