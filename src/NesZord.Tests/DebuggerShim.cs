@@ -3,6 +3,7 @@ using System.Reflection;
 using NSpec;
 using NSpec.Domain;
 using NSpec.Domain.Formatters;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 /*
  * Howdy,
@@ -20,35 +21,23 @@ using NSpec.Domain.Formatters;
  * Visual Studio will detect this and will give you a window which you can use to attach a debugger.
  */
 
-//[TestFixture]
+[TestClass]
 public class DebuggerShim
 {
-    //[Test]
+    [TestMethod]
     public void debug()
     {
-		RunTests();
+        var tagOrClassName = "class_name";
+
+        var types = GetType().Assembly.GetTypes(); 
+        // OR
+        // var types = new Type[]{typeof(Some_Type_Containg_some_Specs)};
+        var finder = new SpecFinder(types, "");
+        var builder = new ContextBuilder(finder, new Tags().Parse(tagOrClassName), new DefaultConventions());
+        var runner = new ContextRunner(builder, new ConsoleFormatter(), false);
+        var results = runner.Run(builder.Contexts().Build());
+
+        //assert that there aren't any failures
+        results.Failures().Count().should_be(0);
     }
-
-	public static void Main(string[] args)
-	{
-		new DebuggerShim().RunTests();
-	}
-
-	private void RunTests(string className = null)
-	{
-		var types = GetType().Assembly.GetTypes();
-		// OR
-		// var types = new Type[]{typeof(Some_Type_Containg_some_Specs)};
-		var finder = new SpecFinder(types);
-
-		var builder = string.IsNullOrWhiteSpace(className)
-			? new ContextBuilder(finder, new DefaultConventions())
-			: new ContextBuilder(finder, new Tags().Parse(className), new DefaultConventions());
-
-		var runner = new ContextRunner(builder, new ConsoleFormatter(), false);
-		var results = runner.Run(builder.Contexts().Build());
-
-		//assert that there aren't any failures
-		results.Failures().Count().should_be(0);
-	}
 }
