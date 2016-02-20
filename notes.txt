@@ -1,0 +1,145 @@
+LDA loads a byte of memory into the accumulator
+STA store the contents of accumulator into memory
+
+Na linguagem do 6502 números com prefixo 
+	"$" estão no formato hexadecimal
+	"#" significam inteiro literal
+	"#$" significam hexa literal
+	
+A - Registrador acumulador
+
+X - Registrador
+Y - Registrador
+
+SP - Stack Pointer (pointeiro de pilha)
+
+PC - Program Counter, indica em que ponto está o programa (pense como se fosse o 
+indicador da linha atual numa liguagem interpretada)
+
+Flags
+	C - Carry Flag, ligada quando o resultado de uma instrução seja maior que 1 byte em algum registrador
+	Z - Zero Flag, ligado quanto o resultado de uma instrução definir o valor $00 em algum registrador
+
+Instruções possuem 0..1 parametros
+	
+Cada instrução incrementa o PC (Program Counter) com uma determinada quantidade de bytes
+
+Os registradores A, X, Y possuem o valor maximo de 1 byte, caso utrapassem $FF então serão considerados 
+apenas os dois ultimos digitos e a flag "C" será ligada
+
+---------------------------------------------------------------------
+
+Addressing modes
+
+The Memory location is compound by page and offset 
+The $00 page is called zero page and is open to be used on calculations program calculations
+The other pages represents external peripherals communication
+
+Absolute
+	Represents the full memory location (page and offset)
+	is used as $ppoo
+	
+Zero Page
+	Represents the whole zero page location
+	is used as $oo
+	
+Zero Page,X
+	Like zero page but adds X register value to offset value
+	is used as $oo,X
+	
+Zero Page,Y
+	Like zero page but adds Y register value to offset value
+	is used as $oo,Y
+	
+Absolute,X
+	Like absolute but adds X register value to offset value
+	is used as $ppoo,X
+	
+Absolute,Y
+	Like absolute but adds Y register value to offset value
+	is used as $ppoo,Y
+	
+Immediate
+	Don't uses memory location, is applied directly on respective register
+	
+Relative
+	Used as argument to branch operations, represents an offset to rollback the program counter in case of branch is not satisfied
+	
+Implicit
+	Like immediate the received argument use is implied by the instruction
+	
+Indirect
+	Applies received arguments as memory location to find target memory location
+	
+Indexed Indirect
+	Acts on zero page plus implicit addressing mode, adds the value of X register on received offset before retrieve target memory location
+	is used as ($oo,X)
+	
+Indirect Indexed
+	Acts on zero page and is similar to "Indexed Indirect" but instead add X register value to the offset, the Y register is added on found memory location
+	is used as ($oo),Y
+	
+---------------------------------------------------------------------
+	
+Zero Page
+$0000-$00FF (0000-0255)
+$0800-$08FF (2048-2303)
+$1000-$10FF (4096-4351)
+$1800-$18FF (6144-6399)
+
+Stack
+$0100-$01FF (0256-0511)
+$0900-$09FF (2304-2559)
+$1100-$11FF (4352-4607)
+$1900-$19FF (6400-6655)
+
+RAM
+$0200-$07FF (0512-2047)
+$1000-$17FF (2048-2303)
+$1000-$10FF (4096-4351)
+$1800-$18FF (6144-6399)
+
+$0800-$1FFF 2048-8191 (Total 6143)
+
+$0800 2048
+$1000 4096
+$1800 6144
+
+---------------------------------------------------------------------
+
+Little Endian
+
+lowest byte at lowest memory location
+highest byte at highest memory location
+
+---------------------------------------------------------------------
+
+$0000-$00FF (0000-0255) Zero Page
+$0100-$01FF (0256-0511) Stack
+$0200-$07FF (0512-2047) RAM
+
+$0800-$08FF (2048-2303) Zero Page M1
+$0900-$09FF (2304-2559) Stack M1
+
+$1000-$10FF (4096-4351) Zero Page M2
+$1100-$11FF (4352-4607) Stack M2
+
+$1200-$17FF (4608-6143) RAM M2
+
+$1800-$18FF (6144-6399) Zero Page M3
+$1900-$19FF (6400-6655) Stack M3
+
+---------------------------------------------------------------------
+
+Address BUS
+	The "Address BUS" is used to set the address of the required location.
+
+Control BUS
+	The "Control BUS" is used to inform the components whether the request is a read or a write.
+
+Data BUS
+	The "Data BUS" is used to read or write the byte to the selected address
+	
+ROM is read-only and is accessed via MMC, to allow banks switching to occur.
+
+The I/O registers are used to communicate with other components of the system, the PPU and the control devices.
