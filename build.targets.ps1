@@ -7,7 +7,10 @@ Properties {
 	$testdll_dir = "$artifacts_dir\NesZord.Tests.dll"
 	
 	$solution_dir = "$source_dir\NesZord.sln"
-	$nspecrunner_dir = "$source_dir\packages\nspec.1.0.1\tools\nspecrunner.exe"
+
+	$nspec_dir_pattern = "^nspec(\.\d){3}"
+	$nspec_dir = Get-ChildItem "$source_dir\packages\" -Directory | ?{ $_.Name -match $nspec_dir_pattern } | select -First 1
+	$nspecrunner_dir = "$nspec_dir\tools\nspecrunner.exe"
 	
 	$isAppVeyor = $env:APPVEYOR -eq $true
 }
