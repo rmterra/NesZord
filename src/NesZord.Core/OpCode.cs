@@ -42,13 +42,19 @@
 
 		AND_ZeroPage = 0x25,
 
+		ROL_ZeroPage = 0x26,
+
 		PLP_Implied = 0x28,
 
 		AND_Immediate = 0x29,
 
+		ROL_Accumulator = 0x2a,
+
 		BIT_Absolute = 0x2c,
 
 		AND_Absolute = 0x2d,
+
+		ROL_Absolute = 0x2e,
 
 		BMI_Relative = 0x30,
 
@@ -56,11 +62,15 @@
 
 		AND_ZeroPageX = 0x35,
 
+		ROL_ZeroPageX = 0x36,
+
 		SEC_Implied = 0x38,
 
 		AND_AbsoluteY = 0x39,
 
 		AND_AbsoluteX = 0x3d,
+
+		ROL_AbsoluteX = 0x3e,
 
 		EOR_IndexedIndirect = 0x41,
 
