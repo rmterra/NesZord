@@ -151,14 +151,14 @@ namespace NesZord.Tests.OpCodes
 				it["should increment shifted value"] = () => readShiftedValue?.Invoke().should_be(0x0b);
 			};
 
-			context["given that accumulator value has sign bit set"] = () =>
+			context["given that byte to shift has sign bit set"] = () =>
 			{
 				before = () => setByteToShift(0x80);
 				it["should set carry flag"] = () => this.processor.Carry.should_be_true();
 				it["should set zero flag"] = () => this.processor.Zero.should_be_true();
 			};
 
-			context["given that accumulator value has sixth bit set"] = () =>
+			context["given that byte to shift has seventh bit set"] = () =>
 			{
 				before = () => setByteToShift(0x40);
 				it["should set negative flag"] = () => this.processor.Negative.should_be_true();
