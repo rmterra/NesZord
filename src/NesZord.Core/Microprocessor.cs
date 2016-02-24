@@ -50,7 +50,8 @@ namespace NesZord.Core
 				{ OpCode.ASL_Accumulator, this.ArithmeticShiftLeftOnAccumulator },
 				{ OpCode.LSR_Accumulator, this.LogicalShiftRightOnAccumulator },
 				{ OpCode.ROL_Accumulator, this.RotateLeftOnAccumulator },
-				{ OpCode.BCC_Relative, this.BranchIfCarryIsClear },
+                { OpCode.ROR_Accumulator, this.RotateRightOnAccumulator },
+                { OpCode.BCC_Relative, this.BranchIfCarryIsClear },
 				{ OpCode.BCS_Relative, this.BranchIfCarryIsSet },
 				{ OpCode.BEQ_Relative, this.BranchIfEqual },
 				{ OpCode.BMI_Relative, this.BranchIfNegativeIsSet },
@@ -113,6 +114,7 @@ namespace NesZord.Core
 				{ OpCode.LSR_Absolute, this.LogicalShiftRightOnMemory },
 				{ OpCode.ORA_Absolute, this.BitwiseOrOperation },
 				{ OpCode.ROL_Absolute, this.RotateLeftOnMemory },
+				{ OpCode.ROR_Absolute, this.RotateRightOnMemory },
 				{ OpCode.STA_Absolute, this.StoreAccumulator },
 				{ OpCode.SBC_Absolute, this.SubtractWithCarry },
 				{ OpCode.ADC_AbsoluteX, this.AddWithCarry },
@@ -127,6 +129,7 @@ namespace NesZord.Core
 				{ OpCode.LSR_AbsoluteX, this.LogicalShiftRightOnMemory },
 				{ OpCode.ORA_AbsoluteX, this.BitwiseOrOperation },
 				{ OpCode.ROL_AbsoluteX, this.RotateLeftOnMemory },
+				{ OpCode.ROR_AbsoluteX, this.RotateRightOnMemory },
 				{ OpCode.STA_AbsoluteX, this.StoreAccumulator },
 				{ OpCode.SBC_AbsoluteX, this.SubtractWithCarry },
 				{ OpCode.ADC_AbsoluteY, this.AddWithCarry },
@@ -171,6 +174,7 @@ namespace NesZord.Core
 				{ OpCode.LDY_ZeroPage, this.LoadYRegister },
 				{ OpCode.LSR_ZeroPage, this.LogicalShiftRightOnMemory },
 				{ OpCode.ROL_ZeroPage, this.RotateLeftOnMemory },
+				{ OpCode.ROR_ZeroPage, this.RotateRightOnMemory },
 				{ OpCode.ORA_ZeroPage, this.BitwiseOrOperation },
 				{ OpCode.STA_ZeroPage, this.StoreAccumulator },
 				{ OpCode.STX_ZeroPage, this.StoreXRegister },
@@ -188,6 +192,7 @@ namespace NesZord.Core
 				{ OpCode.LSR_ZeroPageX, this.LogicalShiftRightOnMemory },
 				{ OpCode.ORA_ZeroPageX, this.BitwiseOrOperation },
 				{ OpCode.ROL_ZeroPageX, this.RotateLeftOnMemory },
+				{ OpCode.ROR_ZeroPageX, this.RotateRightOnMemory },
 				{ OpCode.STA_ZeroPageX, this.StoreAccumulator },
 				{ OpCode.STY_ZeroPageX, this.StoreYRegister },
 				{ OpCode.SBC_ZeroPageX, this.SubtractWithCarry },
@@ -668,6 +673,35 @@ namespace NesZord.Core
 
 			memoryByte = (byte)(memoryByte << 1);
 			memoryByte = (byte)(memoryByte | Convert.ToByte(this.Carry));
+
+			this.Carry = newCarryValue;
+
+			this.Zero = memoryByte == 0;
+			this.Negative = memoryByte.GetBitAt(SIGN_BIT_INDEX);
+
+			this.memory.Write(location, memoryByte);
+		}
+
+        private void RotateRightOnAccumulator()
+        {
+			var newCarryValue = this.Accumulator.GetBitAt(FIRST_BIT_INDEX);
+
+            this.Accumulator = (byte)(this.Accumulator >> 1);
+            this.Accumulator = (byte)(this.Accumulator | (this.Carry ? 0x80 : 0x00));
+
+            this.Carry = newCarryValue;
+
+            this.Zero = this.Accumulator == 0;
+            this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+        }
+
+		private void RotateRightOnMemory(MemoryLocation location)
+		{
+			var memoryByte = this.memory.Read(location);
+			var newCarryValue = memoryByte.GetBitAt(FIRST_BIT_INDEX);
+
+			memoryByte = (byte)(memoryByte >> 1);
+			memoryByte = (byte)(memoryByte | (this.Carry ? 0x80 : 0x00));
 
 			this.Carry = newCarryValue;
 

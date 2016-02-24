@@ -22,6 +22,7 @@
 				case OpCode.LSR_Absolute:
 				case OpCode.ORA_Absolute:
 				case OpCode.ROL_Absolute:
+				case OpCode.ROR_Absolute:
 				case OpCode.STY_Absolute:
 				case OpCode.STA_Absolute:
 				case OpCode.STX_Absolute:
@@ -40,6 +41,7 @@
 				case OpCode.LSR_AbsoluteX:
 				case OpCode.ORA_AbsoluteX:
 				case OpCode.ROL_AbsoluteX:
+				case OpCode.ROR_AbsoluteX:
 				case OpCode.STA_AbsoluteX:
 				case OpCode.SBC_AbsoluteX:
 					return AddressingMode.AbsoluteX;
@@ -58,7 +60,8 @@
 				case OpCode.ASL_Accumulator:
 				case OpCode.LSR_Accumulator:
 				case OpCode.ROL_Accumulator:
-					return AddressingMode.Accumulator;
+                case OpCode.ROR_Accumulator:
+                    return AddressingMode.Accumulator;
 
 				case OpCode.ADC_IndexedIndirect:
 				case OpCode.AND_IndexedIndirect:
@@ -124,6 +127,7 @@
 				case OpCode.LSR_ZeroPage:
 				case OpCode.ORA_ZeroPage:
 				case OpCode.ROL_ZeroPage:
+				case OpCode.ROR_ZeroPage:
 				case OpCode.STA_ZeroPage:
 				case OpCode.STX_ZeroPage:
 				case OpCode.STY_ZeroPage:
@@ -142,6 +146,7 @@
 				case OpCode.LSR_ZeroPageX:
 				case OpCode.ORA_ZeroPageX:
 				case OpCode.ROL_ZeroPageX:
+				case OpCode.ROR_ZeroPageX:
 				case OpCode.STA_ZeroPageX:
 				case OpCode.STY_ZeroPageX:
 				case OpCode.SBC_ZeroPageX:

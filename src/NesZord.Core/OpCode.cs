@@ -108,11 +108,17 @@
 
 		ADC_ZeroPage = 0x65,
 
+		ROR_ZeroPage = 0x66,
+
 		PLA_Implied = 0x68,
 
 		ADC_Immediate = 0x69,
 
+		ROR_Accumulator = 0x6a,
+
 		ADC_Absolute = 0x6d,
+
+		ROR_Absolute = 0x6e,
 
 		BVS_Relative = 0x70,
 
@@ -120,11 +126,15 @@
 
 		ADC_ZeroPageX = 0x75,
 
+		ROR_ZeroPageX = 0x76,
+
 		SEI_Implied = 0x78,
 
 		ADC_AbsoluteY = 0x79,
 
 		ADC_AbsoluteX = 0x7d,
+
+		ROR_AbsoluteX = 0x7e,
 
 		STA_IndexedIndirect = 0x81,
 
