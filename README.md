@@ -8,7 +8,6 @@ A .NET MOS 6502 CPU implementation
 
 JMP
 JSR
-ROR
 RTI
 RTS
 TSX
