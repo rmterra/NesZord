@@ -97,12 +97,14 @@
 					return AddressingMode.Immediate;
 
 				case OpCode.BRK_Implied:
-				case OpCode.SEC_Implied:
-				case OpCode.TXA_Implied:
-				case OpCode.TAX_Implied:
 				case OpCode.DEX_Implied:
 				case OpCode.INY_Implied:
 				case OpCode.INX_Implied:
+				case OpCode.SEC_Implied:
+				case OpCode.TAX_Implied:
+				case OpCode.TSX_Implied:
+				case OpCode.TXA_Implied:
+				case OpCode.TXS_Implied:
 					return AddressingMode.Implied;
 
 				case OpCode.BCC_Relative:

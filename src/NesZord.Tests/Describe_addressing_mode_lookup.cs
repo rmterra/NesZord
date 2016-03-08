@@ -91,12 +91,14 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.SBC_Immediate, AddressingMode.Immediate);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BRK_Implied, AddressingMode.Implied);
-            this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.SEC_Implied, AddressingMode.Implied);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TXA_Implied, AddressingMode.Implied);
-			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TAX_Implied, AddressingMode.Implied);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.DEX_Implied, AddressingMode.Implied);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.INY_Implied, AddressingMode.Implied);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.INX_Implied, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.SEC_Implied, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TAX_Implied, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TSX_Implied, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TXA_Implied, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TXS_Implied, AddressingMode.Implied);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BCC_Relative, AddressingMode.Relative);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.BCS_Relative, AddressingMode.Relative);

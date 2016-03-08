@@ -72,5 +72,46 @@ namespace NesZord.Tests.OpCodes
 
 			it["accumulator must be equal to y"] = () => { processor.Accumulator.should_be(processor.Y); };
 		}
+
+		public void When_transfer_from_x_to_stack_pointer()
+		{
+			act = () =>
+			{
+				this.processor.RunProgram(new byte[]
+				{
+					(byte)OpCode.LDX_Immediate, fixture.Create<byte>(),
+					(byte)OpCode.TXS_Implied
+				});
+			};
+
+			it["should stack pointer be equal to x register"] = () => this.processor.StackPointer.should_be(this.processor.X);
+		}
+
+		public void When_transfer_from_stack_pointer_to_x()
+		{
+			act = () =>
+			{
+				this.processor.RunProgram(new byte[] { (byte)OpCode.TSX_Implied });
+			};
+
+			it["should x register be equal to stack pointer"] = () => this.processor.X.should_be(this.processor.StackPointer);
+			it["should set negative flag"] = () => this.processor.Negative.should_be_true();
+			it["should not set zero flag"] = () => this.processor.Zero.should_be_false();
+
+			context["given that stack pointer value is 0x00"] = () =>
+			{
+				act = () =>
+				{
+					this.processor.RunProgram(new byte[]
+					{
+						(byte)OpCode.LDX_Immediate, 0x00,
+						(byte)OpCode.TXS_Implied,
+						(byte)OpCode.TSX_Implied
+					});
+				};
+
+				it["should set zero flag"] = () => this.processor.Zero.should_be_true();
+			};
+		}
 	}
 }

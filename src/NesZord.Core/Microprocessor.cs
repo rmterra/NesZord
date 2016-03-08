@@ -77,7 +77,9 @@ namespace NesZord.Core
 				{ OpCode.SEI_Implied, this.SetInterruptFlag },
 				{ OpCode.TAX_Implied, this.TransferFromAccumulatorToX },
 				{ OpCode.TAY_Implied, this.TransferFromAccumulatorToY },
+				{ OpCode.TSX_Implied, this.TransferFromStackPointerToX },
 				{ OpCode.TXA_Implied, this.TransferFromXToAccumulator },
+				{ OpCode.TXS_Implied, this.TransferFromXToStackPointer },
 				{ OpCode.TYA_Implied, this.TransferFromYToAccumulator }
 			};
 
@@ -768,9 +770,21 @@ namespace NesZord.Core
 			this.Y = this.Accumulator;
 		}
 
+		private void TransferFromStackPointerToX()
+		{
+			this.X = this.StackPointer;
+			this.Negative = this.X.GetBitAt(SIGN_BIT_INDEX);
+			this.Zero = this.X == 0x00;
+		}
+
 		private void TransferFromXToAccumulator()
 		{
 			this.Accumulator = this.X;
+		}
+
+		private void TransferFromXToStackPointer()
+		{
+			this.StackPointer = this.X;
 		}
 
 		private void TransferFromYToAccumulator()

@@ -170,6 +170,8 @@
 
 		STA_AbsoluteY = 0x99,
 
+		TXS_Implied = 0x9a,
+
 		LDY_Immediate = 0xa0,
 
 		LDX_Immediate = 0xa2,
@@ -207,6 +209,8 @@
 		CLV_Implied = 0xb8,
 
 		LDA_AbsoluteY = 0xb9,
+
+		TSX_Implied = 0xba,
 
 		LDY_AbsoluteX = 0xbc,
 
