@@ -12,20 +12,22 @@
 
 		Accumulator = 4,
 
-		IndexedIndirect = 5,
+		Indirect = 5,
 
-		IndirectIndexed = 6,
+		IndexedIndirect = 6,
 
-		Immediate = 7,
+		IndirectIndexed = 7,
 
-		Implied = 8,
+		Immediate = 8,
 
-		Relative = 9,
+		Implied = 9,
 
-		ZeroPage = 10,
+		Relative = 10,
 
-		ZeroPageX = 11,
+		ZeroPage = 11,
 
-		ZeroPageY = 12
+		ZeroPageX = 12,
+
+		ZeroPageY = 13
 	}
 }

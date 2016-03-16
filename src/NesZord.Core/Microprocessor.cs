@@ -110,6 +110,7 @@ namespace NesZord.Core
 				{ OpCode.DEC_Absolute, this.DecrementValueAtMemory },
 				{ OpCode.EOR_Absolute, this.BitwiseExclusiveOrOperation },
 				{ OpCode.INC_Absolute, this.IncrementValueAtMemory },
+				{ OpCode.JMP_Absolute, this.Jump },
 				{ OpCode.LDA_Absolute, this.LoadAccumulator },
 				{ OpCode.LDX_Absolute, this.LoadXRegister },
 				{ OpCode.LDY_Absolute, this.LoadYRegister },
@@ -145,6 +146,7 @@ namespace NesZord.Core
 				{ OpCode.SBC_AbsoluteY, this.SubtractWithCarry },
 				{ OpCode.STX_Absolute, this.StoreXRegister },
 				{ OpCode.STY_Absolute, this.StoreYRegister },
+				{ OpCode.JMP_Indirect, this.Jump },
 				{ OpCode.ADC_IndexedIndirect, this.AddWithCarry },
 				{ OpCode.AND_IndexedIndirect, this.BitwiseAndOperation },
 				{ OpCode.CMP_IndexedIndirect, this.CompareAccumulator },
@@ -280,6 +282,13 @@ namespace NesZord.Core
 			else if (addressingMode == AddressingMode.Absolute) { offset = this.ReadProgramByte(); }
 			else if (addressingMode == AddressingMode.AbsoluteX) { offset = (byte)(this.ReadProgramByte() + this.X); }
 			else if (addressingMode == AddressingMode.AbsoluteY) { offset = (byte)(this.ReadProgramByte() + this.Y); }
+			else if (addressingMode == AddressingMode.Indirect)
+			{
+				offset = (byte)this.ReadProgramByte();
+				var indirectPage = this.memory.Read(offset, Memory.ZERO_PAGE);
+				var indirectOffset = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
+				return new MemoryLocation(indirectOffset, indirectPage);
+			}
 			else if (addressingMode == AddressingMode.IndexedIndirect)
 			{
 				offset = (byte)(this.ReadProgramByte() + this.X);
@@ -564,6 +573,12 @@ namespace NesZord.Core
 			this.Negative = result.GetBitAt(SIGN_BIT_INDEX);
 			this.Carry = this.Y >= byteToCompare;
 			this.Zero = result == 0;
+		}
+
+		private void Jump(MemoryLocation location)
+		{
+			var offset = this.memory.Read(location);
+			this.ProgramCounter = offset;
 		}
 
 		private void LoadAccumulator(MemoryLocation location)

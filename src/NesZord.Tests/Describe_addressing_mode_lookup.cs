@@ -17,6 +17,7 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.DEC_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.EOR_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.INC_Absolute, AddressingMode.Absolute);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.JMP_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.LDA_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.LDX_Absolute, AddressingMode.Absolute);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.LDY_Absolute, AddressingMode.Absolute);
@@ -59,6 +60,8 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ORA_AbsoluteY, AddressingMode.AbsoluteY);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.STA_AbsoluteY, AddressingMode.AbsoluteY);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.SBC_AbsoluteY, AddressingMode.AbsoluteY);
+
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.JMP_Indirect, AddressingMode.Indirect);
 
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.ADC_IndexedIndirect, AddressingMode.IndexedIndirect);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.AND_IndexedIndirect, AddressingMode.IndexedIndirect);

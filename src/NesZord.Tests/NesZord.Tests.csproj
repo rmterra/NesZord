@@ -76,6 +76,7 @@
     <Compile Include="OpCodes\Describe_microprocessor_cmp_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_inc_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_dec_operation.cs" />
+    <Compile Include="OpCodes\Describe_microprocessor_jump_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_lsr_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_eor_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_ora_operation.cs" />

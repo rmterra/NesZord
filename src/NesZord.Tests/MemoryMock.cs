@@ -41,5 +41,22 @@ namespace NesZord.Tests
 
 			return new MemoryLocation(indirectOffset, (byte)(indirectPage + yRegisterValue));
 		}
+
+		public void MockIndirectMemoryWrite(byte offset, byte value)
+		{
+			var location = GetIndirectLocation(offset);
+			this.Write(location, value);
+		}
+
+		public MemoryLocation GetIndirectLocation(byte offset)
+		{
+			var indirectPage = fixture.Create<byte>();
+			var indirectOffset = fixture.Create<byte>();
+
+			this.Write(offset, Memory.ZERO_PAGE, indirectPage);
+			this.Write((byte)(offset + 1), Memory.ZERO_PAGE, indirectOffset);
+
+			return new MemoryLocation(indirectOffset, indirectPage);
+		}
 	}
 }

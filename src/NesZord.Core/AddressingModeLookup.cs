@@ -16,6 +16,7 @@
 				case OpCode.DEC_Absolute:
 				case OpCode.EOR_Absolute:
 				case OpCode.INC_Absolute:
+				case OpCode.JMP_Absolute:
 				case OpCode.LDA_Absolute:
 				case OpCode.LDX_Absolute:
 				case OpCode.LDY_Absolute:
@@ -62,6 +63,9 @@
 				case OpCode.ROL_Accumulator:
                 case OpCode.ROR_Accumulator:
                     return AddressingMode.Accumulator;
+
+				case OpCode.JMP_Indirect:
+					return AddressingMode.Indirect;
 
 				case OpCode.ADC_IndexedIndirect:
 				case OpCode.AND_IndexedIndirect:

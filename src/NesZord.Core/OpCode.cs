@@ -84,6 +84,8 @@
 
 		LSR_Accumulator = 0x4a,
 
+		JMP_Absolute = 0x4c,
+
 		EOR_Absolute = 0x4d,
 
 		LSR_Absolute = 0x4e,
@@ -115,6 +117,8 @@
 		ADC_Immediate = 0x69,
 
 		ROR_Accumulator = 0x6a,
+
+		JMP_Indirect = 0x6c,
 
 		ADC_Absolute = 0x6d,
 
