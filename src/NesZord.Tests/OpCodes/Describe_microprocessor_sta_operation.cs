@@ -90,7 +90,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the accumulator value at memory"] = () =>
 			{
-				this.memory.Read(processor.Y, 0x20).should_be(processor.Accumulator.Value);
+				this.memory.Read(processor.Y.Value, 0x20).should_be(processor.Accumulator.Value);
 			};
 		}
 

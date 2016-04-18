@@ -61,7 +61,7 @@ namespace NesZord.Tests.OpCodes
 					});
 				};
 
-				it["should Y register value be equal 0x03"] = () => { this.processor.Y.should_be(0x03); };
+				it["should Y register value be equal 0x03"] = () => { this.processor.Y.Value.should_be(0x03); };
 				it["should value at $0200 be equal 0x03"] = () => { this.memory.Read(0x00, 0x02).should_be(0x03); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_true(); };
 				it["should Zero flag turn on"] = () => { this.processor.Zero.should_be_false(); };

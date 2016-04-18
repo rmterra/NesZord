@@ -56,16 +56,16 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should decrement 1 to y register"] = () => { processor.Y.should_be(expectedYRegisterValue); };
+			it["should decrement 1 to y register"] = () => { processor.Y.Value.should_be(expectedYRegisterValue); };
 
 			it["should set zero flag when y register value os 0x00"] = () =>
 			{
-				processor.Zero.should_be(this.processor.Y == 0);
+				processor.Zero.should_be(this.processor.Y.IsValueEqualZero);
 			};
 
 			it["should set negative flag with last y register bit value"] = () =>
 			{
-				processor.Negative.should_be(this.processor.Y.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				processor.Negative.should_be(this.processor.Y.IsSignBitSet);
 			};
 		}
 	}

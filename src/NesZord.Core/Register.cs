@@ -30,9 +30,19 @@ namespace NesZord.Core
 			this.Value = (byte)(this.Value & valueToCompare);
 		}
 
+		public void Decrement()
+		{
+			this.Value -= 1;
+		}
+
 		public void ExlusiveOr(byte valueToCompare)
 		{
 			this.Value = (byte)(this.Value ^ valueToCompare);
+		}
+
+		public void Increment()
+		{
+			this.Value += 1;
 		}
 
 		public void Or(byte valueToCompare)

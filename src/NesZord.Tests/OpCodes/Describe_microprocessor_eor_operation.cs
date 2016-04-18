@@ -116,7 +116,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.Value.should_be(this.processor.Y ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.Y.Value ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
@@ -199,7 +199,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.Value.should_be(this.processor.Y ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.Y.Value ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
@@ -283,7 +283,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.Value.should_be(this.processor.Y ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.Y.Value ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>

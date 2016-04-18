@@ -17,16 +17,16 @@ namespace NesZord.Tests.OpCodes
 		{
 			act = () => { this.processor.RunProgram(new byte[] { (byte)OpCode.INY_Implied }); };
 
-			it["should increment 1 to y register"] = () => { processor.Y.should_be(0x01); };
+			it["should increment 1 to y register"] = () => { processor.Y.Value.should_be(0x01); };
 
 			it["should set zero flag when y register value os 0x00"] = () =>
 			{
-				processor.Zero.should_be(this.processor.Y == 0);
+				processor.Zero.should_be(this.processor.Y.IsValueEqualZero);
 			};
 
 			it["should set negative flag with last y register bit value"] = () =>
 			{
-				processor.Negative.should_be(this.processor.Y.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				processor.Negative.should_be(this.processor.Y.IsSignBitSet);
 			};
 
 		}
