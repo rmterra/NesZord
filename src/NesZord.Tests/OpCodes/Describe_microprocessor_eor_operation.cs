@@ -37,17 +37,17 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.X ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
 			{
-				this.processor.Zero.should_be(this.processor.Accumulator == 0);
+				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
 			};
 		}
 
@@ -75,17 +75,17 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.X ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
 			{
-				this.processor.Zero.should_be(this.processor.Accumulator == 0);
+				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
 			};
 		}
 
@@ -116,17 +116,17 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.Y ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.Y ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
 			{
-				this.processor.Zero.should_be(this.processor.Accumulator == 0);
+				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
 			};
 		}
 
@@ -156,17 +156,17 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.X ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
 			{
-				this.processor.Zero.should_be(this.processor.Accumulator == 0);
+				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
 			};
 		}
 
@@ -199,17 +199,17 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.Y ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.Y ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
 			{
-				this.processor.Zero.should_be(this.processor.Accumulator == 0);
+				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
 			};
 		}
 
@@ -242,17 +242,17 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.X ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
 			{
-				this.processor.Zero.should_be(this.processor.Accumulator == 0);
+				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
 			};
 		}
 
@@ -283,17 +283,17 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.Y ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.Y ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
 			{
-				this.processor.Zero.should_be(this.processor.Accumulator == 0);
+				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
 			};
 		}
 
@@ -324,17 +324,17 @@ namespace NesZord.Tests.OpCodes
 
 			it["should set bitwise exclusive 'or' result on accumulator"] = () =>
 			{
-				this.processor.Accumulator.should_be(this.processor.X ^ byteToCompare);
+				this.processor.Accumulator.Value.should_be(this.processor.X ^ byteToCompare);
 			};
 
 			it["should set negative flag equal to seventh accumulator bit"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
 			};
 
 			it["should set zero flag when accumulator is 0"] = () =>
 			{
-				this.processor.Zero.should_be(this.processor.Accumulator == 0);
+				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
 			};
 		}
 	}

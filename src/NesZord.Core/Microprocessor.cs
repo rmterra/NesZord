@@ -44,6 +44,7 @@ namespace NesZord.Core
 
 			this.memory = memory;
 			this.StackPointer = Memory.INITIAL_STACK_OFFSET;
+			this.Accumulator = new Register();
 
 			this.unadressedOperations = new Dictionary<OpCode, Action>
 			{
@@ -223,7 +224,7 @@ namespace NesZord.Core
 
 		public byte Y { get; private set; }
 
-		public byte Accumulator { get; private set; }
+		public Register Accumulator { get; private set; }
 
 		public byte StackPointer { get; private set; }
 
@@ -310,7 +311,7 @@ namespace NesZord.Core
 
 		private void StoreAccumulator(MemoryLocation location)
 		{
-			this.memory.Write(location, this.Accumulator);
+			this.memory.Write(location, this.Accumulator.Value);
 		}
 
 		private void StoreXRegister(MemoryLocation location)
@@ -325,12 +326,12 @@ namespace NesZord.Core
 
 		private void ArithmeticShiftLeftOnAccumulator()
 		{
-			this.Carry = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+			this.Carry = this.Accumulator.IsSignBitSet;
 
-			this.Accumulator = (byte)(this.Accumulator << 1);
+			this.Accumulator.ShiftLeft();
 
-			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
-			this.Zero = (this.Accumulator & 0xff) == 0;
+			this.Negative = this.Accumulator.IsSignBitSet;
+			this.Zero = this.Accumulator.IsValueEqualZero;
 		}
 
 		private void BranchIfCarryIsClear()
@@ -434,10 +435,10 @@ namespace NesZord.Core
 		private void LogicalShiftRightOnAccumulator()
 		{
 			this.Negative = false;
-			this.Carry = this.Accumulator.GetBitAt(FIRST_BIT_INDEX);
+			this.Carry = this.Accumulator.IsFirstBitSet;
 
-			this.Accumulator = (byte)(this.Accumulator >> 1);
-			this.Zero = (this.Accumulator & 0xff) == 0;
+			this.Accumulator.ShiftRight();
+			this.Zero = this.Accumulator.IsValueEqualZero;
 		}
 
 		private void AddWithCarry(MemoryLocation location)
@@ -448,14 +449,14 @@ namespace NesZord.Core
 
 		private void AddWithCarry(byte byteToAdd)
 		{
-			var result = this.Accumulator + byteToAdd + Convert.ToInt32(this.Carry);
-			this.Overflow = this.Accumulator.GetBitAt(SIGN_BIT_INDEX) != ((byte)result).GetBitAt(SIGN_BIT_INDEX);
-			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+			var result = this.Accumulator.Value + byteToAdd + Convert.ToInt32(this.Carry);
+			this.Overflow = this.Accumulator.IsSignBitSet != ((byte)result).GetBitAt(SIGN_BIT_INDEX);
+			this.Negative = this.Accumulator.IsSignBitSet;
 			this.Zero = result == 0;
 
 			if (this.Decimal)
 			{
-				result = this.Accumulator.ConvertToBcd() + byteToAdd.ConvertToBcd() + Convert.ToInt32(this.Carry);
+				result = this.Accumulator.ToBcd() + byteToAdd.ConvertToBcd() + Convert.ToInt32(this.Carry);
 				this.Carry = result > BCD_MAX_VALUE;
 			}
 			else
@@ -463,7 +464,7 @@ namespace NesZord.Core
 				this.Carry = result > Byte.MaxValue;
 			}
 
-            this.Accumulator = (byte)(result & 0xff);
+            this.Accumulator.Value = (byte)(result & 0xff);
 		}
 
 		private void ArithmeticShiftLeftOnMemory(MemoryLocation location)
@@ -487,9 +488,9 @@ namespace NesZord.Core
 
 		private void BitwiseAndOperation(byte byteToCompare)
 		{
-			this.Accumulator = (byte)(this.Accumulator & byteToCompare);
-			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
-			this.Zero = this.Accumulator == 0;
+			this.Accumulator.And(byteToCompare);
+			this.Negative = this.Accumulator.IsSignBitSet;
+			this.Zero = this.Accumulator.IsValueEqualZero;
 		}
 
 		private void BitwiseExclusiveOrOperation(MemoryLocation location)
@@ -499,9 +500,9 @@ namespace NesZord.Core
 
 		private void BitwiseExclusiveOrOperation(byte byteToCompare)
 		{
-			this.Accumulator = (byte)(this.Accumulator ^ byteToCompare);
-			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
-			this.Zero = this.Accumulator == 0;
+			this.Accumulator.ExlusiveOr(byteToCompare);
+			this.Negative = this.Accumulator.IsSignBitSet;
+			this.Zero = this.Accumulator.IsValueEqualZero;
 		}
 
 		private void BitwiseOrOperation(MemoryLocation location)
@@ -511,9 +512,9 @@ namespace NesZord.Core
 
 		private void BitwiseOrOperation(byte byteToCompare)
 		{
-			this.Accumulator = (byte)(this.Accumulator | byteToCompare);
-			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
-			this.Zero = this.Accumulator == 0;
+			this.Accumulator.Or(byteToCompare);
+			this.Negative = this.Accumulator.IsSignBitSet;
+			this.Zero = this.Accumulator.IsValueEqualZero;
 		}
 
 		private void ClearCarryFlag()
@@ -543,9 +544,9 @@ namespace NesZord.Core
 
 		private void CompareAccumulator(byte byteToCompare)
 		{
-			var result = (byte)(this.Accumulator - byteToCompare);
+			var result = (byte)(this.Accumulator.Value - byteToCompare);
 			this.Negative = result.GetBitAt(SIGN_BIT_INDEX);
-			this.Carry = this.Accumulator >= byteToCompare;
+			this.Carry = this.Accumulator.Value >= byteToCompare;
 			this.Zero = result == 0;
 		}
 
@@ -588,7 +589,7 @@ namespace NesZord.Core
 
 		private void LoadAccumulator(byte value)
 		{
-			this.Accumulator = value;
+			this.Accumulator.Value = value;
 		}
 
 		private void LoadXRegister(MemoryLocation location)
@@ -627,9 +628,9 @@ namespace NesZord.Core
 		private void PullFromStackToAccumulator()
 		{
 			this.StackPointer += 1;
-			this.Accumulator = this.memory.Read(this.StackPointer, Memory.STACK_PAGE);
-			this.Zero = this.Accumulator == 0;
-			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+			this.Accumulator.Value = this.memory.Read(this.StackPointer, Memory.STACK_PAGE);
+			this.Zero = this.Accumulator.IsValueEqualZero;
+			this.Negative = this.Accumulator.IsSignBitSet;
 		}
 
 		private void PullFromStackToStatusFlags()
@@ -648,7 +649,7 @@ namespace NesZord.Core
 
 		private void PushAccumulatorToStack()
 		{
-			this.memory.Write(this.StackPointer, Memory.STACK_PAGE, this.Accumulator);
+			this.memory.Write(this.StackPointer, Memory.STACK_PAGE, this.Accumulator.Value);
 			this.StackPointer -= 1;
 		}
 
@@ -671,15 +672,14 @@ namespace NesZord.Core
 
 		private void RotateLeftOnAccumulator()
 		{
-			var newCarryValue = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+			var newCarryValue = this.Accumulator.IsSignBitSet;
 
-			this.Accumulator = (byte)(this.Accumulator << 1);
-			this.Accumulator = (byte)(this.Accumulator | Convert.ToByte(this.Carry));
+			this.Accumulator.RotateLeft(Convert.ToByte(this.Carry));
 
 			this.Carry = newCarryValue;
 
-			this.Zero = this.Accumulator == 0;
-			this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+			this.Zero = this.Accumulator.IsValueEqualZero;
+			this.Negative = this.Accumulator.IsSignBitSet;
 		}
 
 		private void RotateLeftOnMemory(MemoryLocation location)
@@ -701,15 +701,14 @@ namespace NesZord.Core
 
         private void RotateRightOnAccumulator()
         {
-			var newCarryValue = this.Accumulator.GetBitAt(FIRST_BIT_INDEX);
+			var newCarryValue = this.Accumulator.IsFirstBitSet;
 
-            this.Accumulator = (byte)(this.Accumulator >> 1);
-            this.Accumulator = (byte)(this.Accumulator | (this.Carry ? 0x80 : 0x00));
+            this.Accumulator.RotateRight((byte)(this.Carry ? 0x80 : 0x00));
 
             this.Carry = newCarryValue;
 
-            this.Zero = this.Accumulator == 0;
-            this.Negative = this.Accumulator.GetBitAt(SIGN_BIT_INDEX);
+            this.Zero = this.Accumulator.IsValueEqualZero;
+            this.Negative = this.Accumulator.IsSignBitSet;
         }
 
 		private void RotateRightOnMemory(MemoryLocation location)
@@ -751,8 +750,8 @@ namespace NesZord.Core
 		private void SubtractWithCarry(byte byteToSubtract)
 		{
 			var result = this.Decimal
-				? this.Accumulator.ConvertToBcd() - byteToSubtract.ConvertToBcd() - Convert.ToInt32(!this.Carry)
-				: this.Accumulator - byteToSubtract - Convert.ToInt32(!this.Carry);
+				? this.Accumulator.ToBcd() - byteToSubtract.ConvertToBcd() - Convert.ToInt32(!this.Carry)
+				: this.Accumulator.Value - byteToSubtract - Convert.ToInt32(!this.Carry);
 
 			this.Overflow = this.Decimal
 				? result < 0
@@ -762,13 +761,13 @@ namespace NesZord.Core
 			this.Negative = ((byte)result).GetBitAt(SIGN_BIT_INDEX);
 			this.Zero = result == 0;
 
-			this.Accumulator = (byte)(result & 0xff);
+			this.Accumulator.Value = (byte)(result & 0xff);
 		}
 
 		private void TestBitsInAccumulator(MemoryLocation location)
 		{
 			var memoryValue = this.memory.Read(location);
-			var testResult = (byte)(this.Accumulator & memoryValue);
+			var testResult = (byte)(this.Accumulator.Value & memoryValue);
 
 			this.Negative = testResult.GetBitAt(SIGN_BIT_INDEX);
 			this.Overflow = testResult.GetBitAt(OVERFLOW_BIT_INDEX);
@@ -777,12 +776,12 @@ namespace NesZord.Core
 
 		private void TransferFromAccumulatorToX()
 		{
-			this.X = this.Accumulator;
+			this.X = this.Accumulator.Value;
 		}
 
 		private void TransferFromAccumulatorToY()
 		{
-			this.Y = this.Accumulator;
+			this.Y = this.Accumulator.Value;
 		}
 
 		private void TransferFromStackPointerToX()
@@ -794,7 +793,7 @@ namespace NesZord.Core
 
 		private void TransferFromXToAccumulator()
 		{
-			this.Accumulator = this.X;
+			this.Accumulator.Value = this.X;
 		}
 
 		private void TransferFromXToStackPointer()
@@ -804,7 +803,7 @@ namespace NesZord.Core
 
 		private void TransferFromYToAccumulator()
 		{
-			this.Accumulator = this.Y;
+			this.Accumulator.Value = this.Y;
 		}
 
 		private byte ReadProgramByte()

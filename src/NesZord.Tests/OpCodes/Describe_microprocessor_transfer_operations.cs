@@ -28,7 +28,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["x must be equal to accumulator"] = () => { processor.X.should_be(processor.Accumulator); };
+			it["x must be equal to accumulator"] = () => { processor.X.should_be(processor.Accumulator.Value); };
 		}
 
 		public void When_transfer_from_accumulator_to_y_register()
@@ -42,7 +42,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["y must be equal to accumulator"] = () => { processor.Y.should_be(processor.Accumulator); };
+			it["y must be equal to accumulator"] = () => { processor.Y.should_be(processor.Accumulator.Value); };
 		}
 
 		public void When_transfer_from_x_register_to_accumulator()
@@ -56,7 +56,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["accumulator must be equal to x"] = () => { processor.Accumulator.should_be(processor.X); };
+			it["accumulator must be equal to x"] = () => { processor.Accumulator.Value.should_be(processor.X); };
 		}
 
 		public void When_transfer_from_y_register_to_accumulator()
@@ -70,7 +70,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["accumulator must be equal to y"] = () => { processor.Accumulator.should_be(processor.Y); };
+			it["accumulator must be equal to y"] = () => { processor.Accumulator.Value.should_be(processor.Y); };
 		}
 
 		public void When_transfer_from_x_to_stack_pointer()

@@ -39,7 +39,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should accumulator value be shifted to left"] = () => this.processor.Accumulator.should_be(shiftedValue);
+			it["should accumulator value be shifted to left"] = () => this.processor.Accumulator.Value.should_be(shiftedValue);
 
 			it["should set carry flag equal to seventh accumulator bit"] = () =>
 			{

@@ -31,7 +31,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should value at first stack position be equal to accumulator"] = () =>
 			{
-				this.memory.Read(Memory.INITIAL_STACK_OFFSET, Memory.STACK_PAGE).should_be(this.processor.Accumulator);
+				this.memory.Read(Memory.INITIAL_STACK_OFFSET, Memory.STACK_PAGE).should_be(this.processor.Accumulator.Value);
 			};
 
 			it["should actual stack pointer value be 0xfe"] = () =>
@@ -80,13 +80,13 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should accumulator value be 0x05"] = () => this.processor.Accumulator.should_be(0x05);
+			it["should accumulator value be 0x05"] = () => this.processor.Accumulator.Value.should_be(0x05);
 			it["should keep initial value on negative flag"] = () => { processor.Negative.should_be_false(); };
 			it["should keep initial value on zero flag"] = () => { processor.Zero.should_be_false(); };
 
 			it["should value at first stack position be equal to accumulator"] = () =>
 			{
-				this.memory.Read(Memory.INITIAL_STACK_OFFSET, Memory.STACK_PAGE).should_be(this.processor.Accumulator);
+				this.memory.Read(Memory.INITIAL_STACK_OFFSET, Memory.STACK_PAGE).should_be(this.processor.Accumulator.Value);
 			};
 
 			it["should actual stack pointer value be 0xff"] = () =>

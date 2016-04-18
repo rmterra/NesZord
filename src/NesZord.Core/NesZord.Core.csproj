@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AddressingMode.cs" />
     <Compile Include="AddressingModeLookup.cs" />
+    <Compile Include="Register.cs" />
     <Compile Include="Extensions\ArrayExtension.cs" />
     <Compile Include="Extensions\ByteExtension.cs" />
     <Compile Include="Memory.cs" />

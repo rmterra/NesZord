@@ -40,7 +40,7 @@ namespace NesZord.Tests.OpCodes
 
 			this.DefineSpec(
 				b => this.byteToShift = b,
-				() => this.processor.Accumulator);
+				() => this.processor.Accumulator.Value);
 		}
 
 		public void When_use_zero_page_addressing_mode()

@@ -216,7 +216,7 @@ namespace NesZord.Tests.OpCodes
 
 		private void DefineSpecs(Action<byte> setByteToSubtract)
 		{
-			it["should subtract the specified value to accumulator"] = () => processor.Accumulator.should_be(0x05);
+			it["should subtract the specified value to accumulator"] = () => processor.Accumulator.Value.should_be(0x05);
 			it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
 			it["should keep initial value on overflow flag"] = () => { processor.Overflow.should_be_false(); };
 			it["should keep initial value on negative flag"] = () => { processor.Negative.should_be_false(); };
@@ -225,7 +225,7 @@ namespace NesZord.Tests.OpCodes
 			context["given that carry flag is set"] = () =>
 			{
 				before = () => { this.processor.RunProgram(new byte[] { (byte)OpCode.SEC_Implied }); };
-				it["should not use be it to calculate the final result"] = () => { this.processor.Accumulator.should_be(0x06); };
+				it["should not use be it to calculate the final result"] = () => { this.processor.Accumulator.Value.should_be(0x06); };
 			};
 
 			context["given that accumulator sign bit is set"] = () =>

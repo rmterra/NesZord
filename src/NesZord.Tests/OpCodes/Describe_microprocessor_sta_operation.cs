@@ -33,7 +33,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should store the accumulator value at memory"] = () => { this.memory.Read(randomOffset, Memory.ZERO_PAGE).should_be(processor.Accumulator); };
+			it["should store the accumulator value at memory"] = () => { this.memory.Read(randomOffset, Memory.ZERO_PAGE).should_be(processor.Accumulator.Value); };
 		}
 
 		public void When_use_zero_page_x_mode()
@@ -55,7 +55,7 @@ namespace NesZord.Tests.OpCodes
 			it["should store the accumulator value at memory"] = () =>
 			{
 				var offset = (byte)(randomOffset + processor.X);
-				this.memory.Read(offset, Memory.ZERO_PAGE).should_be(processor.Accumulator);
+				this.memory.Read(offset, Memory.ZERO_PAGE).should_be(processor.Accumulator.Value);
 			};
 		}
 
@@ -72,7 +72,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the accumulator value at memory"] = () =>
 			{
-				this.memory.Read(0x00, 0x20).should_be(processor.Accumulator);
+				this.memory.Read(0x00, 0x20).should_be(processor.Accumulator.Value);
 			};
 		}
 
@@ -90,7 +90,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the accumulator value at memory"] = () =>
 			{
-				this.memory.Read(processor.Y, 0x20).should_be(processor.Accumulator);
+				this.memory.Read(processor.Y, 0x20).should_be(processor.Accumulator.Value);
 			};
 		}
 
@@ -108,7 +108,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the accumulator value at memory"] = () =>
 			{
-				this.memory.Read(processor.X, 0x20).should_be(processor.Accumulator);
+				this.memory.Read(processor.X, 0x20).should_be(processor.Accumulator.Value);
 			};
 		}
 
@@ -137,7 +137,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the accumulator value at memory"] = () =>
 			{
-				this.memory.Read(indirectLocation).should_be(processor.Accumulator);
+				this.memory.Read(indirectLocation).should_be(processor.Accumulator.Value);
 			};
 		}
 
@@ -166,7 +166,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the accumulator value at memory"] = () =>
 			{
-				this.memory.Read(indirectLocation).should_be(processor.Accumulator);
+				this.memory.Read(indirectLocation).should_be(processor.Accumulator.Value);
 			};
 		}
 	}

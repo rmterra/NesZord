@@ -87,7 +87,7 @@ namespace NesZord.Tests.OpCodes
 				};
 
 				it["should X register value be equal 0xf5"] = () => { this.processor.X.should_be(0xf5); };
-				it["should Accumulator register value be equal 0x00"] = () => { this.processor.Accumulator.should_be(0x00); };
+				it["should Accumulator register value be equal 0x00"] = () => { this.processor.Accumulator.Value.should_be(0x00); };
 				it["should value at $0200 be equal 0x00"] = () => { this.memory.Read(0x00, 0x02).should_be(0x00); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_true(); };
 			};
@@ -174,7 +174,7 @@ namespace NesZord.Tests.OpCodes
 					});
 				};
 
-				it["should accumulator value be equal 0x00"] = () => { this.processor.Accumulator.should_be(0x00); };
+				it["should accumulator value be equal 0x00"] = () => { this.processor.Accumulator.Value.should_be(0x00); };
 				it["should set Overflow flag"] = () => { this.processor.Overflow.should_be_true(); };
 			};
 		}
@@ -194,7 +194,7 @@ namespace NesZord.Tests.OpCodes
 					});
 				};
 
-				it["should accumulator value be equal 0x81"] = () => { this.processor.Accumulator.should_be(0x81); };
+				it["should accumulator value be equal 0x81"] = () => { this.processor.Accumulator.Value.should_be(0x81); };
 				it["should not set Negative flag"] = () => { this.processor.Negative.should_be_true(); };
 				it["should not set Overflow flag"] = () => { this.processor.Overflow.should_be_false(); };
 			};

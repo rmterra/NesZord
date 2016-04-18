@@ -39,7 +39,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should accumulator value be shifted to right"] = () => this.processor.Accumulator.should_be(shiftedValue);
+			it["should accumulator value be shifted to right"] = () => this.processor.Accumulator.Value.should_be(shiftedValue);
 
 			it["should set negative flag to false"] = () => { this.processor.Negative.should_be(false); };
 

@@ -215,7 +215,7 @@ namespace NesZord.Tests.OpCodes
 
 		private void DefineSpecs(Action<byte> setByteToAdd)
 		{
-			it["should add the specified value to accumulator"] = () => { processor.Accumulator.should_be(0x0a); };
+			it["should add the specified value to accumulator"] = () => { processor.Accumulator.Value.should_be(0x0a); };
 			it["should keep initial value on carry flag"] = () => { processor.Carry.should_be_false(); };
 			it["should keep initial value on overflow flag"] = () => { processor.Overflow.should_be_false(); };
 			it["should keep initial value on negative flag"] = () => { processor.Negative.should_be_false(); };
@@ -224,7 +224,7 @@ namespace NesZord.Tests.OpCodes
 			context["given that carry flag is set"] = () =>
 			{
 				before = () => { this.processor.RunProgram(new byte[] { (byte)OpCode.SEC_Implied }); };
-				it["should add it to the final result"] = () => { this.processor.Accumulator.should_be(0x0b); };
+				it["should add it to the final result"] = () => { this.processor.Accumulator.Value.should_be(0x0b); };
 			};
 
 			context["given that accumulator sign bit is set"] = () =>
