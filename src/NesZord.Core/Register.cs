@@ -25,29 +25,14 @@ namespace NesZord.Core
 
 		public byte Value { get; set; }
 
-		public void And(byte valueToCompare)
-		{
-			this.Value = (byte)(this.Value & valueToCompare);
-		}
-
 		public void Decrement()
 		{
 			this.Value -= 1;
 		}
 
-		public void ExlusiveOr(byte valueToCompare)
-		{
-			this.Value = (byte)(this.Value ^ valueToCompare);
-		}
-
 		public void Increment()
 		{
 			this.Value += 1;
-		}
-
-		public void Or(byte valueToCompare)
-		{
-			this.Value = (byte)(this.Value | valueToCompare);
 		}
 
 		public void RotateLeft(byte carry)
@@ -70,6 +55,24 @@ namespace NesZord.Core
 		public void ShiftRight()
 		{
 			this.Value = (byte)(this.Value >> 1);
+		}
+
+		public byte And(byte valueToCompare)
+		{
+			this.Value = (byte)(this.Value & valueToCompare);
+			return this.Value;
+		}
+
+		public byte ExlusiveOr(byte valueToCompare)
+		{
+			this.Value = (byte)(this.Value ^ valueToCompare);
+			return this.Value;
+		}
+
+		public byte Or(byte valueToCompare)
+		{
+			this.Value = (byte)(this.Value | valueToCompare);
+			return this.Value;
 		}
 
 		public byte ToBcd()

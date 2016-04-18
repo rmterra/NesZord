@@ -44,8 +44,9 @@ namespace NesZord.Core
 
 			this.memory = memory;
 			this.StackPointer = Memory.INITIAL_STACK_OFFSET;
-			this.Y = new Register();
 			this.Accumulator = new Register();
+			this.X = new Register();
+			this.Y = new Register();
 
 			this.unadressedOperations = new Dictionary<OpCode, Action>
 			{
@@ -221,15 +222,15 @@ namespace NesZord.Core
 
 		public bool Zero { get; private set; }
 
-		public byte X { get; private set; }
-
 		public byte StackPointer { get; private set; }
 
 		public int ProgramCounter { get; private set; }
 
-		public Register Y { get; private set; }
-
 		public Register Accumulator { get; private set; }
+
+		public Register X { get; private set; }
+
+		public Register Y { get; private set; }
 
 		public void RunProgram(IEnumerable<byte> program)
 		{
@@ -279,10 +280,10 @@ namespace NesZord.Core
 			var offset = default(byte);
 
 			if (addressingMode == AddressingMode.ZeroPage) { return new MemoryLocation(this.ReadProgramByte(), Memory.ZERO_PAGE); }
-			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.X), Memory.ZERO_PAGE); }
+			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.X.Value), Memory.ZERO_PAGE); }
 			else if (addressingMode == AddressingMode.ZeroPageY) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.Y.Value), Memory.ZERO_PAGE); }
 			else if (addressingMode == AddressingMode.Absolute) { offset = this.ReadProgramByte(); }
-			else if (addressingMode == AddressingMode.AbsoluteX) { offset = (byte)(this.ReadProgramByte() + this.X); }
+			else if (addressingMode == AddressingMode.AbsoluteX) { offset = (byte)(this.ReadProgramByte() + this.X.Value); }
 			else if (addressingMode == AddressingMode.AbsoluteY) { offset = (byte)(this.ReadProgramByte() + this.Y.Value); }
 			else if (addressingMode == AddressingMode.Indirect)
 			{
@@ -293,7 +294,7 @@ namespace NesZord.Core
 			}
 			else if (addressingMode == AddressingMode.IndexedIndirect)
 			{
-				offset = (byte)(this.ReadProgramByte() + this.X);
+				offset = (byte)(this.ReadProgramByte() + this.X.Value);
 				var indirectPage = this.memory.Read(offset, Memory.ZERO_PAGE);
 				var indirectOffset = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
 				return new MemoryLocation(indirectOffset, indirectPage);
@@ -317,7 +318,7 @@ namespace NesZord.Core
 
 		private void StoreXRegister(MemoryLocation location)
 		{
-			this.memory.Write(location, this.X);
+			this.memory.Write(location, this.X.Value);
 		}
 
 		private void StoreYRegister(MemoryLocation location)
@@ -398,9 +399,9 @@ namespace NesZord.Core
 
 		private void DecrementValueAtX()
 		{
-			this.X -= 1;
-			this.Zero = this.X == 0;
-			this.Negative = this.X.GetBitAt(SIGN_BIT_INDEX);
+			this.X.Decrement();
+			this.Zero = this.X.IsValueEqualZero;
+			this.Negative = this.X.IsSignBitSet;
 		}
 
 		private void DecrementValueAtY()
@@ -421,9 +422,9 @@ namespace NesZord.Core
 
 		private void IncrementValueAtX()
 		{
-			this.X += 1;
-			this.Zero = this.X == 0;
-			this.Negative = this.X.GetBitAt(SIGN_BIT_INDEX);
+			this.X.Increment();
+			this.Zero = this.X.IsValueEqualZero;
+			this.Negative = this.X.IsSignBitSet;
 		}
 
 		private void IncrementValueAtY()
@@ -558,9 +559,9 @@ namespace NesZord.Core
 
 		private void CompareXRegister(byte byteToCompare)
 		{
-			var result = (byte)(this.X - byteToCompare);
+			var result = (byte)(this.X.Value - byteToCompare);
 			this.Negative = result.GetBitAt(SIGN_BIT_INDEX);
-			this.Carry = this.X >= byteToCompare;
+			this.Carry = this.X.Value >= byteToCompare;
 			this.Zero = result == 0;
 		}
 
@@ -600,7 +601,7 @@ namespace NesZord.Core
 
 		private void LoadXRegister(byte value)
 		{
-			this.X = value;
+			this.X.Value = value;
 		}
 
 		private void LoadYRegister(MemoryLocation location)
@@ -777,7 +778,7 @@ namespace NesZord.Core
 
 		private void TransferFromAccumulatorToX()
 		{
-			this.X = this.Accumulator.Value;
+			this.X.Value = this.Accumulator.Value;
 		}
 
 		private void TransferFromAccumulatorToY()
@@ -787,19 +788,19 @@ namespace NesZord.Core
 
 		private void TransferFromStackPointerToX()
 		{
-			this.X = this.StackPointer;
-			this.Negative = this.X.GetBitAt(SIGN_BIT_INDEX);
-			this.Zero = this.X == 0x00;
+			this.X.Value = this.StackPointer;
+			this.Negative = this.X.IsSignBitSet;
+			this.Zero = this.X.IsValueEqualZero;
 		}
 
 		private void TransferFromXToAccumulator()
 		{
-			this.Accumulator.Value = this.X;
+			this.Accumulator.Value = this.X.Value;
 		}
 
 		private void TransferFromXToStackPointer()
 		{
-			this.StackPointer = this.X;
+			this.StackPointer = this.X.Value;
 		}
 
 		private void TransferFromYToAccumulator()

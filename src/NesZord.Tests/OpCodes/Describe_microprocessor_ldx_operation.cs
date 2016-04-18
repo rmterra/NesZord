@@ -30,7 +30,7 @@ namespace NesZord.Tests.OpCodes
 				processor.RunProgram(new byte[] { operation, expectedXRegisterValue });
 			};
 
-			it["should set x with received value"] = () => { processor.X.should_be(expectedXRegisterValue); };
+			it["should set x with received value"] = () => { processor.X.Value.should_be(expectedXRegisterValue); };
 		}
 
 		public void When_use_zero_page_addressing_mode()
@@ -52,7 +52,7 @@ namespace NesZord.Tests.OpCodes
 				processor.RunProgram(new byte[] { operation, randomOffset });
 			};
 
-			it["should set x with received value"] = () => { processor.X.should_be(expectedXRegisterValue); };
+			it["should set x with received value"] = () => { processor.X.Value.should_be(expectedXRegisterValue); };
 		}
 
 		public void When_use_zero_y_page_addressing_mode()
@@ -79,7 +79,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set x register with received value"] = () => { processor.X.should_be(expectedXRegisterValue); };
+			it["should set x register with received value"] = () => { processor.X.Value.should_be(expectedXRegisterValue); };
 		}
 
 		public void When_use_absolute_addressing_mode()
@@ -103,7 +103,7 @@ namespace NesZord.Tests.OpCodes
 				processor.RunProgram(new byte[] { operation, randomOffset, randomPage });
 			};
 
-			it["should set x with received value"] = () => { processor.X.should_be(expectedXRegisterValue); };
+			it["should set x with received value"] = () => { processor.X.Value.should_be(expectedXRegisterValue); };
 		}
 
 		public void When_use_absolute_y_addressing_mode()
@@ -132,7 +132,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set x with received value"] = () => { processor.X.should_be(expectedXRegisterValue); };
+			it["should set x with received value"] = () => { processor.X.Value.should_be(expectedXRegisterValue); };
 		}
 	}
 }

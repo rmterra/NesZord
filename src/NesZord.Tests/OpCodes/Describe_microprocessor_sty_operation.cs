@@ -54,7 +54,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the y register value at memory"] = () =>
 			{
-				var offset = (byte)(randomOffset + processor.X);
+				var offset = (byte)(randomOffset + processor.X.Value);
 				this.memory.Read(offset, Memory.ZERO_PAGE).should_be(processor.Y.Value);
 			};
 		}

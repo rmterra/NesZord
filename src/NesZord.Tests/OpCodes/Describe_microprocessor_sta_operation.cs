@@ -54,7 +54,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the accumulator value at memory"] = () =>
 			{
-				var offset = (byte)(randomOffset + processor.X);
+				var offset = (byte)(randomOffset + processor.X.Value);
 				this.memory.Read(offset, Memory.ZERO_PAGE).should_be(processor.Accumulator.Value);
 			};
 		}
@@ -108,7 +108,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should store the accumulator value at memory"] = () =>
 			{
-				this.memory.Read(processor.X, 0x20).should_be(processor.Accumulator.Value);
+				this.memory.Read(processor.X.Value, 0x20).should_be(processor.Accumulator.Value);
 			};
 		}
 

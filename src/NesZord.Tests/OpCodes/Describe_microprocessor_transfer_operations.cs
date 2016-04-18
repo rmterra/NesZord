@@ -28,7 +28,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["x must be equal to accumulator"] = () => { processor.X.should_be(processor.Accumulator.Value); };
+			it["x must be equal to accumulator"] = () => { processor.X.Value.should_be(processor.Accumulator.Value); };
 		}
 
 		public void When_transfer_from_accumulator_to_y_register()
@@ -56,7 +56,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["accumulator must be equal to x"] = () => { processor.Accumulator.Value.should_be(processor.X); };
+			it["accumulator must be equal to x"] = () => { processor.Accumulator.Value.should_be(processor.X.Value); };
 		}
 
 		public void When_transfer_from_y_register_to_accumulator()
@@ -84,7 +84,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should stack pointer be equal to x register"] = () => this.processor.StackPointer.should_be(this.processor.X);
+			it["should stack pointer be equal to x register"] = () => this.processor.StackPointer.should_be(this.processor.X.Value);
 		}
 
 		public void When_transfer_from_stack_pointer_to_x()
@@ -94,7 +94,7 @@ namespace NesZord.Tests.OpCodes
 				this.processor.RunProgram(new byte[] { (byte)OpCode.TSX_Implied });
 			};
 
-			it["should x register be equal to stack pointer"] = () => this.processor.X.should_be(this.processor.StackPointer);
+			it["should x register be equal to stack pointer"] = () => this.processor.X.Value.should_be(this.processor.StackPointer);
 			it["should set negative flag"] = () => this.processor.Negative.should_be_true();
 			it["should not set zero flag"] = () => this.processor.Zero.should_be_false();
 

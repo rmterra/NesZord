@@ -28,16 +28,16 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should decrement 1 to x register"] = () => { processor.X.should_be(expectedXRegisterValue); };
+			it["should decrement 1 to x register"] = () => { processor.X.Value.should_be(expectedXRegisterValue); };
 
 			it["should set zero flag when x register value os 0x00"] = () =>
 			{
-				processor.Zero.should_be(this.processor.X == 0);
+				processor.Zero.should_be(this.processor.X.IsValueEqualZero);
 			};
 
 			it["should set negative flag with last x register bit value"] = () => 
 			{
-				processor.Negative.should_be(this.processor.X.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				processor.Negative.should_be(this.processor.X.IsSignBitSet);
 			};
 		}
 

@@ -36,7 +36,7 @@ namespace NesZord.Tests.OpCodes
 					});
 				};
 
-				it["should X register value be equal 0x03"] = () => { this.processor.X.should_be(0x03); };
+				it["should X register value be equal 0x03"] = () => { this.processor.X.Value.should_be(0x03); };
 				it["should value at $0200 be equal 0x03"] = () => { this.memory.Read(0x00, 0x02).should_be(0x03); };
 				it["should value at $0201 be equal 0x03"] = () => { this.memory.Read(0x01, 0x02).Is(0x03); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_true(); };
@@ -86,7 +86,7 @@ namespace NesZord.Tests.OpCodes
 					});
 				};
 
-				it["should X register value be equal 0xf5"] = () => { this.processor.X.should_be(0xf5); };
+				it["should X register value be equal 0xf5"] = () => { this.processor.X.Value.should_be(0xf5); };
 				it["should Accumulator register value be equal 0x00"] = () => { this.processor.Accumulator.Value.should_be(0x00); };
 				it["should value at $0200 be equal 0x00"] = () => { this.memory.Read(0x00, 0x02).should_be(0x00); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_true(); };
@@ -111,7 +111,7 @@ namespace NesZord.Tests.OpCodes
 					});
 				};
 
-				it["should X register value be equal 0x02"] = () => { this.processor.X.should_be(0x02); };
+				it["should X register value be equal 0x02"] = () => { this.processor.X.Value.should_be(0x02); };
 				it["should value at $0200 be equal 0x02"] = () => { this.memory.Read(0x00, 0x02).should_be(0x02); };
 				it["should value at $0201 be equal 0x02"] = () => { this.memory.Read(0x01, 0x02).Is(0x02); };
 				it["should Carry flag turn on"] = () => { this.processor.Carry.should_be_false(); };
@@ -133,7 +133,7 @@ namespace NesZord.Tests.OpCodes
 					});
 				};
 
-				it["should X register value be equal 0xff"] = () => { this.processor.X.should_be(0xff); };
+				it["should X register value be equal 0xff"] = () => { this.processor.X.Value.should_be(0xff); };
 				it["should Negative flag turn on"] = () => { this.processor.Negative.should_be_true(); };
 			};
 		}
@@ -153,7 +153,7 @@ namespace NesZord.Tests.OpCodes
 					});
 				};
 
-				it["should X register value be equal 0x00"] = () => { this.processor.X.should_be(0x00); };
+				it["should X register value be equal 0x00"] = () => { this.processor.X.Value.should_be(0x00); };
 				it["should Negative flag turn off"] = () => { this.processor.Negative.should_be_false(); };
 				it["should Zero flag turn on"] = () => { this.processor.Zero.should_be_true(); };
 			};
