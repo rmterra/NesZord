@@ -1,13 +1,15 @@
 ﻿using NesZord.Core;
-using NesZord.Core.Extensions;
 using NSpec;
 using Ploeh.AutoFixture;
+using System;
 
 namespace NesZord.Tests.OpCodes
 {
 	public class Describe_microprocessor_asl_operation : nspec
 	{
 		private static readonly Fixture fixture = new Fixture();
+
+		private byte byteToShift;
 
 		private MemoryMock memory;
 
@@ -17,102 +19,46 @@ namespace NesZord.Tests.OpCodes
 		{
 			this.memory = new MemoryMock();
 			this.processor = new Microprocessor(this.memory);
+			this.byteToShift = 0x05;
 		}
 
 		public void When_use_accumulator_addressing_mode()
 		{
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
-
-			before = () =>
-			{
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte << 1);
-			};
-
 			act = () =>
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Immediate, randomByte,
-					(byte) OpCode.ASL_Accumulator
-				});
+				this.processor.RunProgram(new byte[] { (byte) OpCode.ASL_Accumulator });
 			};
 
-			it["should accumulator value be shifted to left"] = () => this.processor.Accumulator.Value.should_be(shiftedValue);
-
-			it["should set carry flag equal to seventh accumulator bit"] = () =>
-			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
-			};
-
-			it["should set negative flag equal to seventh shifted value bit"] = () =>
-			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
-			};
-
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
-			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
-			};
+			this.DefineSpecs(
+				() => this.processor.Accumulator.Value,
+				(b) => this.processor.Accumulator.Value = b);
 		}
 
 		public void When_zero_page_addressing_mode()
 		{
 			var randomOffset = default(byte);
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
 
-			before = () =>
-			{
-				randomOffset = fixture.Create<byte>();
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte << 1);
-
-				this.memory.WriteZeroPage(randomOffset, randomByte);
-			};
+			before = () => randomOffset = fixture.Create<byte>();
 
 			act = () =>
 			{
 				this.processor.RunProgram(new byte[] { (byte) OpCode.ASL_ZeroPageX, randomOffset });
 			};
 
-			it["should memory value be shifted to left"] = () =>
-			{
-				this.memory.Read(randomOffset, Memory.ZERO_PAGE).should_be(shiftedValue);
-			};
-
-			it["should set carry flag equal to seventh memory value bit"] = () =>
-			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
-			};
-
-			it["should set negative flag equal to seventh shifted value bit"] = () =>
-			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
-			};
-
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
-			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
-			};
+			this.DefineSpecs(
+				() => this.memory.Read(randomOffset, Memory.ZERO_PAGE), 
+				(b) => this.memory.WriteZeroPage(randomOffset, b));
 		}
 
 		public void When_zero_page_x_addressing_mode()
 		{
 			var randomOffset = default(byte);
 			var xRegisterValue = default(byte);
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
 
 			before = () =>
 			{
 				randomOffset = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte << 1);
-
-				this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), randomByte);
 			};
 
 			act = () =>
@@ -124,42 +70,20 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should memory value be shifted to left"] = () =>
-			{
-				this.memory.Read((byte)(xRegisterValue + randomOffset), Memory.ZERO_PAGE).should_be(shiftedValue);
-			};
-
-			it["should set carry flag equal to seventh memory value bit"] = () =>
-			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
-			};
-
-			it["should set negative flag equal to seventh shifted value bit"] = () =>
-			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
-			};
-
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
-			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
-			};
+			this.DefineSpecs(
+				() => this.memory.Read((byte)(xRegisterValue + randomOffset), Memory.ZERO_PAGE),
+				(b) => this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), b));
 		}
 
 		public void When_absolute_addressing_mode()
 		{
 			var randomOffset = default(byte);
 			var randomPage = default(byte);
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
 
 			before = () =>
 			{
 				randomOffset = fixture.Create<byte>();
 				randomPage = fixture.Create<byte>();
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte << 1);
-
-				this.memory.Write(randomOffset, randomPage, randomByte);
 			};
 
 			act = () =>
@@ -167,25 +91,9 @@ namespace NesZord.Tests.OpCodes
 				this.processor.RunProgram(new byte[] { (byte)OpCode.ASL_Absolute, randomOffset, randomPage });
 			};
 
-			it["should memory value be shifted to left"] = () =>
-			{
-				this.memory.Read(randomOffset, randomPage).should_be(shiftedValue);
-			};
-
-			it["should set carry flag equal to seventh memory value bit"] = () =>
-			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
-			};
-
-			it["should set negative flag equal to seventh shifted value bit"] = () =>
-			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
-			};
-
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
-			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
-			};
+			this.DefineSpecs(
+				() => this.memory.Read(randomOffset, randomPage),
+				(b) => this.memory.Write(randomOffset, randomPage, b));
 		}
 
 		public void When_absolute_x_addressing_mode()
@@ -193,18 +101,12 @@ namespace NesZord.Tests.OpCodes
 			var randomOffset = default(byte);
 			var randomPage = default(byte);
 			var xRegisterValue = default(byte);
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
 
 			before = () =>
 			{
 				randomOffset = fixture.Create<byte>();
 				randomPage = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte << 1);
-
-				this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, randomByte);
 			};
 
 			act = () =>
@@ -216,24 +118,41 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should memory value be shifted to left"] = () =>
+			this.DefineSpecs(
+				() => this.memory.Read((byte)(xRegisterValue + randomOffset), randomPage),
+				(b) => this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, b));
+		}
+
+		private void DefineSpecs(Func<byte> getByteToTest, Action<byte> setByteToShift = null)
+		{
+			before = () => setByteToShift?.Invoke(this.byteToShift);
+
+			it["should byte to test be shifted to left"] = () =>
 			{
-				this.memory.Read((byte)(xRegisterValue + randomOffset), randomPage).should_be(shiftedValue);
+				var byteToTest = getByteToTest?.Invoke();
+				byteToTest.should_be(0x0a);
 			};
 
-			it["should set carry flag equal to seventh memory value bit"] = () =>
+			it["should not set carry flag"] = () => this.processor.Carry.should_be_false();
+			it["should not set negative flag"] = () => this.processor.Negative.should_be_false();
+			it["should not set zero flag"] = () => this.processor.Zero.should_be_false();
+
+			context["given that byte to shift has the sign bit set"] = () =>
 			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				before = () => setByteToShift?.Invoke(0x80);
+				it["should set carry flag"] = () => this.processor.Carry.should_be_true();
 			};
 
-			it["should set negative flag equal to seventh shifted value bit"] = () =>
+			context["given that shift result has the sign bit set"] = () =>
 			{
-				this.processor.Negative.should_be(shiftedValue.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				before = () => setByteToShift?.Invoke(0x40);
+				it["should set negative flag"] = () => this.processor.Negative.should_be_true();
 			};
 
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
+			context["given that shift result is 0x00"] = () =>
 			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
+				before = () => setByteToShift?.Invoke(0x80);
+				it["should set zero flag"] = () => this.processor.Zero.should_be_true();
 			};
 		}
 	}
