@@ -1,7 +1,6 @@
 ﻿using NesZord.Core;
 using NSpec;
 using Ploeh.AutoFixture;
-using NesZord.Core.Extensions;
 
 namespace NesZord.Tests.OpCodes
 {
@@ -35,20 +34,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
-			{
-				this.processor.Accumulator.Value.should_be(this.processor.X.And(byteToCompare));
-			};
-
-			it["should set negative flag equal to seventh accumulator bit"] = () =>
-			{
-				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
-			};
-
-			it["should set zero flag when accumulator is 0"] = () =>
-			{
-				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
-			};
+			this.DefineSpecs(byteToCompare);
 		}
 
 		public void When_use_zero_page_addressing_mode()
@@ -73,20 +59,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
-			{
-				this.processor.Accumulator.Value.should_be(this.processor.X.And(byteToCompare));
-			};
-
-			it["should set negative flag equal to seventh accumulator bit"] = () =>
-			{
-				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
-			};
-
-			it["should set zero flag when accumulator is 0"] = () =>
-			{
-				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
-			};
+			this.DefineSpecs(byteToCompare);
 		}
 
 		public void When_use_zero_page_x_addressing_mode()
@@ -114,20 +87,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
-			{
-				this.processor.Accumulator.Value.should_be(this.processor.Y.Value & byteToCompare);
-			};
-
-			it["should set negative flag equal to seventh accumulator bit"] = () =>
-			{
-				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
-			};
-
-			it["should set zero flag when accumulator is 0"] = () =>
-			{
-				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
-			};
+			this.DefineSpecs(byteToCompare);
 		}
 
 		public void When_use_absolute_addressing_mode()
@@ -154,20 +114,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
-			{
-				this.processor.Accumulator.Value.should_be(this.processor.X.And(byteToCompare));
-			};
-
-			it["should set negative flag equal to seventh accumulator bit"] = () =>
-			{
-				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
-			};
-
-			it["should set zero flag when accumulator is 0"] = () =>
-			{
-				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
-			};
+			this.DefineSpecs(byteToCompare);
 		}
 
 		public void When_use_absolute_x_addressing_mode()
@@ -197,20 +144,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
-			{
-				this.processor.Accumulator.Value.should_be(this.processor.Y.Value & byteToCompare);
-			};
-
-			it["should set negative flag equal to seventh accumulator bit"] = () =>
-			{
-				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
-			};
-
-			it["should set zero flag when accumulator is 0"] = () =>
-			{
-				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
-			};
+			this.DefineSpecs(byteToCompare);
 		}
 
 		public void When_use_absolute_y_addressing_mode()
@@ -240,20 +174,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
-			{
-				this.processor.Accumulator.Value.should_be(this.processor.X.And(byteToCompare));
-			};
-
-			it["should set negative flag equal to seventh accumulator bit"] = () =>
-			{
-				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
-			};
-
-			it["should set zero flag when accumulator is 0"] = () =>
-			{
-				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
-			};
+			this.DefineSpecs(byteToCompare);
 		}
 
 		public void When_use_indexed_indirect_addressing_mode()
@@ -281,20 +202,7 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set bitwise 'and' result on accumulator"] = () =>
-			{
-				this.processor.Accumulator.Value.should_be(this.processor.Y.Value & byteToCompare);
-			};
-
-			it["should set negative flag equal to seventh accumulator bit"] = () =>
-			{
-				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
-			};
-
-			it["should set zero flag when accumulator is 0"] = () =>
-			{
-				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
-			};
+			this.DefineSpecs(byteToCompare);
 		}
 
 		public void When_use_indirect_indexed_addressing_mode()
@@ -322,6 +230,11 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
+			this.DefineSpecs(byteToCompare);
+		}
+
+		private void DefineSpecs(byte byteToCompare)
+		{
 			it["should set bitwise 'and' result on accumulator"] = () =>
 			{
 				this.processor.Accumulator.Value.should_be(this.processor.X.And(byteToCompare));
