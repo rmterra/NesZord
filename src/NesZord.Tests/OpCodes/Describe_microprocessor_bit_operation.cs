@@ -2,6 +2,7 @@
 using NesZord.Core.Extensions;
 using NSpec;
 using Ploeh.AutoFixture;
+using System;
 
 namespace NesZord.Tests.OpCodes
 {
@@ -22,57 +23,34 @@ namespace NesZord.Tests.OpCodes
 		public void When_use_zero_page_addressing_mode()
 		{
 			var accumulatorValue = default(byte);
-			var testResult = default(byte);
 			var randomOffset = default(byte);
 
-			before = () => 
-			{
-				accumulatorValue = fixure.Create<byte>();
-				randomOffset = fixure.Create<byte>();
+			before = () => randomOffset = fixure.Create<byte>();
 
-				var memoryValue = fixure.Create<byte>();
-				this.memory.WriteZeroPage(randomOffset, memoryValue);
-				testResult = (byte)(accumulatorValue & memoryValue);
-			};
-
-			act = () => 
+			act = () =>
 			{
-				this.processor.RunProgram(new byte[] 
+				this.processor.RunProgram(new byte[]
 				{
 					(byte) OpCode.LDA_Immediate, accumulatorValue,
 					(byte) OpCode.BIT_ZeroPage, randomOffset
 				});
 			};
 
-			it["should set negative flag equal to last test result bit"] = () =>
-			{
-				this.processor.Negative.should_be(testResult.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
-			};
-
-			it["should set negative flag equal to last test result bit"] = () =>
-			{
-				this.processor.Overflow.should_be(testResult.GetBitAt(Microprocessor.OVERFLOW_BIT_INDEX));
-			};
-
-			it["should set zero flag when test result is 0"] = () => { this.processor.Zero.should_be(testResult == 0); };
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => this.memory.WriteZeroPage(randomOffset, b));
 		}
 
 		public void When_use_absolute_addressing_mode()
 		{
 			var accumulatorValue = default(byte);
-			var testResult = default(byte);
 			var randomOffset = default(byte);
 			var randomPage = default(byte);
 
 			before = () =>
 			{
-				accumulatorValue = fixure.Create<byte>();
 				randomOffset = fixure.Create<byte>();
 				randomPage = fixure.Create<byte>();
-
-				var memoryValue = fixure.Create<byte>();
-				this.memory.Write(randomOffset, randomPage, memoryValue);
-				testResult = (byte)(accumulatorValue & memoryValue);
 			};
 
 			act = () =>
@@ -84,17 +62,131 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should set negative flag equal to last test result bit"] = () =>
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => this.memory.Write(randomOffset, randomPage, b));
+		}
+
+		private void DefineSpecs(Action<byte> setAccumulator, Action<byte> setByteToTest)
+		{
+			context["given that sign bit is not set on acccumulator and byte to test"] = () =>
 			{
-				this.processor.Negative.should_be(testResult.GetBitAt(Microprocessor.SIGN_BIT_INDEX));
+				before = () =>
+				{
+					setAccumulator?.Invoke(0x05);
+					setByteToTest?.Invoke(0x05);
+				};
+
+				this.TestNegativeAndZero(false, false);
 			};
 
-			it["should set negative flag equal to last test result bit"] = () =>
+			context["given that overflow bit is not set on acccumulator and byte to test"] = () =>
 			{
-				this.processor.Overflow.should_be(testResult.GetBitAt(Microprocessor.OVERFLOW_BIT_INDEX));
+				before = () =>
+				{
+					setAccumulator?.Invoke(0x05);
+					setByteToTest?.Invoke(0x05);
+				};
+
+				this.TestOverflowAndZero(false, false);
 			};
 
-			it["should set zero flag when test result is 0"] = () => { this.processor.Zero.should_be(testResult == 0); };
+			context["given that sign bit is not set on acccumulator but is on byte to test"] = () =>
+			{
+				before = () =>
+				{
+					setAccumulator?.Invoke(0x05);
+					setByteToTest?.Invoke(0x80);
+				};
+
+				this.TestNegativeAndZero(false, true);
+			};
+
+			context["given that overflow bit is not set on acccumulator but is on byte to test"] = () =>
+			{
+				before = () =>
+				{
+					setAccumulator?.Invoke(0x05);
+					setByteToTest?.Invoke(0x40);
+				};
+
+				this.TestOverflowAndZero(false, true);
+			};
+
+			context["given that sign bit is set on acccumulator but not is on byte to test"] = () =>
+			{
+				before = () =>
+				{
+					setAccumulator?.Invoke(0x80);
+					setByteToTest?.Invoke(0x05);
+				};
+
+				this.TestNegativeAndZero(false, true);
+			};
+
+			context["given that overflow bit is set on acccumulator but not is on byte to test"] = () =>
+			{
+				before = () =>
+				{
+					setAccumulator?.Invoke(0x40);
+					setByteToTest?.Invoke(0x05);
+				};
+
+				this.TestOverflowAndZero(false, true);
+			};
+
+			context["given that sign bit is set on acccumulator and byte to test"] = () =>
+			{
+				before = () =>
+				{
+					setAccumulator?.Invoke(0x80);
+					setByteToTest?.Invoke(0x80);
+				};
+
+				this.TestNegativeAndZero(true, false);
+			};
+
+			context["given that overflow bit is set on acccumulator and byte to test"] = () =>
+			{
+				before = () =>
+				{
+					setAccumulator?.Invoke(0x40);
+					setByteToTest?.Invoke(0x40);
+				};
+
+				this.TestOverflowAndZero(true, false);
+			};
+
+			context["given that all bytes from accumulator are different from byte to test"] = () =>
+			{
+				before = () =>
+				{
+					setAccumulator?.Invoke(0x40);
+					setByteToTest?.Invoke(0xbf);
+				};
+
+				this.TestZero(true);
+			};
+		}
+
+		private void TestNegativeAndZero(bool negative, bool zero)
+		{
+			var negativeFlagSentence = negative ? "should set negative flag" : "should not set negative flag";
+			it[negativeFlagSentence] = () => this.processor.Negative.should_be(negative);
+			this.TestZero(zero);
+		}
+
+		private void TestOverflowAndZero(bool overflow, bool zero)
+		{
+			var overflowFlagSentence = overflow ? "should set overflow flag" : "should not set overflow flag";
+			it[overflowFlagSentence] = () => this.processor.Overflow.should_be(overflow);
+			this.TestZero(zero);
+		}
+
+		private void TestZero(bool zero)
+		{
+			var zeroFlagSentence = zero ? "should set zero flag" : "should not set zero flag";
+			it[zeroFlagSentence] = () => this.processor.Zero.should_be(zero);
 		}
 	}
 }
