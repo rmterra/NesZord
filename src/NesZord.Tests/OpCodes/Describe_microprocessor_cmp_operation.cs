@@ -1,6 +1,7 @@
 ﻿using NesZord.Core;
 using NSpec;
 using Ploeh.AutoFixture;
+using System;
 
 namespace NesZord.Tests.OpCodes
 {
@@ -23,8 +24,6 @@ namespace NesZord.Tests.OpCodes
 			var accumulatorValue = default(byte);
 			var byteToCompare = default(byte);
 
-			before = () => { accumulatorValue = 0x05; };
-
 			act = () =>
 			{
 				processor.RunProgram(new byte[]
@@ -34,42 +33,9 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			context["given that accumulator value is lower than compared byte"] = () =>
-			{
-				before = () => { byteToCompare = 0xff; };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should not set on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given that accumulator value is equal than compared byte"] = () =>
-			{
-				before = () => { byteToCompare = 0x05; };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
-			};
-
-			context["given that accumulator value is greater than compared byte"] = () =>
-			{
-				before = () => { byteToCompare = 0x00; };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given compare result is greater than 0x80"] = () =>
-			{
-				before = () =>
-				{
-					accumulatorValue = 0xff;
-					byteToCompare = 0x00;
-				};
-
-				it["should set negative flag"] = () => { processor.Negative.should_be_true(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => byteToCompare = b);
 		}
 
 		public void When_use_zero_page_addressing_mode()
@@ -77,11 +43,7 @@ namespace NesZord.Tests.OpCodes
 			var randomOffset = default(byte);
 			var accumulatorValue = default(byte);
 
-			before = () => 
-			{
-				randomOffset = fixture.Create<byte>();
-				accumulatorValue = 0x05;
-            };
+			before = () => randomOffset = fixture.Create<byte>();
 
 			act = () =>
 			{
@@ -92,42 +54,9 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			context["given that accumulator value is lower than compared byte"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage(randomOffset, 0xff); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should not set on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given that accumulator value is equal than compared byte"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage(randomOffset, 0x05); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
-			};
-
-			context["given that accumulator value is greater than compared byte"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage(randomOffset, 0x00); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given compare result is greater than 0x80"] = () =>
-			{
-				before = () => 
-				{
-					accumulatorValue = 0xff;
-					this.memory.WriteZeroPage(randomOffset, 0x00);
-				};
-
-				it["should set negative flag"] = () => { processor.Negative.should_be_true(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => this.memory.WriteZeroPage(randomOffset, b));
 		}
 
 		public void When_use_zero_page_x_addressing_mode()
@@ -140,7 +69,6 @@ namespace NesZord.Tests.OpCodes
 			{
 				randomOffset = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
-				accumulatorValue = 0x05;
 			};
 
 			act = () =>
@@ -153,42 +81,9 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			context["given that accumulator value is lower than compared byte"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), 0xff); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should not set on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given that accumulator value is equal than compared byte"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), 0x05); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
-			};
-
-			context["given that accumulator value is greater than compared byte"] = () =>
-			{
-				before = () => { this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), 0x00); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given compare result is greater than 0x80"] = () =>
-			{
-				before = () =>
-				{
-					accumulatorValue = 0xff;
-					this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), 0x00);
-				};
-
-				it["should set negative flag"] = () => { processor.Negative.should_be_true(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), b));
 		}
 
 		public void When_use_absolute_addressing_mode()
@@ -199,8 +94,6 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				accumulatorValue = 0x05;
-
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 			};
@@ -214,42 +107,9 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			context["given that accumulator value is lower than compared byte"] = () =>
-			{
-				before = () => { this.memory.Write(randomOffset, randomPage, 0xff); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should not set on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given that accumulator value is equal than compared byte"] = () =>
-			{
-				before = () => { this.memory.Write(randomOffset, randomPage, 0x05); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
-			};
-
-			context["given that accumulator value is greater than compared byte"] = () =>
-			{
-				before = () => { this.memory.Write(randomOffset, randomPage, 0x00); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given compare result is greater than 0x80"] = () =>
-			{
-				before = () =>
-				{
-					accumulatorValue = 0xff;
-					this.memory.WriteZeroPage(randomOffset, 0x00);
-				};
-
-				it["should set negative flag"] = () => { processor.Negative.should_be_true(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => this.memory.Write(randomOffset, randomPage, b));
 		}
 
 		public void When_use_absolute_x_addressing_mode()
@@ -261,8 +121,6 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				accumulatorValue = 0x05;
-
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
@@ -278,42 +136,9 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			context["given that accumulator value is lower than compared byte"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, 0xff); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should not set on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given that accumulator value is equal than compared byte"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, 0x05); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
-			};
-
-			context["given that accumulator value is greater than compared byte"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, 0x00); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given compare result is greater than 0x80"] = () =>
-			{
-				before = () =>
-				{
-					accumulatorValue = 0xff;
-					this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), 0x00);
-				};
-
-				it["should set negative flag"] = () => { processor.Negative.should_be_true(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, b));
 		}
 
 		public void When_use_absolute_y_addressing_mode()
@@ -325,8 +150,6 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				accumulatorValue = 0x05;
-
 				randomPage = fixture.Create<byte>();
 				randomOffset = fixture.Create<byte>();
 				yRegisterValue = fixture.Create<byte>();
@@ -342,42 +165,9 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			context["given that accumulator value is lower than compared byte"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, 0xff); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should not set on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given that accumulator value is equal than compared byte"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, 0x05); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
-			};
-
-			context["given that accumulator value is greater than compared byte"] = () =>
-			{
-				before = () => { this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, 0x00); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given compare result is greater than 0x80"] = () =>
-			{
-				before = () =>
-				{
-					accumulatorValue = 0xff;
-					this.memory.WriteZeroPage((byte)(yRegisterValue + randomOffset), 0x00);
-				};
-
-				it["should set negative flag"] = () => { processor.Negative.should_be_true(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, b));
 		}
 
 		public void When_use_indexed_indirect_addressing_mode()
@@ -388,8 +178,6 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				accumulatorValue = 0x05;
-
 				randomOffset = fixture.Create<byte>();
 				xRegisterValue = fixture.Create<byte>();
 			};
@@ -404,42 +192,9 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			context["given that accumulator value is lower than compared byte"] = () =>
-			{
-				before = () => { this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, 0xff); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should not set on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given that accumulator value is equal than compared byte"] = () =>
-			{
-				before = () => { this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, 0x05); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
-			};
-
-			context["given that accumulator value is greater than compared byte"] = () =>
-			{
-				before = () => { this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, 0x00); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
-
-			context["given compare result is greater than 0x80"] = () =>
-			{
-				before = () =>
-				{
-					accumulatorValue = 0xff;
-					this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, 0x00);
-				};
-
-				it["should set negative flag"] = () => { processor.Negative.should_be_true(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
-			};
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, b));
 		}
 
 		public void When_use_indirect_indexed_addressing_mode()
@@ -450,8 +205,6 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				accumulatorValue = 0x05;
-
 				randomOffset = fixture.Create<byte>();
 				yRegisterValue = fixture.Create<byte>();
 			};
@@ -466,9 +219,18 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
+			this.DefineSpecs(
+				(b) => accumulatorValue = b,
+				(b) => this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, b));
+		}
+
+		private void DefineSpecs(Action<byte> setAccumulatorValue, Action<byte> setByteToCompare)
+		{
+			before = () => { setAccumulatorValue(0x05); };
+
 			context["given that accumulator value is lower than compared byte"] = () =>
 			{
-				before = () => { this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, 0xff); };
+				before = () => { setByteToCompare(0xff); };
 				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
 				it["should not set on carry flag"] = () => { processor.Carry.should_be_false(); };
 				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
@@ -476,7 +238,7 @@ namespace NesZord.Tests.OpCodes
 
 			context["given that accumulator value is equal than compared byte"] = () =>
 			{
-				before = () => { this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, 0x05); };
+				before = () => { setByteToCompare(0x05); };
 				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
 				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
 				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
@@ -484,7 +246,7 @@ namespace NesZord.Tests.OpCodes
 
 			context["given that accumulator value is greater than compared byte"] = () =>
 			{
-				before = () => { this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, 0x00); };
+				before = () => { setByteToCompare(0x00); };
 				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
 				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
 				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
@@ -494,8 +256,8 @@ namespace NesZord.Tests.OpCodes
 			{
 				before = () =>
 				{
-					accumulatorValue = 0xff;
-					this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, 0x00);
+					setAccumulatorValue(0xff);
+					setByteToCompare(0x00);
 				};
 
 				it["should set negative flag"] = () => { processor.Negative.should_be_true(); };
