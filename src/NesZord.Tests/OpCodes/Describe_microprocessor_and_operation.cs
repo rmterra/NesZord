@@ -1,253 +1,204 @@
 ﻿using NesZord.Core;
 using NSpec;
 using Ploeh.AutoFixture;
+using System;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_and_operation : nspec
+	public class Describe_microprocessor_and_operation : Describe_microprocessor_operation
 	{
-		private static readonly Fixture fixture = new Fixture();
-
-		private MemoryMock memory;
-
-		private Microprocessor processor;
-
-		public void before_each()
-		{
-			this.memory = new MemoryMock();
-			this.processor = new Microprocessor(this.memory);
-		}
+		private byte accumulatorValue;
 
 		public void When_use_immediate_addressing_mode()
 		{
 			var byteToCompare = default(byte);
 
-			before = () => { byteToCompare = fixture.Create<byte>(); };
-
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
-					(byte) OpCode.TAX_Implied,
-					(byte) OpCode.AND_Immediate, byteToCompare
-				});
-			};
+				(byte) OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte) OpCode.AND_Immediate, byteToCompare
+			});
 
-			this.DefineSpecs(byteToCompare);
+			this.DefineSpecs(b => byteToCompare = b);
 		}
 
 		public void When_use_zero_page_addressing_mode()
 		{
 			var randomOffset = default(byte);
-			var byteToCompare = default(byte);
 
-			before = () => 
+			before = () => randomOffset = this.Fixture.Create<byte>();
+
+			this.RunProgram(() => new byte[]
 			{
-				randomOffset = fixture.Create<byte>();
-				byteToCompare = fixture.Create<byte>();
-				this.memory.WriteZeroPage(randomOffset, byteToCompare);
-			};
+				(byte) OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte) OpCode.AND_ZeroPage, randomOffset
+			});
 
-			act = () =>
-			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
-					(byte) OpCode.TAX_Implied,
-					(byte) OpCode.AND_ZeroPage, randomOffset
-				});
-			};
-
-			this.DefineSpecs(byteToCompare);
+			this.DefineSpecs(b => this.Memory.WriteZeroPage(randomOffset, b));
 		}
 
 		public void When_use_zero_page_x_addressing_mode()
 		{
 			var randomOffset = default(byte);
-			var byteToCompare = default(byte);
 			var xRegisterValue = default(byte);
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				byteToCompare = fixture.Create<byte>();
-				xRegisterValue = fixture.Create<byte>();
-				this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), byteToCompare);
+				randomOffset = this.Fixture.Create<byte>();
+				xRegisterValue = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
-					(byte) OpCode.TAY_Implied,
-					(byte) OpCode.LDX_Immediate, xRegisterValue,
-					(byte) OpCode.AND_ZeroPageX, randomOffset
-				});
-			};
+				(byte) OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte) OpCode.LDX_Immediate, xRegisterValue,
+				(byte) OpCode.AND_ZeroPageX, randomOffset
+			});
 
-			this.DefineSpecs(byteToCompare);
+			this.DefineSpecs(b => this.Memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), b));
 		}
 
 		public void When_use_absolute_addressing_mode()
 		{
 			var randomOffset = default(byte);
 			var randomPage = default(byte);
-			var byteToCompare = default(byte);
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				byteToCompare = fixture.Create<byte>();
-				randomPage = fixture.Create<byte>();
-				this.memory.Write(randomOffset, randomPage, byteToCompare);
+				randomOffset = this.Fixture.Create<byte>();
+				randomPage = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
-					(byte) OpCode.TAX_Implied,
-					(byte) OpCode.AND_Absolute, randomOffset, randomPage
-				});
-			};
+				(byte) OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte) OpCode.AND_Absolute, randomOffset, randomPage
+			});
 
-			this.DefineSpecs(byteToCompare);
+			this.DefineSpecs(b => this.Memory.Write(randomOffset, randomPage, b));
 		}
 
 		public void When_use_absolute_x_addressing_mode()
 		{
 			var randomOffset = default(byte);
 			var randomPage = default(byte);
-			var byteToCompare = default(byte);
 			var xRegisterValue = default(byte);
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				byteToCompare = fixture.Create<byte>();
-				randomPage = fixture.Create<byte>();
-				xRegisterValue = fixture.Create<byte>();
-				this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, byteToCompare);
+				randomOffset = this.Fixture.Create<byte>();
+				randomPage = this.Fixture.Create<byte>();
+				xRegisterValue = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
-					(byte) OpCode.TAY_Implied,
-					(byte) OpCode.LDX_Immediate, xRegisterValue,
-					(byte) OpCode.AND_AbsoluteX, randomOffset, randomPage
-				});
-			};
+				(byte) OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte) OpCode.LDX_Immediate, xRegisterValue,
+				(byte) OpCode.AND_AbsoluteX, randomOffset, randomPage
+			});
 
-			this.DefineSpecs(byteToCompare);
+			this.DefineSpecs(b => this.Memory.Write((byte)(xRegisterValue + randomOffset), randomPage, b));
 		}
 
 		public void When_use_absolute_y_addressing_mode()
 		{
 			var randomOffset = default(byte);
 			var randomPage = default(byte);
-			var byteToCompare = default(byte);
 			var yRegisterValue = default(byte);
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				byteToCompare = fixture.Create<byte>();
-				randomPage = fixture.Create<byte>();
-				yRegisterValue = fixture.Create<byte>();
-				this.memory.Write((byte)(yRegisterValue + randomOffset), randomPage, byteToCompare);
+				randomOffset = this.Fixture.Create<byte>();
+				randomPage = this.Fixture.Create<byte>();
+				yRegisterValue = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
-					(byte) OpCode.TAX_Implied,
-					(byte) OpCode.LDY_Immediate, yRegisterValue,
-					(byte) OpCode.AND_AbsoluteY, randomOffset, randomPage
-				});
-			};
+				(byte) OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte) OpCode.LDY_Immediate, yRegisterValue,
+				(byte) OpCode.AND_AbsoluteY, randomOffset, randomPage
+			});
 
-			this.DefineSpecs(byteToCompare);
+			this.DefineSpecs(b => this.Memory.Write((byte)(yRegisterValue + randomOffset), randomPage, b));
 		}
 
 		public void When_use_indexed_indirect_addressing_mode()
 		{
 			var randomOffset = default(byte);
-			var byteToCompare = default(byte);
 			var xRegisterValue = default(byte);
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				byteToCompare = fixture.Create<byte>();
-				xRegisterValue = fixture.Create<byte>();
-				this.memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, byteToCompare);
+				randomOffset = this.Fixture.Create<byte>();
+				xRegisterValue = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
-					(byte) OpCode.TAY_Implied,
-					(byte) OpCode.LDX_Immediate, xRegisterValue,
-					(byte) OpCode.AND_IndexedIndirect, randomOffset
-				});
-			};
+				(byte) OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte) OpCode.LDX_Immediate, xRegisterValue,
+				(byte) OpCode.AND_IndexedIndirect, randomOffset
+			});
 
-			this.DefineSpecs(byteToCompare);
+			this.DefineSpecs(b => this.Memory.MockIndexedIndirectMemoryWrite(randomOffset, xRegisterValue, b));
 		}
 
 		public void When_use_indirect_indexed_addressing_mode()
 		{
 			var randomOffset = default(byte);
-			var byteToCompare = default(byte);
 			var yRegisterValue = default(byte);
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				byteToCompare = fixture.Create<byte>();
-				yRegisterValue = fixture.Create<byte>();
-				this.memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, byteToCompare);
+				randomOffset = this.Fixture.Create<byte>();
+				yRegisterValue = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Absolute, fixture.Create<byte>(),
-					(byte) OpCode.TAX_Implied,
-					(byte) OpCode.LDY_Immediate, yRegisterValue,
-					(byte) OpCode.AND_IndirectIndexed, randomOffset
-				});
-			};
+				(byte) OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte) OpCode.LDY_Immediate, yRegisterValue,
+				(byte) OpCode.AND_IndirectIndexed, randomOffset
+			});
 
-			this.DefineSpecs(byteToCompare);
+			this.DefineSpecs(b => this.Memory.MockIndirectIndexedMemoryWrite(randomOffset, yRegisterValue, b));
 		}
 
-		private void DefineSpecs(byte byteToCompare)
+		private void DefineSpecs(Action<byte> setByteToCompare)
 		{
-			it["should set bitwise 'and' result on accumulator"] = () =>
+			before = () => 
 			{
-				this.processor.Accumulator.Value.should_be(this.processor.X.And(byteToCompare));
+				this.accumulatorValue = 0xa9;
+				setByteToCompare?.Invoke(0x05);
 			};
 
-			it["should set negative flag equal to seventh accumulator bit"] = () =>
+			it["should set bitwise 'and' result on accumulator"] =  () => this.Processor.Accumulator.Value.should_be(0x01);
+
+			this.ZeroFlagShouldBeFalse();
+			this.NegativeFlagShouldBeFalse();
+
+			context["given that accumulator sign bit is set"] = () =>
 			{
-				this.processor.Negative.should_be(this.processor.Accumulator.IsSignBitSet);
+				before = () =>
+				{
+					this.accumulatorValue = 0x80;
+					setByteToCompare?.Invoke(0x80);
+				};
+
+				this.NegativeFlagShouldBeTrue();
 			};
 
-			it["should set zero flag when accumulator is 0"] = () =>
+			context["given that operation result over accumulator is 0x00"] = () => 
 			{
-				this.processor.Zero.should_be(this.processor.Accumulator.IsValueEqualZero);
+				before = () =>
+				{
+					this.accumulatorValue = 0x00;
+					setByteToCompare?.Invoke(0x00);
+				};
+
+				this.ZeroFlagShouldBeTrue();
 			};
 		}
 	}
