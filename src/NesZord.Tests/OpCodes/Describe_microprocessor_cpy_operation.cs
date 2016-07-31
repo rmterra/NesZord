@@ -5,32 +5,17 @@ using System;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_cpy_operation : nspec
+	public class Describe_microprocessor_cpy_operation : Describe_microprocessor_operation
 	{
-		private static readonly Fixture fixture = new Fixture();
-
-		private MemoryMock memory;
-
-		private Microprocessor processor;
-
-		public void before_each()
-		{
-			this.memory = new MemoryMock();
-			this.processor = new Microprocessor(this.memory);
-		}
-
 		public void When_use_immediate_addressing_mode()
 		{
 			var byteToCompare = default(byte);
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDY_Immediate, 0x05,
-					(byte)OpCode.CPY_Immediate, byteToCompare
-				});
-			};
+				(byte)OpCode.LDY_Immediate, 0x05,
+				(byte)OpCode.CPY_Immediate, byteToCompare
+			});
 
 			this.DefineSpecs((b) => byteToCompare = b);
 		}
@@ -39,18 +24,15 @@ namespace NesZord.Tests.OpCodes
 		{
 			var randomOffset = default(byte);
 
-			before = () => { randomOffset = fixture.Create<byte>(); };
+			before = () => { randomOffset = this.Fixture.Create<byte>(); };
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDY_Immediate, 0x05,
-					(byte)OpCode.CPY_ZeroPage, randomOffset
-				});
-			};
+				(byte)OpCode.LDY_Immediate, 0x05,
+				(byte)OpCode.CPY_ZeroPage, randomOffset
+			});
 
-			this.DefineSpecs((b) => this.memory.WriteZeroPage(randomOffset, b));
+			this.DefineSpecs((b) => this.Memory.WriteZeroPage(randomOffset, b));
 		}
 
 		public void When_use_absolute_addressing_mode()
@@ -60,20 +42,17 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				randomPage = fixture.Create<byte>();
-				randomOffset = fixture.Create<byte>();
+				randomPage = this.Fixture.Create<byte>();
+				randomOffset = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDY_Immediate, 0x05,
-					(byte)OpCode.CPY_Absolute, randomOffset, randomPage
-				});
-			};
+				(byte)OpCode.LDY_Immediate, 0x05,
+				(byte)OpCode.CPY_Absolute, randomOffset, randomPage
+			});
 
-			this.DefineSpecs((b) => this.memory.Write(randomOffset, randomPage, b));
+			this.DefineSpecs((b) => this.Memory.Write(randomOffset, randomPage, b));
 		}
 
 		private void DefineSpecs(Action<byte> setByteToCompare)
@@ -81,25 +60,25 @@ namespace NesZord.Tests.OpCodes
 			context["given that y register value is lower than compared byte"] = () =>
 			{
 				before = () => { setByteToCompare(0xff); };
-				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should not set carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not set zero flag"] = () => { processor.Zero.should_be_false(); };
+				this.NegativeFlagShouldBeFalse();
+				this.CarryFlagShouldBeFalse();
+				this.ZeroFlagShouldBeFalse();
 			};
 
 			context["given that y register value is equal than compared byte"] = () =>
 			{
 				before = () => { setByteToCompare(0x05); };
-				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
+				this.NegativeFlagShouldBeFalse();
+				this.CarryFlagShouldBeTrue();
+				this.ZeroFlagShouldBeTrue();
 			};
 
 			context["given that y register value is grater than compared byte"] = () =>
 			{
 				before = () => { setByteToCompare(0x00); };
-				it["should not set negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set zero flag"] = () => { processor.Zero.should_be_false(); };
+				this.NegativeFlagShouldBeFalse();
+				this.CarryFlagShouldBeTrue();
+				this.ZeroFlagShouldBeFalse();
 			};
 		}
 	}

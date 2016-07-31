@@ -5,33 +5,18 @@ using System;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_cpx_operation : nspec
+	public class Describe_microprocessor_cpx_operation : Describe_microprocessor_operation
 	{
-		private static readonly Fixture fixture = new Fixture();
-
-		private MemoryMock memory;
-
-		private Microprocessor processor;
-
-		public void before_each()
-		{
-			this.memory = new MemoryMock();
-			this.processor = new Microprocessor(this.memory);
-		}
-
 		public void When_use_immediate_addressing_mode()
 		{
 			var xRegisterValue = default(byte);
 			var byteToCompare = default(byte);
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDX_Immediate, xRegisterValue,
-					(byte)OpCode.CPX_Immediate, byteToCompare
-				});
-			};
+				(byte)OpCode.LDX_Immediate, xRegisterValue,
+				(byte)OpCode.CPX_Immediate, byteToCompare
+			});
 
 			this.DefineSpec(
 				(b) => xRegisterValue = b,
@@ -43,20 +28,17 @@ namespace NesZord.Tests.OpCodes
 			var randomOffset = default(byte);
 			var xRegisterValue = default(byte);
 
-			before = () => randomOffset = fixture.Create<byte>();
+			before = () => randomOffset = this.Fixture.Create<byte>();
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDX_Immediate, xRegisterValue,
-					(byte)OpCode.CPX_ZeroPage, randomOffset
-				});
-			};
+				(byte)OpCode.LDX_Immediate, xRegisterValue,
+				(byte)OpCode.CPX_ZeroPage, randomOffset
+			});
 
 			this.DefineSpec(
 				(b) => xRegisterValue = b,
-				(b) => this.memory.WriteZeroPage(randomOffset, b));
+				(b) => this.Memory.WriteZeroPage(randomOffset, b));
 		}
 
 		public void When_use_absolute_addressing_mode()
@@ -67,22 +49,19 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				randomPage = fixture.Create<byte>();
-				randomOffset = fixture.Create<byte>();
+				randomPage = this.Fixture.Create<byte>();
+				randomOffset = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDX_Immediate, xRegisterValue,
-					(byte)OpCode.CPX_Absolute, randomOffset, randomPage
-				});
-			};
+				(byte)OpCode.LDX_Immediate, xRegisterValue,
+				(byte)OpCode.CPX_Absolute, randomOffset, randomPage
+			});
 
 			this.DefineSpec(
 				(b) => xRegisterValue = b,
-				(b) => this.memory.Write(randomOffset, randomPage, b));
+				(b) => this.Memory.Write(randomOffset, randomPage, b));
 		}
 
 		private void DefineSpec(Action<byte> setXRegisterValue, Action<byte> setByteToCompare)
@@ -92,25 +71,25 @@ namespace NesZord.Tests.OpCodes
 			context["given that x register value is lower than compared byte"] = () =>
 			{
 				before = () => { setByteToCompare(0xff); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should not set on carry flag"] = () => { processor.Carry.should_be_false(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
+				this.NegativeFlagShouldBeFalse();
+				this.CarryFlagShouldBeFalse();
+				this.ZeroFlagShouldBeFalse();
 			};
 
 			context["given that x register value is equal than compared byte"] = () =>
 			{
 				before = () => { setByteToCompare(0x05); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should set zero flag"] = () => { processor.Zero.should_be_true(); };
+				this.NegativeFlagShouldBeFalse();
+				this.CarryFlagShouldBeTrue();
+				this.ZeroFlagShouldBeTrue();
 			};
 
 			context["given that x register value is greater than compared byte"] = () =>
 			{
 				before = () => { setByteToCompare(0x00); };
-				it["should not set on negative flag"] = () => { processor.Negative.should_be_false(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
+				this.NegativeFlagShouldBeFalse();
+				this.CarryFlagShouldBeTrue();
+				this.ZeroFlagShouldBeFalse();
 			};
 
 			context["given compare result is greater than 0x80"] = () =>
@@ -121,9 +100,9 @@ namespace NesZord.Tests.OpCodes
 					setByteToCompare(0x00);
 				};
 
-				it["should set negative flag"] = () => { processor.Negative.should_be_true(); };
-				it["should set carry flag"] = () => { processor.Carry.should_be_true(); };
-				it["should not set on zero flag"] = () => { processor.Zero.should_be_false(); };
+				this.NegativeFlagShouldBeTrue();
+				this.CarryFlagShouldBeTrue();
+				this.ZeroFlagShouldBeFalse();
 			};
 		}
 	}
