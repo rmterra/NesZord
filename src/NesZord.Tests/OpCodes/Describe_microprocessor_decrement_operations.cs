@@ -5,67 +5,65 @@ using Ploeh.AutoFixture;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_decrement_operations : nspec
+	public class Describe_microprocessor_decrement_operations : Describe_microprocessor_operation
 	{
-		private static readonly Fixture fixture = new Fixture();
-
-		private Microprocessor processor;
-
-		public void before_each() { this.processor = new Microprocessor(new MemoryMock()); }
-
 		public void When_decrement_the_value_of_x_register()
 		{
-			var expectedXRegisterValue = default(byte);
+			var xRegisterValue = default(byte);
 
-			before = () => { expectedXRegisterValue = fixture.Create<byte>(); };
+			before = () => xRegisterValue = 0x05;
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDX_Immediate, (byte)(expectedXRegisterValue + 1),
-					(byte)OpCode.DEX_Implied
-				});
+				(byte)OpCode.LDX_Immediate, xRegisterValue,
+				(byte)OpCode.DEX_Implied
+			});
+
+			it["should decrement 1 to x register"] = () => { this.Processor.X.Value.should_be(0x04); };
+
+			this.ZeroFlagShouldBeFalse();
+			this.NegativeFlagShouldBeFalse();
+
+			context["given that x register value is decremented to 0x00"] = () => 
+			{
+				before = () => xRegisterValue = 0x01;
+				this.ZeroFlagShouldBeTrue();
 			};
 
-			it["should decrement 1 to x register"] = () => { processor.X.Value.should_be(expectedXRegisterValue); };
-
-			it["should set zero flag when x register value os 0x00"] = () =>
+			context["given that x register value is decremented to a value thar sign bit is set"] = () =>
 			{
-				processor.Zero.should_be(this.processor.X.IsValueEqualZero);
-			};
-
-			it["should set negative flag with last x register bit value"] = () => 
-			{
-				processor.Negative.should_be(this.processor.X.IsSignBitSet);
+				before = () => xRegisterValue = 0x81;
+				this.NegativeFlagShouldBeTrue();
 			};
 		}
 
 		public void When_decrement_the_value_of_y_register()
 		{
-			var expectedYRegisterValue = default(byte);
+			var yRegisterValue = default(byte);
 
-			before = () => { expectedYRegisterValue = fixture.Create<byte>(); };
+			before = () => yRegisterValue = 0x05;
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDY_Immediate, (byte)(expectedYRegisterValue + 1),
-					(byte)OpCode.DEY_Implied
-				});
+				(byte)OpCode.LDY_Immediate, yRegisterValue,
+				(byte)OpCode.DEY_Implied
+			});
+
+			it["should decrement 1 to y register"] = () => { this.Processor.Y.Value.should_be(0x04); };
+
+			this.ZeroFlagShouldBeFalse();
+			this.NegativeFlagShouldBeFalse();
+
+			context["given that y register value is decremented to 0x00"] = () =>
+			{
+				before = () => yRegisterValue = 0x01;
+				this.ZeroFlagShouldBeTrue();
 			};
 
-			it["should decrement 1 to y register"] = () => { processor.Y.Value.should_be(expectedYRegisterValue); };
-
-			it["should set zero flag when y register value os 0x00"] = () =>
+			context["given that y register value is decremented to a value thar sign bit is set"] = () =>
 			{
-				processor.Zero.should_be(this.processor.Y.IsValueEqualZero);
-			};
-
-			it["should set negative flag with last y register bit value"] = () =>
-			{
-				processor.Negative.should_be(this.processor.Y.IsSignBitSet);
+				before = () => yRegisterValue = 0x81;
+				this.NegativeFlagShouldBeTrue();
 			};
 		}
 	}
