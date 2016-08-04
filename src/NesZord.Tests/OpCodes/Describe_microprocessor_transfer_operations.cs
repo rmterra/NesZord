@@ -84,7 +84,10 @@ namespace NesZord.Tests.OpCodes
 				});
 			};
 
-			it["should stack pointer be equal to x register"] = () => this.processor.StackPointer.should_be(this.processor.X.Value);
+			it["should stack pointer be equal to x register"] = () =>
+			{
+				this.processor.StackPointer.CurrentOffset.should_be(this.processor.X.Value);
+			};
 		}
 
 		public void When_transfer_from_stack_pointer_to_x()
@@ -94,7 +97,11 @@ namespace NesZord.Tests.OpCodes
 				this.processor.RunProgram(new byte[] { (byte)OpCode.TSX_Implied });
 			};
 
-			it["should x register be equal to stack pointer"] = () => this.processor.X.Value.should_be(this.processor.StackPointer);
+			it["should x register be equal to stack pointer"] = () =>
+			{
+				this.processor.X.Value.should_be(this.processor.StackPointer.CurrentOffset);
+			};
+
 			it["should set negative flag"] = () => this.processor.Negative.should_be_true();
 			it["should not set zero flag"] = () => this.processor.Zero.should_be_false();
 

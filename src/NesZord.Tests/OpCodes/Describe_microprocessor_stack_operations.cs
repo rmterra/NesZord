@@ -36,7 +36,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should actual stack pointer value be 0xfe"] = () =>
 			{
-				this.processor.StackPointer.should_be(0xfe);
+				this.processor.StackPointer.CurrentOffset.should_be(0xfe);
 			};
 		}
 
@@ -59,7 +59,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should actual stack pointer value be 0xfe"] = () =>
 			{
-				this.processor.StackPointer.should_be(0xfe);
+				this.processor.StackPointer.CurrentOffset.should_be(0xfe);
 			};
 		}
 
@@ -91,7 +91,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should actual stack pointer value be 0xff"] = () =>
 			{
-				this.processor.StackPointer.should_be(0xff);
+				this.processor.StackPointer.CurrentOffset.should_be(0xff);
 			};
 
 			context["given that pulled value is 0x00"] = () =>
@@ -133,7 +133,7 @@ namespace NesZord.Tests.OpCodes
 
 			it["should actual stack pointer value be 0xff"] = () =>
 			{
-				this.processor.StackPointer.should_be(0xff);
+				this.processor.StackPointer.CurrentOffset.should_be(0xff);
 			};
 		}
 	}

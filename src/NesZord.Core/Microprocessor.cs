@@ -43,7 +43,7 @@ namespace NesZord.Core
 			if (memory == null) { throw new ArgumentNullException(nameof(memory)); }
 
 			this.memory = memory;
-			this.StackPointer = Memory.INITIAL_STACK_OFFSET;
+			this.StackPointer = new Stack(this.memory);
 			this.Accumulator = new Register();
 			this.X = new Register();
 			this.Y = new Register();
@@ -222,7 +222,7 @@ namespace NesZord.Core
 
 		public bool Zero { get; private set; }
 
-		public byte StackPointer { get; private set; }
+		public Stack StackPointer { get; private set; }
 
 		public int ProgramCounter { get; private set; }
 
@@ -629,16 +629,14 @@ namespace NesZord.Core
 
 		private void PullFromStackToAccumulator()
 		{
-			this.StackPointer += 1;
-			this.Accumulator.Value = this.memory.Read(this.StackPointer, Memory.STACK_PAGE);
+			this.Accumulator.Value = this.StackPointer.Pop();
 			this.Zero = this.Accumulator.IsValueEqualZero;
 			this.Negative = this.Accumulator.IsSignBitSet;
 		}
 
 		private void PullFromStackToStatusFlags()
 		{
-			this.StackPointer += 1;
-			var status = this.memory.Read(this.StackPointer, Memory.STACK_PAGE);
+			var status = this.StackPointer.Pop();
 
 			this.Carry = status.GetBitAt(CARRY_BIT_INDEX);
 			this.Zero = status.GetBitAt(ZERO_BIT_INDEX);
@@ -651,8 +649,7 @@ namespace NesZord.Core
 
 		private void PushAccumulatorToStack()
 		{
-			this.memory.Write(this.StackPointer, Memory.STACK_PAGE, this.Accumulator.Value);
-			this.StackPointer -= 1;
+			this.StackPointer.Push(this.Accumulator.Value);
 		}
 
 		private void PushProcessorStatusToStack()
@@ -667,9 +664,7 @@ namespace NesZord.Core
 			status = status.SetBitAt(OVERFLOW_BIT_INDEX, this.Overflow);
 			status = status.SetBitAt(SIGN_BIT_INDEX, this.Negative);
 
-			this.memory.Write(this.StackPointer, Memory.STACK_PAGE, status);
-
-			this.StackPointer -= 1;
+			this.StackPointer.Push(status);
 		}
 
 		private void RotateLeftOnAccumulator()
@@ -788,7 +783,7 @@ namespace NesZord.Core
 
 		private void TransferFromStackPointerToX()
 		{
-			this.X.Value = this.StackPointer;
+			this.X.Value = this.StackPointer.CurrentOffset;
 			this.Negative = this.X.IsSignBitSet;
 			this.Zero = this.X.IsValueEqualZero;
 		}
@@ -800,7 +795,7 @@ namespace NesZord.Core
 
 		private void TransferFromXToStackPointer()
 		{
-			this.StackPointer = this.X.Value;
+			this.StackPointer.CurrentOffset = this.X.Value;
 		}
 
 		private void TransferFromYToAccumulator()
