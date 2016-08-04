@@ -108,6 +108,8 @@
 
 		LSR_AbsoluteX = 0x5e,
 
+		RTS_Implied = 0x60,
+
 		ADC_IndexedIndirect = 0x61,
 
 		ADC_ZeroPage = 0x65,

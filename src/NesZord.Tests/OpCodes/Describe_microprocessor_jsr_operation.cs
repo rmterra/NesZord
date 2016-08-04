@@ -25,7 +25,7 @@ namespace NesZord.Tests.OpCodes
 			it["should stack return page address"] = () =>  this.Memory.Read(0xff, Core.Memory.STACK_PAGE).should_be(0x06);
 			it["should stack return offset address"] = () => this.Memory.Read(0xfe, Core.Memory.STACK_PAGE).should_be(0x03);
 
-			it["should move program counter to 0x6020 address"] = () => this.Processor.ProgramCounter.should_be(0x0621);
+			it["should move program counter to 0x0621 address"] = () => this.Processor.ProgramCounter.should_be(0x0621);
 		}
 	}
 }
