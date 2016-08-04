@@ -6,6 +6,5 @@ A .NET MOS 6502 CPU implementation
 
 ###Remaining OpCodes
 
-JSR
 RTI
 RTS

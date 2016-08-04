@@ -32,6 +32,8 @@
 
 		ORA_AbsoluteY = 0x19,
 
+		JSR_Absolute = 0x20,
+
 		ORA_AbsoluteX = 0x1d,
 
 		ASL_AbsoluteX = 0x1e,

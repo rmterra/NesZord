@@ -114,6 +114,7 @@ namespace NesZord.Core
 				{ OpCode.EOR_Absolute, this.BitwiseExclusiveOrOperation },
 				{ OpCode.INC_Absolute, this.IncrementValueAtMemory },
 				{ OpCode.JMP_Absolute, this.Jump },
+				{ OpCode.JSR_Absolute, this.JumpToSubRoutine },
 				{ OpCode.LDA_Absolute, this.LoadAccumulator },
 				{ OpCode.LDX_Absolute, this.LoadXRegister },
 				{ OpCode.LDY_Absolute, this.LoadYRegister },
@@ -582,6 +583,17 @@ namespace NesZord.Core
 		{
 			var offset = this.memory.Read(location);
 			this.ProgramCounter = offset;
+		}
+
+		private void JumpToSubRoutine(MemoryLocation location)
+		{
+			var page = (byte)(this.ProgramCounter >> 8);
+			this.StackPointer.Push(page);
+
+			var offset = (byte)(this.ProgramCounter & 0xff);
+			this.StackPointer.Push(offset);
+
+			this.ProgramCounter = location.FullLocation;
 		}
 
 		private void LoadAccumulator(MemoryLocation location)

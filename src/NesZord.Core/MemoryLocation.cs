@@ -16,5 +16,10 @@ namespace NesZord.Core
 		public byte Offset { get; private set; }
 
 		public byte Page { get; private set; }
+
+		public int FullLocation
+		{
+			get { return (this.Page << 8) + this.Offset; }
+		}
 	}
 }

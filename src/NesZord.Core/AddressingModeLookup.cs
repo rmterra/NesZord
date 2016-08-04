@@ -17,6 +17,7 @@
 				case OpCode.EOR_Absolute:
 				case OpCode.INC_Absolute:
 				case OpCode.JMP_Absolute:
+				case OpCode.JSR_Absolute:
 				case OpCode.LDA_Absolute:
 				case OpCode.LDX_Absolute:
 				case OpCode.LDY_Absolute:
