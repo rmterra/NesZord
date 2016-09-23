@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using NesZord.Core.Extensions;
 
 namespace NesZord.Core
 {
@@ -20,6 +17,14 @@ namespace NesZord.Core
 		public int FullLocation
 		{
 			get { return (this.Page << 8) + this.Offset; }
+		}
+
+		public MemoryLocation Sum(byte value)
+		{
+			var fullLocation = this.FullLocation;
+			var newLocation = fullLocation + value;
+
+			return new MemoryLocation(newLocation.GetOffset(), newLocation.GetPage());
 		}
 	}
 }
