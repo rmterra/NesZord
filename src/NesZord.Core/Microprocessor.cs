@@ -459,22 +459,17 @@ namespace NesZord.Core
 
 		private void AddWithCarry(byte byteToAdd)
 		{
-			var result = this.Accumulator.Value + byteToAdd + Convert.ToInt32(this.Carry);
-			this.Overflow = this.Accumulator.IsSignBitSet != ((byte)result).GetBitAt(SIGN_BIT_INDEX);
+			var result = this.Decimal
+				? this.Accumulator.ToBcd() + byteToAdd.ConvertToBcd() + Convert.ToInt32(this.Carry)
+				: this.Accumulator.Value + byteToAdd + Convert.ToInt32(this.Carry);
+			
 			this.Negative = this.Accumulator.IsSignBitSet;
 			this.Zero = result == 0;
 
-			if (this.Decimal)
-			{
-				result = this.Accumulator.ToBcd() + byteToAdd.ConvertToBcd() + Convert.ToInt32(this.Carry);
-				this.Carry = result > BCD_MAX_VALUE;
-			}
-			else
-			{
-				this.Carry = result > Byte.MaxValue;
-			}
+			this.Carry = result > (this.Decimal ? BCD_MAX_VALUE : Byte.MaxValue);
+			this.Overflow = this.Carry;
 
-            this.Accumulator.Value = (byte)(result & 0xff);
+			this.Accumulator.Value = (byte)(result & 0xff);
 		}
 
 		private void ArithmeticShiftLeftOnMemory(MemoryLocation location)
