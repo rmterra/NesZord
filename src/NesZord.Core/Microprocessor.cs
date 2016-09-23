@@ -583,8 +583,7 @@ namespace NesZord.Core
 
 		private void Jump(MemoryLocation location)
 		{
-			var offset = this.memory.Read(location);
-			this.ProgramCounter = offset;
+			this.ProgramCounter = location.FullLocation;
 		}
 
 		private void JumpToSubRoutine(MemoryLocation location)
