@@ -298,15 +298,15 @@ namespace NesZord.Core
 			else if (addressingMode == AddressingMode.Indirect)
 			{
 				offset = (byte)this.ReadProgramByte();
-				var indirectPage = this.memory.Read(offset, Memory.ZERO_PAGE);
-				var indirectOffset = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
+				var indirectOffset = this.memory.Read(offset, Memory.ZERO_PAGE);
+				var indirectPage = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
 				return new MemoryLocation(indirectOffset, indirectPage);
 			}
 			else if (addressingMode == AddressingMode.IndexedIndirect)
 			{
 				offset = (byte)(this.ReadProgramByte() + this.X.Value);
-				var indirectPage = this.memory.Read(offset, Memory.ZERO_PAGE);
-				var indirectOffset = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
+				var indirectOffset = this.memory.Read(offset, Memory.ZERO_PAGE);
+				var indirectPage = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
 				return new MemoryLocation(indirectOffset, indirectPage);
 			}
 			else if (addressingMode == AddressingMode.IndirectIndexed)
