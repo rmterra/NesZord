@@ -312,9 +312,10 @@ namespace NesZord.Core
 			else if (addressingMode == AddressingMode.IndirectIndexed)
 			{
 				offset = this.ReadProgramByte();
-				var indirectPage = this.memory.Read(offset, Memory.ZERO_PAGE);
-				var indirectOffset = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
-				return new MemoryLocation(indirectOffset, (byte)(indirectPage + this.Y.Value));
+				var indirectOffset = this.memory.Read(offset, Memory.ZERO_PAGE);
+				var indirectPage = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
+				var location = new MemoryLocation(indirectOffset, indirectPage);
+				return location.Sum(this.Y.Value);
 			}
 
 
