@@ -389,14 +389,11 @@ namespace NesZord.Core
 
 		private void BranchIfConditionIsNotSatisfied(Func<bool> condition)
 		{
-			if (condition.Invoke()) { this.ReadProgramByte(); return; }
+			var offset = this.ReadProgramByte();
 
-			var memoryPage = (byte)(this.ProgramCounter >> 8);
-			var memoryOffset = (byte)(this.ProgramCounter & 0xff);
-			var branchOffset = this.memory.Read(memoryOffset, memoryPage);
+			if (condition.Invoke()) { return; }
 
-			var offset = 0xff ^ branchOffset;
-			this.ProgramCounter -= offset;
+			this.ProgramCounter += offset;
 		}
 
 		private void DecrementValueAtMemory(MemoryLocation location)
