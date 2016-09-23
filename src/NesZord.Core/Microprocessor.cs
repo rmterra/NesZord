@@ -605,6 +605,7 @@ namespace NesZord.Core
 		private void LoadAccumulator(byte value)
 		{
 			this.Accumulator.Value = value;
+			this.UpdateFlagsWith(this.Accumulator.Value);
 		}
 
 		private void LoadXRegister(MemoryLocation location)
@@ -615,6 +616,7 @@ namespace NesZord.Core
 		private void LoadXRegister(byte value)
 		{
 			this.X.Value = value;
+			this.UpdateFlagsWith(this.X.Value);
 		}
 
 		private void LoadYRegister(MemoryLocation location)
@@ -625,6 +627,7 @@ namespace NesZord.Core
 		private void LoadYRegister(byte value)
 		{
 			this.Y.Value = value;
+			this.UpdateFlagsWith(this.Y.Value);
 		}
 
 		private void LogicalShiftRightOnMemory(MemoryLocation location)
@@ -834,6 +837,12 @@ namespace NesZord.Core
 			this.ProgramCounter++;
 
 			return value;
+		}
+
+		private void UpdateFlagsWith(byte value)
+		{
+			this.Zero = value == 0x00;
+			this.Negative = (value & 0x80) == 0x80;
 		}
 	}
 }
