@@ -285,8 +285,16 @@ namespace NesZord.Core
 			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.X.Value), Memory.ZERO_PAGE); }
 			else if (addressingMode == AddressingMode.ZeroPageY) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.Y.Value), Memory.ZERO_PAGE); }
 			else if (addressingMode == AddressingMode.Absolute) { offset = this.ReadProgramByte(); }
-			else if (addressingMode == AddressingMode.AbsoluteX) { offset = (byte)(this.ReadProgramByte() + this.X.Value); }
-			else if (addressingMode == AddressingMode.AbsoluteY) { offset = (byte)(this.ReadProgramByte() + this.Y.Value); }
+			else if (addressingMode == AddressingMode.AbsoluteX)
+			{
+				var location = new MemoryLocation(this.ReadProgramByte(), this.ReadProgramByte());
+				return location.Sum(this.X.Value);
+			}
+			else if (addressingMode == AddressingMode.AbsoluteY)
+			{
+				var location = new MemoryLocation(this.ReadProgramByte(), this.ReadProgramByte());
+				return location.Sum(this.Y.Value);
+			}
 			else if (addressingMode == AddressingMode.Indirect)
 			{
 				offset = (byte)this.ReadProgramByte();
