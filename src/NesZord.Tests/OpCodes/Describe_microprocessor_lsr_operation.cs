@@ -1,185 +1,72 @@
 ﻿using NesZord.Core;
-using NesZord.Core.Extensions;
 using NSpec;
 using Ploeh.AutoFixture;
+using System;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_lsr_operation : nspec
+	public class Describe_microprocessor_lsr_operation : Describe_microprocessor_operation
 	{
-		private static readonly Fixture fixture = new Fixture();
-
-		private MemoryMock memory;
-
-		private Microprocessor processor;
-
-		public void before_each()
-		{
-			this.memory = new MemoryMock();
-			this.processor = new Microprocessor(this.memory);
-		}
-
 		public void When_use_accumulator_addressing_mode()
 		{
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
+			var accumulatorValue = default(byte);
 
-			before = () =>
+			this.RunProgram(() => new byte[]
 			{
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte >> 1);
-			};
+				(byte) OpCode.LDA_Immediate, accumulatorValue,
+				(byte) OpCode.LSR_Accumulator
+			});
 
-			act = () =>
-			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDA_Immediate, randomByte,
-					(byte) OpCode.LSR_Accumulator
-				});
-			};
-
-			it["should accumulator value be shifted to right"] = () => this.processor.Accumulator.Value.should_be(shiftedValue);
-
-			it["should set negative flag to false"] = () => { this.processor.Negative.should_be(false); };
-
-			it["should set carry flag equal to first accumulator bit"] = () =>
-			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
-			};
-
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
-			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
-			};
+			this.DefineSpecs(
+				(b) => accumulatorValue = b, 
+				() => this.Processor.Accumulator.Value);
 		}
 
 		public void When_zero_page_addressing_mode()
 		{
 			var randomOffset = default(byte);
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
 
-			before = () =>
-			{
-				randomOffset = fixture.Create<byte>();
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte >> 1);
+			before = () => randomOffset = this.Fixture.Create<byte>();
 
-				this.memory.WriteZeroPage(randomOffset, randomByte);
-			};
+			this.RunProgram(() => new byte[] { (byte)OpCode.LSR_ZeroPage, randomOffset });
 
-			act = () =>
-			{
-				this.processor.RunProgram(new byte[] { (byte) OpCode.LSR_ZeroPage, randomOffset });
-			};
-
-			it["should memory value be shifted to right"] = () =>
-			{
-				this.memory.Read(randomOffset, Memory.ZERO_PAGE).should_be(shiftedValue);
-			};
-
-			it["should set negative flag to false"] = () => { this.processor.Negative.should_be(false); };
-
-			it["should set carry flag equal to first memory value bit"] = () =>
-			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
-			};
-
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
-			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
-			};
+			this.DefineSpecs(() => new MemoryLocation(randomOffset, Core.Memory.ZERO_PAGE));
 		}
 
 		public void When_zero_page_x_addressing_mode()
 		{
 			var randomOffset = default(byte);
 			var xRegisterValue = default(byte);
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				xRegisterValue = fixture.Create<byte>();
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte >> 1);
-
-				this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), randomByte);
+				randomOffset = this.Fixture.Create<byte>();
+				xRegisterValue = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte) OpCode.LDX_Immediate, xRegisterValue,
-					(byte) OpCode.LSR_ZeroPageX, randomOffset
-				});
-			};
+				(byte) OpCode.LDX_Immediate, xRegisterValue,
+				(byte) OpCode.LSR_ZeroPageX, randomOffset
+			});
 
-			it["should memory value be shifted to right"] = () =>
-			{
-				this.memory.Read((byte)(xRegisterValue + randomOffset), Memory.ZERO_PAGE).should_be(shiftedValue);
-			};
-
-			it["should set negative flag to false"] = () =>
-			{
-				this.processor.Negative.should_be(false);
-			};
-
-			it["should set carry flag equal to first memory value bit"] = () =>
-			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
-			};
-
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
-			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
-			};
+			this.DefineSpecs(() => new MemoryLocation((byte)(xRegisterValue + randomOffset), Core.Memory.ZERO_PAGE));
 		}
 
 		public void When_absolute_addressing_mode()
 		{
 			var randomOffset = default(byte);
 			var randomPage = default(byte);
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				randomPage = fixture.Create<byte>();
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte >> 1);
-
-				this.memory.Write(randomOffset, randomPage, randomByte);
+				randomOffset = this.Fixture.Create<byte>();
+				randomPage = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
-			{
-				this.processor.RunProgram(new byte[] { (byte)OpCode.LSR_Absolute, randomOffset, randomPage });
-			};
+			this.RunProgram(() => new byte[] { (byte)OpCode.LSR_Absolute, randomOffset, randomPage });
 
-			it["should memory value be shifted to right"] = () =>
-			{
-				this.memory.Read(randomOffset, randomPage).should_be(shiftedValue);
-			};
-
-			it["should set negative flag to false"] = () =>
-			{
-				this.processor.Negative.should_be(false);
-			};
-
-			it["should set carry flag equal to first memory value bit"] = () =>
-			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
-			};
-
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
-			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
-			};
+			this.DefineSpecs(() => new MemoryLocation(randomOffset, randomPage));
 		}
 
 		public void When_absolute_x_addressing_mode()
@@ -187,47 +74,55 @@ namespace NesZord.Tests.OpCodes
 			var randomOffset = default(byte);
 			var randomPage = default(byte);
 			var xRegisterValue = default(byte);
-			var randomByte = default(byte);
-			var shiftedValue = default(byte);
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				randomPage = fixture.Create<byte>();
-				xRegisterValue = fixture.Create<byte>();
-				randomByte = fixture.Create<byte>();
-				shiftedValue = (byte)(randomByte >> 1);
-
-				this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, randomByte);
+				randomOffset = this.Fixture.Create<byte>();
+				randomPage = this.Fixture.Create<byte>();
+				xRegisterValue = this.Fixture.Create<byte>();
 			};
 
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDX_Immediate, xRegisterValue,
-					(byte)OpCode.LSR_AbsoluteX, randomOffset, randomPage
-				});
+				(byte)OpCode.LDX_Immediate, xRegisterValue,
+				(byte)OpCode.LSR_AbsoluteX, randomOffset, randomPage
+			});
+
+			this.DefineSpecs(() => new MemoryLocation(randomOffset, randomPage).Sum(xRegisterValue));
+		}
+
+		private void DefineSpecs(Func<MemoryLocation> getLocation)
+		{
+			this.DefineSpecs(
+				(b) => this.Memory.Write(getLocation?.Invoke(), b), 
+				() => this.Memory.Read(getLocation?.Invoke()));
+		}
+
+		private void DefineSpecs(Action<byte> setValueToBeShifted, Func<byte> getValueToBeShifted)
+		{
+			before = () => setValueToBeShifted?.Invoke(0x06);
+
+			it["should value be shifted to right"] = () => getValueToBeShifted?.Invoke().should_be(0x03);
+
+			this.CarryFlagShouldBeFalse();
+			this.ZeroFlagShouldBeFalse();
+			this.NegativeFlagShouldBeFalse();
+
+			context["given that value to be shifted has it first bit set"] = () =>
+			{
+				before = () => setValueToBeShifted?.Invoke(0x05);
+
+				this.CarryFlagShouldBeTrue();
+				this.ZeroFlagShouldBeFalse();
+				this.NegativeFlagShouldBeFalse();
 			};
 
-			it["should memory value be shifted to right"] = () =>
+			context["given that shifted value is 0x00"] = () =>
 			{
-				this.memory.Read((byte)(xRegisterValue + randomOffset), randomPage).should_be(shiftedValue);
-			};
+				before = () => setValueToBeShifted?.Invoke(0x01);
 
-			it["should set negative flag to false"] = () =>
-			{
-				this.processor.Negative.should_be(false);
-			};
-
-			it["should set carry flag equal to first memory value bit"] = () =>
-			{
-				this.processor.Carry.should_be(randomByte.GetBitAt(Microprocessor.FIRST_BIT_INDEX));
-			};
-
-			it["should set zero flag when shifted value is 0xff or 0x00"] = () =>
-			{
-				this.processor.Zero.should_be((shiftedValue & 0xff) == 0);
+				this.CarryFlagShouldBeTrue();
+				this.ZeroFlagShouldBeTrue();
 			};
 		}
 	}
