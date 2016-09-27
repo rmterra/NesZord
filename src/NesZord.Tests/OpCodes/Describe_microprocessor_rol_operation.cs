@@ -2,36 +2,18 @@
 using NSpec;
 using Ploeh.AutoFixture;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_rol_operation : nspec
+	public class Describe_microprocessor_rol_operation : Describe_microprocessor_operation
 	{
-		private static readonly Fixture fixture = new Fixture();
-
 		private bool hashCarry;
 
 		private byte byteToShift;
 
-		private MemoryMock memory;
-
-		private Microprocessor processor;
-
-		public void before_each()
-		{
-			hashCarry = false;
-			this.byteToShift = 0x05;
-			this.memory = new MemoryMock();
-			this.processor = new Microprocessor(this.memory);
-		}
-
 		public void When_use_accumulator_addressing_mode()
 		{
-			act = () => this.processor.RunProgram(new byte[]
+			this.RunProgram(() => new byte[]
 			{
 				(byte)(this.hashCarry ? OpCode.SEC_Implied : OpCode.CLC_Implied),
 				(byte)OpCode.LDA_Immediate, this.byteToShift,
@@ -40,28 +22,24 @@ namespace NesZord.Tests.OpCodes
 
 			this.DefineSpec(
 				b => this.byteToShift = b,
-				() => this.processor.Accumulator.Value);
+				() => this.Processor.Accumulator.Value);
 		}
 
 		public void When_use_zero_page_addressing_mode()
 		{
 			var randomOffset = default(byte);
 
-			before = () =>
-			{
-				randomOffset = fixture.Create<byte>();
-				this.memory.WriteZeroPage(randomOffset, this.byteToShift);
-			};
+			before = () => randomOffset = this.Fixture.Create<byte>();
 
-			act = () => this.processor.RunProgram(new byte[]
+			this.RunProgram(() => new byte[]
 			{
 				(byte)(this.hashCarry ? OpCode.SEC_Implied : OpCode.CLC_Implied),
 				(byte)OpCode.ROL_ZeroPage, randomOffset
 			});
 
 			this.DefineSpec(
-				(b) => this.memory.WriteZeroPage(randomOffset, b),
-				() => this.memory.Read(randomOffset, Memory.ZERO_PAGE));
+				(b) => this.Memory.WriteZeroPage(randomOffset, b),
+				() => this.Memory.Read(randomOffset, Core.Memory.ZERO_PAGE));
 		}
 
 		public void When_use_zero_page_x_addressing_mode()
@@ -71,12 +49,11 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				randomOffset = fixture.Create<byte>();
-				xRegisterValue = fixture.Create<byte>();
-				this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), byteToShift);
+				randomOffset = this.Fixture.Create<byte>();
+				xRegisterValue = this.Fixture.Create<byte>();
 			};
 
-			act = () => this.processor.RunProgram(new byte[]
+			this.RunProgram(() => new byte[]
 			{
 				(byte)(this.hashCarry ? OpCode.SEC_Implied : OpCode.CLC_Implied),
 				(byte)OpCode.LDX_Immediate, xRegisterValue,
@@ -84,8 +61,8 @@ namespace NesZord.Tests.OpCodes
 			});
 
 			this.DefineSpec(
-				(b) => this.memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), b),
-				() => this.memory.Read((byte)(xRegisterValue + randomOffset), Memory.ZERO_PAGE));
+				(b) => this.Memory.WriteZeroPage((byte)(xRegisterValue + randomOffset), b),
+				() => this.Memory.Read((byte)(xRegisterValue + randomOffset), Core.Memory.ZERO_PAGE));
 		}
 
 		public void When_use_absolute_addressing_mode()
@@ -95,20 +72,19 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				randomPage = fixture.Create<byte>();
-				randomOffset = fixture.Create<byte>();
-				this.memory.Write(randomOffset, randomPage, byteToShift);
+				randomPage = this.Fixture.Create<byte>();
+				randomOffset = this.Fixture.Create<byte>();
 			};
 
-			act = () => this.processor.RunProgram(new byte[]
+			this.RunProgram(() => new byte[]
 			{
 				(byte)(this.hashCarry ? OpCode.SEC_Implied : OpCode.CLC_Implied),
 				(byte)OpCode.ROL_Absolute, randomOffset, randomPage
 			});
 
 			this.DefineSpec(
-				(b) => this.memory.Write(randomOffset, randomPage, b),
-				() => this.memory.Read(randomOffset, randomPage));
+				(b) => this.Memory.Write(randomOffset, randomPage, b),
+				() => this.Memory.Read(randomOffset, randomPage));
 		}
 
 		public void When_use_absolute_x_addressing_mode()
@@ -119,13 +95,12 @@ namespace NesZord.Tests.OpCodes
 
 			before = () =>
 			{
-				randomPage = fixture.Create<byte>();
-				randomOffset = fixture.Create<byte>();
-				xRegisterValue = fixture.Create<byte>();
-				this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, byteToShift);
+				randomPage = this.Fixture.Create<byte>();
+				randomOffset = this.Fixture.Create<byte>();
+				xRegisterValue = this.Fixture.Create<byte>();
 			};
 
-			act = () => this.processor.RunProgram(new byte[]
+			this.RunProgram(() => new byte[]
 			{
 				(byte)(this.hashCarry ? OpCode.SEC_Implied : OpCode.CLC_Implied),
 				(byte)OpCode.LDX_Immediate, xRegisterValue,
@@ -133,17 +108,23 @@ namespace NesZord.Tests.OpCodes
 			});
 
 			this.DefineSpec(
-				(b) => this.memory.Write((byte)(xRegisterValue + randomOffset), randomPage, b),
-				() => this.memory.Read((byte)(xRegisterValue + randomOffset), randomPage));
+				(b) => this.Memory.Write(new MemoryLocation(randomOffset, randomPage).Sum(xRegisterValue), b),
+				() => this.Memory.Read(new MemoryLocation(randomOffset, randomPage).Sum(xRegisterValue)));
 		}
 
 		private void DefineSpec(Action<byte> setByteToShift, Func<byte> readShiftedValue)
 		{
+			before = () =>
+			{
+				this.hashCarry = false;
+				setByteToShift(0x05);
+			};
+
 			it["should shift value to left"] = () => readShiftedValue?.Invoke().should_be(0x0a);
 
-			it["should not set carry flag"] = () => this.processor.Carry.should_be_false();
-			it["should not set zero flag"] = () => this.processor.Zero.should_be_false();
-			it["should not set negative flag"] = () => this.processor.Negative.should_be_false();
+			this.CarryFlagShouldBeFalse();
+			this.ZeroFlagShouldBeFalse();
+			this.NegativeFlagShouldBeFalse();
 
 			context["given that carry flag is set"] = () =>
 			{
@@ -154,14 +135,14 @@ namespace NesZord.Tests.OpCodes
 			context["given that byte to shift has sign bit set"] = () =>
 			{
 				before = () => setByteToShift(0x80);
-				it["should set carry flag"] = () => this.processor.Carry.should_be_true();
-				it["should set zero flag"] = () => this.processor.Zero.should_be_true();
+				this.CarryFlagShouldBeTrue();
+				this.ZeroFlagShouldBeTrue();
 			};
 
 			context["given that byte to shift has seventh bit set"] = () =>
 			{
 				before = () => setByteToShift(0x40);
-				it["should set negative flag"] = () => this.processor.Negative.should_be_true();
+				this.NegativeFlagShouldBeTrue();
 			};
 		}
 	}
