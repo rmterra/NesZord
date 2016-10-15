@@ -9,9 +9,7 @@ namespace NesZord.Tests.OpCodes
 		public void When_use_zero_page_addressing_mode()
 		{
 			var accumulatorValue = default(byte);
-			var randomOffset = default(byte);
-			
-			before = () => randomOffset = this.Fixture.Create<byte>();
+			var randomOffset = this.Fixture.Create<byte>();
 
 			act = () =>
 			{
@@ -30,14 +28,8 @@ namespace NesZord.Tests.OpCodes
 		public void When_use_absolute_addressing_mode()
 		{
 			var accumulatorValue = default(byte);
-			var randomOffset = default(byte);
-			var randomPage = default(byte);
-
-			before = () =>
-			{
-				randomOffset = this.Fixture.Create<byte>();
-				randomPage = this.Fixture.Create<byte>();
-			};
+			var randomOffset = this.Fixture.Create<byte>();
+			var randomPage = this.Fixture.Create<byte>();
 
 			act = () =>
 			{

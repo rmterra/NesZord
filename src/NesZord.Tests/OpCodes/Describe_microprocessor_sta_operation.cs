@@ -1,173 +1,150 @@
 ﻿using NesZord.Core;
 using NSpec;
 using Ploeh.AutoFixture;
+using System;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_sta_operation : nspec
+	public class Describe_microprocessor_sta_operation : Describe_microprocessor_operation
 	{
-		private static readonly Fixture fixture = new Fixture();
-
-		private MemoryMock memory;
-
-		private Microprocessor processor;
-
-		public void before_each()
-		{
-			this.memory = new MemoryMock();
-			this.processor = new Microprocessor(this.memory);
-		}
+		private byte accumulatorValue = default(byte);
 
 		public void When_use_zero_page_mode()
 		{
-			var randomOffset = default(byte);
+			var randomOffset = this.Fixture.Create<byte>();
 
-			before = () => { randomOffset = fixture.Create<byte>(); };
-
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.STA_ZeroPage, randomOffset
-				});
-			};
+				(byte)OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte)OpCode.STA_ZeroPage, randomOffset
+			});
 
-			it["should store the accumulator value at memory"] = () => { this.memory.Read(randomOffset, Memory.ZERO_PAGE).should_be(processor.Accumulator.Value); };
+			this.DefineSpecs(() => this.Memory.Read(randomOffset, Core.Memory.ZERO_PAGE));
 		}
 
 		public void When_use_zero_page_x_mode()
 		{
-			var randomOffset = default(byte);
+			var randomOffset = this.Fixture.Create<byte>();
+			var xRegisterValue = this.Fixture.Create<byte>();
 
-			before = () => { randomOffset = fixture.Create<byte>(); };
-
-			act = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDX_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.STA_ZeroPageX, randomOffset
-				});
-			};
+				(byte)OpCode.LDX_Immediate, xRegisterValue,
+				(byte)OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte)OpCode.STA_ZeroPageX, randomOffset
+			});
 
-			it["should store the accumulator value at memory"] = () =>
-			{
-				var offset = (byte)(randomOffset + processor.X.Value);
-				this.memory.Read(offset, Memory.ZERO_PAGE).should_be(processor.Accumulator.Value);
-			};
+			this.DefineSpecs(() => this.Memory.Read((byte)(randomOffset + xRegisterValue), Core.Memory.ZERO_PAGE));
 		}
 
 		public void When_use_absolute_addressing_mode()
 		{
-			act = () =>
-			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.STA_Absolute, 0x00, 0x20
-				});
-			};
+			var randomOffset = this.Fixture.Create<byte>();
+			var randomPage = this.Fixture.Create<byte>();
 
-			it["should store the accumulator value at memory"] = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.memory.Read(0x00, 0x20).should_be(processor.Accumulator.Value);
-			};
+				(byte)OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte)OpCode.STA_Absolute, randomOffset, randomPage
+			});
+
+			this.DefineSpecs(() => this.Memory.Read(randomOffset, randomPage));
 		}
 
 		public void When_use_absolute_y_addressing_mode()
 		{
-			act = () =>
-			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDY_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.STA_AbsoluteY, 0x00, 0x20
-				});
-			};
+			var randomOffset = this.Fixture.Create<byte>();
+			var randomPage = this.Fixture.Create<byte>();
+			var yRegisterValue = this.Fixture.Create<byte>();
 
-			it["should store the accumulator value at memory"] = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.memory.Read(processor.Y.Value, 0x20).should_be(processor.Accumulator.Value);
-			};
+				(byte)OpCode.LDY_Immediate, yRegisterValue,
+				(byte)OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte)OpCode.STA_AbsoluteY, randomOffset, randomPage
+			});
+
+			this.DefineSpecs(() => this.Memory.Read(new MemoryLocation(randomOffset, randomPage).Sum(yRegisterValue)));
 		}
 
 		public void When_use_absolute_x_addressing_mode()
 		{
+			var randomOffset = this.Fixture.Create<byte>();
+			var randomPage = this.Fixture.Create<byte>();
+			var xRegisterValue = this.Fixture.Create<byte>();
+
 			act = () =>
 			{
-				this.processor.RunProgram(new byte[]
+				this.Processor.RunProgram(new byte[]
 				{
-					(byte)OpCode.LDX_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.STA_AbsoluteX, 0x00, 0x20
+					(byte)OpCode.LDX_Immediate, xRegisterValue,
+					(byte)OpCode.LDA_Immediate, this.accumulatorValue,
+					(byte)OpCode.STA_AbsoluteX, randomOffset, randomPage
 				});
 			};
 
-			it["should store the accumulator value at memory"] = () =>
-			{
-				this.memory.Read(processor.X.Value, 0x20).should_be(processor.Accumulator.Value);
-			};
+			this.DefineSpecs(() => this.Memory.Read(new MemoryLocation(randomOffset, randomPage).Sum(xRegisterValue)));
 		}
 
 		public void When_use_indexed_indirect_mode()
 		{
-			var randomOffset = default(byte);
-			var xRegisterValue = default(byte);
-			var indirectLocation = default(MemoryLocation);
+			var randomOffset = this.Fixture.Create<byte>();
+			var xRegisterValue = this.Fixture.Create<byte>();
 
-			before = () =>
-			{
-				randomOffset = fixture.Create<byte>();
-				xRegisterValue = fixture.Create<byte>();
-				indirectLocation = this.memory.GetIndexedIndirectLocation(randomOffset, xRegisterValue);
-			};
+			var indirectOffset = this.Fixture.Create<byte>();
+			var indirectPage = this.Fixture.Create<byte>();
 
-			act = () =>
-			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDX_Immediate, xRegisterValue,
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.STA_IndexedIndirect, randomOffset
-				});
-			};
+			var computedOffset = (byte)(xRegisterValue + randomOffset);
 
-			it["should store the accumulator value at memory"] = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.memory.Read(indirectLocation).should_be(processor.Accumulator.Value);
-			};
+				(byte)OpCode.LDY_Immediate, indirectOffset,
+				(byte)OpCode.STY_ZeroPage, computedOffset,
+
+				(byte)OpCode.LDY_Immediate, indirectPage,
+				(byte)OpCode.STY_ZeroPage, (byte)(computedOffset + 1),
+
+				(byte)OpCode.LDX_Immediate, xRegisterValue,
+
+				(byte)OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte)OpCode.STA_IndexedIndirect, randomOffset
+			});
+
+			this.DefineSpecs(() => this.Memory.Read(indirectOffset, indirectPage));
 		}
 
 		public void When_use_indirect_indexed_mode()
 		{
-			var randomOffset = default(byte);
-			var yRegisterValue = default(byte);
-			var indirectLocation = default(MemoryLocation);
+			var randomOffset = this.Fixture.Create<byte>();
+			var yRegisterValue = this.Fixture.Create<byte>();
 
-			before = () =>
-			{
-				randomOffset = fixture.Create<byte>();
-				yRegisterValue = fixture.Create<byte>();
-				indirectLocation = this.memory.GetIndirectIndexedLocation(randomOffset, yRegisterValue);
-			};
+			var indirectOffset = this.Fixture.Create<byte>();
+			var indirectPage = this.Fixture.Create<byte>();
 
-			act = () =>
-			{
-				this.processor.RunProgram(new byte[]
-				{
-					(byte)OpCode.LDY_Immediate, yRegisterValue,
-					(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
-					(byte)OpCode.STA_IndirectIndexed, randomOffset
-				});
-			};
+			var targetLocation = new MemoryLocation(indirectOffset, indirectPage).Sum(yRegisterValue);
 
-			it["should store the accumulator value at memory"] = () =>
+			this.RunProgram(() => new byte[]
 			{
-				this.memory.Read(indirectLocation).should_be(processor.Accumulator.Value);
-			};
+				(byte)OpCode.LDY_Immediate, indirectOffset,
+				(byte)OpCode.STY_ZeroPage, randomOffset,
+
+				(byte)OpCode.LDY_Immediate, indirectPage,
+				(byte)OpCode.STY_ZeroPage, (byte)(randomOffset + 1),
+
+				(byte)OpCode.LDY_Immediate, yRegisterValue,
+
+				(byte)OpCode.LDA_Immediate, this.accumulatorValue,
+				(byte)OpCode.STA_IndirectIndexed, randomOffset
+			});
+
+			this.DefineSpecs(() => this.Memory.Read(targetLocation));
+		}
+
+		private void DefineSpecs(Func<byte> getExpectedValue)
+		{
+			before = () => this.accumulatorValue = 0x05;
+
+			it["should store the accumulator value at memory"] = () => { getExpectedValue?.Invoke().should_be(0x05); };
 		}
 	}
 }

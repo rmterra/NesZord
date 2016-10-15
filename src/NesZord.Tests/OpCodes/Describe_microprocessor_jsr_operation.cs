@@ -7,14 +7,8 @@ namespace NesZord.Tests.OpCodes
 	{
 		public void When_use_absolute_addressing_mode()
 		{
-			var randomPage = default(byte);
-			var randomOffset = default(byte);
-
-			before = () =>
-			{
-				randomPage = 0x06;
-				randomOffset = 0x020;
-			};
+			byte randomPage = 0x06;
+			byte randomOffset = 0x020;
 
 			this.RunProgram(() => new byte[] 
 			{

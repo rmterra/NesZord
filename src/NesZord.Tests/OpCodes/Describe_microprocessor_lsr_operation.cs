@@ -18,15 +18,13 @@ namespace NesZord.Tests.OpCodes
 			});
 
 			this.DefineSpecs(
-				(b) => accumulatorValue = b, 
+				(b) => accumulatorValue = b,
 				() => this.Processor.Accumulator.Value);
 		}
 
 		public void When_zero_page_addressing_mode()
 		{
-			var randomOffset = default(byte);
-
-			before = () => randomOffset = this.Fixture.Create<byte>();
+			var randomOffset = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[] { (byte)OpCode.LSR_ZeroPage, randomOffset });
 
@@ -35,14 +33,8 @@ namespace NesZord.Tests.OpCodes
 
 		public void When_zero_page_x_addressing_mode()
 		{
-			var randomOffset = default(byte);
-			var xRegisterValue = default(byte);
-
-			before = () =>
-			{
-				randomOffset = this.Fixture.Create<byte>();
-				xRegisterValue = this.Fixture.Create<byte>();
-			};
+			var randomOffset = this.Fixture.Create<byte>();
+			var xRegisterValue = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
@@ -55,14 +47,8 @@ namespace NesZord.Tests.OpCodes
 
 		public void When_absolute_addressing_mode()
 		{
-			var randomOffset = default(byte);
-			var randomPage = default(byte);
-
-			before = () =>
-			{
-				randomOffset = this.Fixture.Create<byte>();
-				randomPage = this.Fixture.Create<byte>();
-			};
+			var randomOffset = this.Fixture.Create<byte>();
+			var randomPage = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[] { (byte)OpCode.LSR_Absolute, randomOffset, randomPage });
 
@@ -71,16 +57,9 @@ namespace NesZord.Tests.OpCodes
 
 		public void When_absolute_x_addressing_mode()
 		{
-			var randomOffset = default(byte);
-			var randomPage = default(byte);
-			var xRegisterValue = default(byte);
-
-			before = () =>
-			{
-				randomOffset = this.Fixture.Create<byte>();
-				randomPage = this.Fixture.Create<byte>();
-				xRegisterValue = this.Fixture.Create<byte>();
-			};
+			var randomOffset = this.Fixture.Create<byte>();
+			var randomPage = this.Fixture.Create<byte>();
+			var xRegisterValue = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
@@ -94,7 +73,7 @@ namespace NesZord.Tests.OpCodes
 		private void DefineSpecs(Func<MemoryLocation> getLocation)
 		{
 			this.DefineSpecs(
-				(b) => this.Memory.Write(getLocation?.Invoke(), b), 
+				(b) => this.Memory.Write(getLocation?.Invoke(), b),
 				() => this.Memory.Read(getLocation?.Invoke()));
 		}
 

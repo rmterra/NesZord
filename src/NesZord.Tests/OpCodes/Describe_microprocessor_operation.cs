@@ -7,7 +7,7 @@ namespace NesZord.Tests.OpCodes
 {
 	public abstract class Describe_microprocessor_operation : nspec
 	{
-		protected Fixture Fixture { get; private set; }
+		protected Fixture Fixture { get; } = new Fixture();
 
 		protected MemoryMock Memory { get; private set; }
 
@@ -15,7 +15,6 @@ namespace NesZord.Tests.OpCodes
 
 		public void before_each()
 		{
-			this.Fixture = new Fixture();
 			this.Memory = new MemoryMock();
 			this.Processor = new Microprocessor(this.Memory);
 		}

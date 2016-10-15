@@ -25,10 +25,8 @@ namespace NesZord.Tests.OpCodes
 
 		public void When_use_zero_page_addressing_mode()
 		{
-			var randomOffset = default(byte);
 			var xRegisterValue = default(byte);
-
-			before = () => randomOffset = this.Fixture.Create<byte>();
+			var randomOffset = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
@@ -44,14 +42,8 @@ namespace NesZord.Tests.OpCodes
 		public void When_use_absolute_addressing_mode()
 		{
 			var xRegisterValue = default(byte);
-			var randomPage = default(byte);
-			var randomOffset = default(byte);
-
-			before = () =>
-			{
-				randomPage = this.Fixture.Create<byte>();
-				randomOffset = this.Fixture.Create<byte>();
-			};
+			var randomPage = this.Fixture.Create<byte>();
+			var randomOffset = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{

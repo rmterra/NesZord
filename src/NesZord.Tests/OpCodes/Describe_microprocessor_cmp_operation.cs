@@ -24,10 +24,8 @@ namespace NesZord.Tests.OpCodes
 
 		public void When_use_zero_page_addressing_mode()
 		{
-			var randomOffset = default(byte);
 			var accumulatorValue = default(byte);
-
-			before = () => randomOffset = this.Fixture.Create<byte>();
+			var randomOffset = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
@@ -42,15 +40,9 @@ namespace NesZord.Tests.OpCodes
 
 		public void When_use_zero_page_x_addressing_mode()
 		{
-			var randomOffset = default(byte);
 			var accumulatorValue = default(byte);
-			var xRegisterValue = default(byte);
-
-			before = () =>
-			{
-				randomOffset = this.Fixture.Create<byte>();
-				xRegisterValue = this.Fixture.Create<byte>();
-			};
+			var randomOffset = this.Fixture.Create<byte>();
+			var xRegisterValue = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
@@ -67,14 +59,8 @@ namespace NesZord.Tests.OpCodes
 		public void When_use_absolute_addressing_mode()
 		{
 			var accumulatorValue = default(byte);
-			var randomPage = default(byte);
-			var randomOffset = default(byte);
-
-			before = () =>
-			{
-				randomPage = this.Fixture.Create<byte>();
-				randomOffset = this.Fixture.Create<byte>();
-			};
+			var randomPage = this.Fixture.Create<byte>();
+			var randomOffset = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
@@ -90,16 +76,9 @@ namespace NesZord.Tests.OpCodes
 		public void When_use_absolute_x_addressing_mode()
 		{
 			var accumulatorValue = default(byte);
-			var xRegisterValue = default(byte);
-			var randomPage = default(byte);
-			var randomOffset = default(byte);
-
-			before = () =>
-			{
-				randomPage = this.Fixture.Create<byte>();
-				randomOffset = this.Fixture.Create<byte>();
-				xRegisterValue = this.Fixture.Create<byte>();
-			};
+			var randomPage = this.Fixture.Create<byte>();
+			var randomOffset = this.Fixture.Create<byte>();
+			var xRegisterValue = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
@@ -110,22 +89,15 @@ namespace NesZord.Tests.OpCodes
 
 			this.DefineSpecs(
 				(b) => accumulatorValue = b,
-				(b) => this.Memory.Write((byte)(xRegisterValue + randomOffset), randomPage, b));
+				(b) => this.Memory.Write(new MemoryLocation(randomOffset, randomPage).Sum(xRegisterValue), b));
 		}
 
 		public void When_use_absolute_y_addressing_mode()
 		{
 			var accumulatorValue = default(byte);
-			var yRegisterValue = default(byte);
-			var randomPage = default(byte);
-			var randomOffset = default(byte);
-
-			before = () =>
-			{
-				randomPage = this.Fixture.Create<byte>();
-				randomOffset = this.Fixture.Create<byte>();
-				yRegisterValue = this.Fixture.Create<byte>();
-			};
+			var randomPage = this.Fixture.Create<byte>();
+			var randomOffset = this.Fixture.Create<byte>();
+			var yRegisterValue = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
@@ -136,20 +108,14 @@ namespace NesZord.Tests.OpCodes
 
 			this.DefineSpecs(
 				(b) => accumulatorValue = b,
-				(b) => this.Memory.Write((byte)(yRegisterValue + randomOffset), randomPage, b));
+				(b) => this.Memory.Write(new MemoryLocation(randomOffset, randomPage).Sum(yRegisterValue), b));
 		}
 
 		public void When_use_indexed_indirect_addressing_mode()
 		{
 			var accumulatorValue = default(byte);
-			var xRegisterValue = default(byte);
-			var randomOffset = default(byte);
-
-			before = () =>
-			{
-				randomOffset = this.Fixture.Create<byte>();
-				xRegisterValue = this.Fixture.Create<byte>();
-			};
+			var randomOffset = this.Fixture.Create<byte>();
+			var xRegisterValue = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
@@ -166,14 +132,8 @@ namespace NesZord.Tests.OpCodes
 		public void When_use_indirect_indexed_addressing_mode()
 		{
 			var accumulatorValue = default(byte);
-			var yRegisterValue = default(byte);
-			var randomOffset = default(byte);
-
-			before = () =>
-			{
-				randomOffset = this.Fixture.Create<byte>();
-				yRegisterValue = this.Fixture.Create<byte>();
-			};
+			var randomOffset = this.Fixture.Create<byte>();
+			var yRegisterValue = this.Fixture.Create<byte>();
 
 			this.RunProgram(() => new byte[]
 			{
