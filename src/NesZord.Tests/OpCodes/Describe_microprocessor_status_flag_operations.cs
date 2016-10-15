@@ -3,7 +3,7 @@ using NSpec;
 
 namespace NesZord.Tests.OpCodes
 {
-	public class Describe_microprocessor_status_flag_opeartions : nspec
+	public class Describe_microprocessor_status_flag_operations : nspec
 	{
 		private Microprocessor processor;
 
