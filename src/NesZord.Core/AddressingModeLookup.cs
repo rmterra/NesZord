@@ -105,6 +105,7 @@
 				case OpCode.DEX_Implied:
 				case OpCode.INY_Implied:
 				case OpCode.INX_Implied:
+				case OpCode.RTI_Implied:
 				case OpCode.RTS_Implied:
 				case OpCode.SEC_Implied:
 				case OpCode.TAX_Implied:

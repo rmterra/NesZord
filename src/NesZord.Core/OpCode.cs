@@ -74,6 +74,8 @@
 
 		ROL_AbsoluteX = 0x3e,
 
+		RTI_Implied = 0xFF,
+
 		EOR_IndexedIndirect = 0x41,
 
 		EOR_ZeroPage = 0x45,

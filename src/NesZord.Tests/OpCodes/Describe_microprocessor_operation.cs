@@ -28,9 +28,24 @@ namespace NesZord.Tests.OpCodes
 			};
 		}
 
+		protected void BreakFlagShouldBeFalse()
+		{
+			this.FlagShouldBeFalse(() => this.Processor.Break, nameof(this.Processor.Break));
+		}
+
 		protected void CarryFlagShouldBeFalse()
 		{
 			this.FlagShouldBeFalse(() => this.Processor.Carry, nameof(this.Processor.Carry));
+		}
+
+		protected void DecimalFlagShouldBeFalse()
+		{
+			this.FlagShouldBeFalse(() => this.Processor.Decimal, nameof(this.Processor.Decimal));
+		}
+
+		protected void InterruptFlagShouldBeFalse()
+		{
+			this.FlagShouldBeFalse(() => this.Processor.Interrupt, nameof(this.Processor.Interrupt));
 		}
 
 		protected void NegativeFlagShouldBeFalse()
@@ -53,9 +68,24 @@ namespace NesZord.Tests.OpCodes
 			this.TestFlag(current, false, name);
 		}
 
+		protected void BreakFlagShouldBeTrue()
+		{
+			this.FlagShouldBeTrue(() => this.Processor.Break, nameof(this.Processor.Break));
+		}
+
 		protected void CarryFlagShouldBeTrue()
 		{
 			this.FlagShouldBeTrue(() => this.Processor.Carry, nameof(this.Processor.Carry));
+		}
+
+		protected void DecimalFlagShouldBeTrue()
+		{
+			this.FlagShouldBeTrue(() => this.Processor.Decimal, nameof(this.Processor.Decimal));
+		}
+
+		protected void InterruptFlagShouldBeTrue()
+		{
+			this.FlagShouldBeTrue(() => this.Processor.Interrupt, nameof(this.Processor.Interrupt));
 		}
 
 		protected void NegativeFlagShouldBeTrue()

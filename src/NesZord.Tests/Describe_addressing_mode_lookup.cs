@@ -98,6 +98,7 @@ namespace NesZord.Tests
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.DEX_Implied, AddressingMode.Implied);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.INY_Implied, AddressingMode.Implied);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.INX_Implied, AddressingMode.Implied);
+			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.RTI_Implied, AddressingMode.Implied);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.RTS_Implied, AddressingMode.Implied);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.SEC_Implied, AddressingMode.Implied);
 			this.GivenTheOpCodeReceivedAddressingModeShouldBe(OpCode.TAX_Implied, AddressingMode.Implied);

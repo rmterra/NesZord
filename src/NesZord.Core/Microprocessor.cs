@@ -75,6 +75,7 @@ namespace NesZord.Core
 				{ OpCode.PHP_Implied, this.PushProcessorStatusToStack },
 				{ OpCode.PLA_Implied, this.PullFromStackToAccumulator },
 				{ OpCode.PLP_Implied, this.PullFromStackToStatusFlags },
+				{ OpCode.RTI_Implied, this.ReturnFromInterrupt },
 				{ OpCode.RTS_Implied, this.ReturnFromSubRoutine },
 				{ OpCode.SEC_Implied, this.SetCarryFlag },
 				{ OpCode.SED_Implied, this.SetDecimalFlag },
@@ -681,6 +682,15 @@ namespace NesZord.Core
 			status = status.SetBitAt(SIGN_BIT_INDEX, this.Negative);
 
 			this.StackPointer.Push(status);
+		}
+
+		private void ReturnFromInterrupt()
+		{
+			this.PullFromStackToStatusFlags();
+
+			var offset = this.StackPointer.Pop();
+			var page = this.StackPointer.Pop();
+			this.ProgramCounter = new MemoryLocation(offset, page).FullLocation;
 		}
 
 		private void ReturnFromSubRoutine()
