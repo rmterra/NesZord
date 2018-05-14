@@ -19,3 +19,5 @@ src/sidekick.bat
 src/sidekickapp.cs
 src/stacktrace.txt
 src/watchr.bat
+
+src/.vs/
