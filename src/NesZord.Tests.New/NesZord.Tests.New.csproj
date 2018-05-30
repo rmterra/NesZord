@@ -66,7 +66,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MemoryMock.cs" />
-    <Compile Include="OpCodes\When_process_ADC_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_indirect_indexed_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_indexed_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_zero_page_addressing_mode_should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
