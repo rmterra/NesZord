@@ -81,7 +81,6 @@
     <Compile Include="OpCodes\Describe_microprocessor_eor_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_ora_operation.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_and_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_asl_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_branch_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_decrement_operations.cs" />
