@@ -1,31 +1,22 @@
-﻿using AutoFixture;
-using NesZord.Core;
+﻿using NesZord.Core;
+using NesZord.Tests.New.AddressingMode;
 
 namespace NesZord.Tests.New.OpCodes.ADC
 {
-	public class When_process_ADC_with_indexed_indirect_addressing_mode_should : When_process_ADC_should
+	public class When_process_ADC_with_indexed_indirect_addressing_mode_should 
+		: When_process_ADC_should<IndexedIndirectAddressingMode>
 	{
-		private static Fixture fixture = new Fixture();
-
-		private byte randomOffset;
-
-		private byte xRegisterValue;
-
-		protected override void Initialize()
+		public When_process_ADC_with_indexed_indirect_addressing_mode_should() 
+			: base(new IndexedIndirectAddressingMode())
 		{
-			this.randomOffset = fixture.Create<byte>();
-			this.xRegisterValue = fixture.Create<byte>();
 		}
 
 		protected override void RunProgram()
 			=> this.Processor.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDA_Immediate, this.AccumulatorValue,
-				(byte)OpCode.LDX_Immediate, this.xRegisterValue,
-				(byte)OpCode.ADC_IndexedIndirect, this.randomOffset
+				(byte)OpCode.LDX_Immediate, this.AddressingMode.XRegisterValue,
+				(byte)OpCode.ADC_IndexedIndirect, this.AddressingMode.RandomOffset
 			});
-
-		protected override void SetByteToAdd(byte value)
-			=> this.Memory.MockIndexedIndirectMemoryWrite(this.randomOffset, this.xRegisterValue, value);
 	}
 }

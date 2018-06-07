@@ -1,36 +1,21 @@
-﻿using NesZord.Core;
+﻿using FluentAssertions;
+using NesZord.Core;
+using NesZord.Tests.New.AddressingMode;
 using Xunit;
 
 namespace NesZord.Tests.New.OpCodes.ADC
 {
-	public abstract class When_process_ADC_should
+	public abstract class When_process_ADC_should<T> 
+		: When_process_opcode_should<T> where T : IAddressingMode
 	{
-		public When_process_ADC_should()
+		public When_process_ADC_should(T addressingMode)
+			: base(addressingMode)
 		{
-			this.Memory = new MemoryMock();
-			this.Processor = new Microprocessor(this.Memory);
-
-			this.Initialize();
-
 			this.AccumulatorValue = 0x05;
-			this.SetByteToAdd(0x05);
+			this.SetOperationByte(0x05);
 		}
 
 		protected byte AccumulatorValue { get; private set; }
-
-		protected byte ByteToAdd { get; set; }
-
-		protected MemoryMock Memory { get; }
-
-		protected Microprocessor Processor { get; }
-
-		protected abstract void RunProgram();
-
-		protected abstract void SetByteToAdd(byte value);
-
-		protected virtual void Initialize()
-		{
-		}
 
 		[Fact]
 		public void Add_the_specified_value_to_accumulator()
@@ -126,7 +111,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		{
 			// Arrange
 			this.AccumulatorValue = 0x00;
-			this.SetByteToAdd(0x00);
+			this.SetOperationByte(0x00);
 
 			// Act
 			this.RunProgram();
@@ -139,7 +124,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		public void Set_carry_flag_given_that_result_on_accumulator_is_negative()
 		{
 			// Arrange
-			this.SetByteToAdd(0xff);
+			this.SetOperationByte(0xff);
 
 			// Act
 			this.RunProgram();
@@ -153,7 +138,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		{
 			// Arrange
 			this.Processor.RunProgram(new byte[] { (byte)OpCode.SED_Implied });
-			this.SetByteToAdd(0x95);
+			this.SetOperationByte(0x95);
 
 			// Act
 			this.RunProgram();
@@ -167,7 +152,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		{
 			// Arrange
 			this.Processor.RunProgram(new byte[] { (byte)OpCode.SED_Implied });
-			this.SetByteToAdd(0x02);
+			this.SetOperationByte(0x02);
 
 			// Act
 			this.RunProgram();
@@ -180,7 +165,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		public void Set_carry_flag_given_that_decimal_flag_is_not_set_and_added_byte_is_0xff()
 		{
 			// Arrange
-			this.SetByteToAdd(0xff);
+			this.SetOperationByte(0xff);
 
 			// Act
 			this.RunProgram();
@@ -193,7 +178,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		public void Not_set_carry_flag_given_that_decimal_flag_is_not_set_and_added_byte_is_0x00()
 		{
 			// Arrange
-			this.SetByteToAdd(0x00);
+			this.SetOperationByte(0x00);
 
 			// Act
 			this.RunProgram();

@@ -1,34 +1,22 @@
-﻿using AutoFixture;
-using NesZord.Core;
+﻿using NesZord.Core;
+using NesZord.Tests.New.AddressingMode;
 
 namespace NesZord.Tests.New.OpCodes.ADC
 {
-	public class When_process_ADC_with_absolute_x_addressing_mode_should : When_process_ADC_should
+	public class When_process_ADC_with_absolute_x_addressing_mode_should 
+		: When_process_ADC_should<AbsoluteXAddressingMode>
 	{
-		private static Fixture fixture = new Fixture();
-
-		private byte randomOffset;
-
-		private byte randomPage;
-
-		private byte xRegisterValue;
-
-		protected override void Initialize()
+		public When_process_ADC_with_absolute_x_addressing_mode_should() 
+			: base(new AbsoluteXAddressingMode())
 		{
-			this.randomOffset = fixture.Create<byte>();
-			this.randomPage = fixture.Create<byte>();
-			this.xRegisterValue = fixture.Create<byte>();
 		}
 
 		protected override void RunProgram()
 			=> this.Processor.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDA_Immediate, this.AccumulatorValue,
-				(byte)OpCode.LDX_Immediate, this.xRegisterValue,
-				(byte)OpCode.ADC_AbsoluteX, this.randomOffset, this.randomPage
+				(byte)OpCode.LDX_Immediate, this.AddressingMode.XRegisterValue,
+				(byte)OpCode.ADC_AbsoluteX, this.AddressingMode.RandomOffset, this.AddressingMode.RandomPage
 			});
-
-		protected override void SetByteToAdd(byte value)
-			=> this.Memory.Write(new MemoryLocation(this.randomOffset, this.randomPage).Sum(this.xRegisterValue), value);
 	}
 }

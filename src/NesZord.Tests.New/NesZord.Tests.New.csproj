@@ -88,6 +88,7 @@
     <Compile Include="AddressingMode\ImmediateAddressingMode.cs" />
     <Compile Include="AddressingMode\IndexedIndirectAddressingMode.cs" />
     <Compile Include="AddressingMode\IndirectIndexedAddressingMode.cs" />
+    <Compile Include="OpCodes\When_process_opcode_should.cs" />
     <Compile Include="AddressingMode\ZeroPageAddressingMode.cs" />
     <Compile Include="AddressingMode\ZeroPageXAddressingMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
