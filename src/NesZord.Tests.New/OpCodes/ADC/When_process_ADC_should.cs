@@ -39,7 +39,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.Equal(0x0a, this.Processor.Accumulator.Value);
+			this.Processor.Accumulator.Value.Should().Be(0x0a);
 		}
 
 		[Fact]
@@ -49,7 +49,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.False(this.Processor.Carry);
+			this.Processor.Carry.Should().BeFalse();
 		}
 
 		[Fact]
@@ -59,7 +59,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.False(this.Processor.Overflow);
+			this.Processor.Overflow.Should().BeFalse();
 		}
 
 		[Fact]
@@ -69,7 +69,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.False(this.Processor.Negative);
+			this.Processor.Negative.Should().BeFalse();
 		}
 
 		[Fact]
@@ -79,7 +79,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.False(this.Processor.Zero);
+			this.Processor.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -92,7 +92,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.Equal(0x0b, this.Processor.Accumulator.Value);
+			this.Processor.Accumulator.Value.Should().Be(0x0b);
 		}
 
 		[Fact]
@@ -105,7 +105,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.True(this.Processor.Overflow);
+			this.Processor.Overflow.Should().BeTrue();
 		}
 
 		[Fact]
@@ -118,7 +118,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.True(this.Processor.Negative);
+			this.Processor.Negative.Should().BeTrue();
 		}
 
 		[Fact]
@@ -132,7 +132,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.True(this.Processor.Zero);
+			this.Processor.Zero.Should().BeTrue();
 		}
 
 		[Fact]
@@ -145,7 +145,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.True(this.Processor.Carry);
+			this.Processor.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -159,7 +159,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.True(this.Processor.Carry);
+			this.Processor.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -173,7 +173,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.False(this.Processor.Carry);
+			this.Processor.Carry.Should().BeFalse();
 		}
 
 		[Fact]
@@ -186,7 +186,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.True(this.Processor.Carry);
+			this.Processor.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -199,7 +199,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			this.RunProgram();
 
 			// Assert
-			Assert.False(this.Processor.Carry);
+			this.Processor.Carry.Should().BeFalse();
 		}
 	}
 }
