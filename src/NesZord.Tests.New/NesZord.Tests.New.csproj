@@ -72,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MemoryMock.cs" />
+    <Compile Include="AddressingMode\AbsoluteAddressingMode.cs" />
+    <Compile Include="AddressingMode\AbsoluteXAddressingMode.cs" />
+    <Compile Include="AddressingMode\AbsoluteYAddressingMode.cs" />
     <Compile Include="OpCodes\ADC\When_process_ADC_should.cs" />
     <Compile Include="OpCodes\ADC\When_process_ADC_with_indirect_indexed_addressing_mode_should.cs" />
     <Compile Include="OpCodes\ADC\When_process_ADC_with_indexed_indirect_addressing_mode_should.cs" />
@@ -81,6 +84,12 @@
     <Compile Include="OpCodes\ADC\When_process_ADC_with_absolute_addressing_mode_should.cs" />
     <Compile Include="OpCodes\ADC\When_process_ADC_with_zero_page_x_addressing_mode_should.cs" />
     <Compile Include="OpCodes\ADC\When_process_ADC_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="AddressingMode\IAddressingMode.cs" />
+    <Compile Include="AddressingMode\ImmediateAddressingMode.cs" />
+    <Compile Include="AddressingMode\IndexedIndirectAddressingMode.cs" />
+    <Compile Include="AddressingMode\IndirectIndexedAddressingMode.cs" />
+    <Compile Include="AddressingMode\ZeroPageAddressingMode.cs" />
+    <Compile Include="AddressingMode\ZeroPageXAddressingMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
