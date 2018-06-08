@@ -15,19 +15,22 @@ namespace NesZord.Tests.New.OpCodes
 			this.AddressingMode = addressingMode;
 			this.Memory = new MemoryMock();
 			this.Processor = new Microprocessor(this.Memory);
-
-			this.AddressingMode.Initialize();
+			
+			this.AddressingMode.Initialize(this.Processor, this.Memory);
 		}
 
 		protected T AddressingMode { get; }
 
 		protected MemoryMock Memory { get; }
 
+		protected byte OperationByte
+		{
+			get { return this.AddressingMode.OperationByte; }
+			set { this.AddressingMode.OperationByte = value; }
+		}
+
 		protected Microprocessor Processor { get; }
 
 		protected abstract void RunProgram();
-
-		protected void SetOperationByte(byte value)
-			=> this.AddressingMode.SetOperationByte(this.Memory, value);
 	}
 }

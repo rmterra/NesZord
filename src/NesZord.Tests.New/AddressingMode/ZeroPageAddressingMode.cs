@@ -1,4 +1,6 @@
 ﻿using AutoFixture;
+using NesZord.Core;
+using System;
 
 namespace NesZord.Tests.New.AddressingMode
 {
@@ -6,12 +8,21 @@ namespace NesZord.Tests.New.AddressingMode
 	{
 		private static Fixture fixture = new Fixture();
 
+		private MemoryMock memory;
+
+		public byte OperationByte
+		{
+			get => this.memory.Read(this.RandomOffset, Memory.ZERO_PAGE);
+			set => this.memory.WriteZeroPage(this.RandomOffset, value);
+		}
+
 		public byte RandomOffset { get; private set; }
 
-		public void Initialize()
-			=> this.RandomOffset = fixture.Create<byte>();
+		public void Initialize(Microprocessor processor, MemoryMock memory)
+		{
+			this.memory = memory ?? throw new ArgumentNullException(nameof(memory));
 
-		public void SetOperationByte(MemoryMock memory, byte value)
-			=> memory.WriteZeroPage(this.RandomOffset, value);
+			this.RandomOffset = fixture.Create<byte>();
+		}
 	}
 }

@@ -11,7 +11,7 @@ namespace NesZord.Tests.New.OpCodes.AND
 			: base(addressingMode)
 		{
 			this.AccumulatorValue = 0xa9;
-			this.SetOperationByte(0x05);
+			this.OperationByte = 0x05;
 		}
 
 		protected byte AccumulatorValue { get; private set; }
@@ -51,7 +51,7 @@ namespace NesZord.Tests.New.OpCodes.AND
 		{
 			// Arrange
 			this.AccumulatorValue = 0x80;
-			this.SetOperationByte(0x80);
+			this.OperationByte = 0x80;
 
 			// Act
 			this.RunProgram();
@@ -65,7 +65,7 @@ namespace NesZord.Tests.New.OpCodes.AND
 		{
 			// Arrange
 			this.AccumulatorValue = 0x00;
-			this.SetOperationByte(0x00);
+			this.OperationByte = 0x00;
 
 			// Act
 			this.RunProgram();

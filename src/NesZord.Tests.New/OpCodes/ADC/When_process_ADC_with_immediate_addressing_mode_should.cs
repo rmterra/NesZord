@@ -15,7 +15,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 			=> this.Processor.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDA_Immediate, this.AccumulatorValue,
-				(byte)OpCode.ADC_Immediate, this.AddressingMode.ByteToCompare
+				(byte)OpCode.ADC_Immediate, this.AddressingMode.OperationByte
 			});
 	}
 }

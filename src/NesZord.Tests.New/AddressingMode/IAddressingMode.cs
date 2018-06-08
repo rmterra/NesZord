@@ -1,9 +1,11 @@
-﻿namespace NesZord.Tests.New.AddressingMode
+﻿using NesZord.Core;
+
+namespace NesZord.Tests.New.AddressingMode
 {
 	public interface IAddressingMode
 	{
-		void Initialize();
+		byte OperationByte { get; set; }
 
-		void SetOperationByte(MemoryMock memory, byte value);
+		void Initialize(Microprocessor processor, MemoryMock memory);
 	}
 }
