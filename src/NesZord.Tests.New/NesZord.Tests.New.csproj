@@ -104,6 +104,17 @@
     <Compile Include="OpCodes\ASL\When_process_ASL_with_zero_page_addressing_mode_should.cs" />
     <Compile Include="OpCodes\ASL\When_process_ASL_with_zero_page_x_addressing_mode_should.cs" />
     <Compile Include="OpCodes\ASL\When_process_ASL_should.cs" />
+    <Compile Include="OpCodes\BCC\When_process_BCC_should.cs" />
+    <Compile Include="OpCodes\BCS\When_process_BCS_should.cs" />
+    <Compile Include="OpCodes\BEQ\When_process_BEQ_should.cs" />
+    <Compile Include="OpCodes\BIT\When_process_BIT_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\BIT\When_process_BIT_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\BIT\When_process_BIT_should.cs" />
+    <Compile Include="OpCodes\BMI\When_process_BMI_should.cs" />
+    <Compile Include="OpCodes\BNE\When_process_BNE_should.cs" />
+    <Compile Include="OpCodes\BPL\When_process_BPL_should.cs" />
+    <Compile Include="OpCodes\BVC\When_process_BVC_should.cs" />
+    <Compile Include="OpCodes\BVS\When_process_BVS_should.cs" />
     <Compile Include="OpCodes\When_process_opcode_should.cs" />
     <Compile Include="AddressingMode\ZeroPageAddressingMode.cs" />
     <Compile Include="AddressingMode\ZeroPageXAddressingMode.cs" />
