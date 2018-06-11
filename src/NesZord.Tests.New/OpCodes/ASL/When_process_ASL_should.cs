@@ -5,7 +5,7 @@ using Xunit;
 namespace NesZord.Tests.New.OpCodes.ASL
 {
 	public abstract class When_process_ASL_should<T>
-		: When_process_opcode_should<T> where T : IAddressingMode
+		: When_process_opcode_with_addressing_mode_should<T> where T : IAddressingMode
 	{
 		public When_process_ASL_should(T addressingMode) 
 			: base(addressingMode)
