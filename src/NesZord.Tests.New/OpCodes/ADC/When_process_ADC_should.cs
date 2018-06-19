@@ -11,11 +11,9 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		public When_process_ADC_should(T addressingMode)
 			: base(addressingMode)
 		{
-			this.AccumulatorValue = 0x05;
+			this.Processor.Accumulator.Value = 0x05;
 			this.OperationByte = 0x05;
 		}
-
-		protected byte AccumulatorValue { get; private set; }
 
 		[Fact]
 		public void Add_the_specified_value_to_accumulator()
@@ -84,7 +82,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		public void Set_overflow_flag_given_that_accumulator_sign_bit_is_set()
 		{
 			// Arrange
-			this.AccumulatorValue = 0xff;
+			this.Processor.Accumulator.Value = 0xff;
 
 			// Act
 			this.RunProgram();
@@ -97,7 +95,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		public void Set_negative_flag_given_that_accumulator_sign_bit_is_set()
 		{
 			// Arrange
-			this.AccumulatorValue = 0xff;
+			this.Processor.Accumulator.Value = 0xff;
 
 			// Act
 			this.RunProgram();
@@ -110,7 +108,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		public void Set_zero_flag_given_that_result_on_accumulator_is_0x00()
 		{
 			// Arrange
-			this.AccumulatorValue = 0x00;
+			this.Processor.Accumulator.Value = 0x00;
 			this.OperationByte = 0x00;
 
 			// Act

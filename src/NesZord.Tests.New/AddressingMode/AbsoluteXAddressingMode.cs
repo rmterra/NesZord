@@ -8,9 +8,18 @@ namespace NesZord.Tests.New.AddressingMode
 	{
 		private static Fixture fixture = new Fixture();
 
-		private MemoryLocation memoryLocation;
+		private Microprocessor processor;
 
 		private MemoryMock memory;
+
+		private MemoryLocation memoryLocation;
+
+		private OpCode opCode;
+
+		public AbsoluteXAddressingMode(OpCode opCode)
+		{
+			this.opCode = opCode;
+		}
 
 		public byte OperationByte
 		{
@@ -26,6 +35,7 @@ namespace NesZord.Tests.New.AddressingMode
 
 		public void Initialize(Microprocessor processor, MemoryMock memory)
 		{
+			this.processor = processor ?? throw new ArgumentNullException(nameof(processor));
 			this.memory = memory ?? throw new ArgumentNullException(nameof(memory));
 
 			this.RandomOffset = fixture.Create<byte>();
@@ -34,5 +44,12 @@ namespace NesZord.Tests.New.AddressingMode
 
 			this.memoryLocation = new MemoryLocation(this.RandomOffset, this.RandomPage).Sum(this.XRegisterValue);
 		}
+
+		public void RunProgram()
+			=> this.processor.RunProgram(new byte[]
+			{
+				(byte)OpCode.LDX_Immediate, this.XRegisterValue,
+				(byte)this.opCode, this.RandomOffset, this.RandomPage
+			});
 	}
 }

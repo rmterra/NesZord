@@ -31,6 +31,7 @@ namespace NesZord.Tests.New.OpCodes
 
 		protected Microprocessor Processor { get; }
 
-		protected abstract void RunProgram();
+		protected void RunProgram()
+			=> this.AddressingMode.RunProgram();
 	}
 }

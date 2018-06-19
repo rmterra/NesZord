@@ -10,11 +10,9 @@ namespace NesZord.Tests.New.OpCodes.AND
 		public When_process_AND_should(T addressingMode)
 			: base(addressingMode)
 		{
-			this.AccumulatorValue = 0xa9;
+			this.Processor.Accumulator.Value = 0xa9;
 			this.OperationByte = 0x05;
 		}
-
-		protected byte AccumulatorValue { get; private set; }
 
 		[Fact]
 		public void Set_bitwise_and_result_on_Accumulator()
@@ -50,7 +48,7 @@ namespace NesZord.Tests.New.OpCodes.AND
 		public void Set_negative_flag_given_that_accumulator_sign_bit_is_set()
 		{
 			// Arrange
-			this.AccumulatorValue = 0x80;
+			this.Processor.Accumulator.Value = 0x80;
 			this.OperationByte = 0x80;
 
 			// Act
@@ -64,7 +62,7 @@ namespace NesZord.Tests.New.OpCodes.AND
 		public void Set_zero_flag_given_that_operation_result_over_accumulator_is_0x00()
 		{
 			// Arrange
-			this.AccumulatorValue = 0x00;
+			this.Processor.Accumulator.Value = 0x00;
 			this.OperationByte = 0x00;
 
 			// Act

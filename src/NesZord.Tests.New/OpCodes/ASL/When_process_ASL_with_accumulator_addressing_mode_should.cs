@@ -7,11 +7,8 @@ namespace NesZord.Tests.New.OpCodes.ASL
 		: When_process_ASL_should<AccumulatorAddressingMode>
 	{
 		public When_process_ASL_with_accumulator_addressing_mode_should()
-			: base(new AccumulatorAddressingMode())
+			: base(new AccumulatorAddressingMode(OpCode.ASL_Accumulator))
 		{
 		}
-
-		protected override void RunProgram()
-			=> this.Processor.RunProgram(new byte[] { (byte)OpCode.ASL_Accumulator });
 	}
 }

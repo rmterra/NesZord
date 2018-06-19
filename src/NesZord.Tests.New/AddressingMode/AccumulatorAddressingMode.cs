@@ -7,6 +7,13 @@ namespace NesZord.Tests.New.AddressingMode
 	{
 		private Microprocessor processor;
 
+		private OpCode opCode;
+
+		public AccumulatorAddressingMode(OpCode opCode)
+		{
+			this.opCode = opCode;
+		}
+
 		public byte OperationByte
 		{
 			get => this.processor.Accumulator.Value;
@@ -15,5 +22,8 @@ namespace NesZord.Tests.New.AddressingMode
 
 		public void Initialize(Microprocessor processor, MemoryMock memory)
 			=> this.processor = processor ?? throw new ArgumentNullException(nameof(processor));
+
+		public void RunProgram()
+			=> this.processor.RunProgram(new byte[] { (byte)this.opCode });
 	}
 }

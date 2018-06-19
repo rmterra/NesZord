@@ -7,5 +7,7 @@ namespace NesZord.Tests.New.AddressingMode
 		byte OperationByte { get; set; }
 
 		void Initialize(Microprocessor processor, MemoryMock memory);
+
+		void RunProgram();
 	}
 }
