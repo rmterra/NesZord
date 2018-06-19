@@ -29,7 +29,11 @@ Task Clean {
 	Exec { msbuild $solution_dir /t:Clean /p:Configuration=Debug /v:quiet } 
 }
 
-Task Build -Depends Clean {	
+Task RestorePackages -Depends Clean {
+	Exec { $source_dir\.nuget\NuGet restore -PackagesDirectory $source_dir\packages }
+}
+
+Task Build -Depends RestorePackages {	
 	Print "Building NesZord.sln"
 	if($isAppVeyor) {
 		Exec { msbuild $solution_dir /t:Build /p:Configuration=Debug /v:quiet /p:OutDir=$artifacts_dir /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" } 
