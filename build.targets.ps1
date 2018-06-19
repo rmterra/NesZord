@@ -17,7 +17,7 @@ Properties {
 
 FormatTaskName (("-"*25) + "[{0}]" + ("-"*25))
 
-Task Default -Depends Setup, Clean, Build, Test
+Task Default -Depends Setup, Clean, RestorePackages, Build, Test
 
 Task Setup {
 	CreateCleanDir "build artifacts" $artifacts_dir
