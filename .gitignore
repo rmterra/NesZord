@@ -10,6 +10,7 @@ artifacts/
 *DS_Store
 *.sln.ide
 
+src/.vs/
 src/watcher_dot_net.rb
 src/NesZord.Core/specwatchr-usage.txt
 src/dotnet.watchr.rb
@@ -20,4 +21,4 @@ src/sidekickapp.cs
 src/stacktrace.txt
 src/watchr.bat
 
-src/.vs/
+tools/
