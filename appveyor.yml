@@ -1,36 +1,20 @@
-version: 1.0.0.{build}
+#---------------------------------#
+#  Build Image                    #
+#---------------------------------#
+image: Visual Studio 2017
 
-skip_tags: true
-
-configuration: Debug
-
-init:
-  - git config --global core.autocrlf true
-
-clone_folder: c:\projects\neszord
-
-shallow_clone: false
-
-clone_depth: 5
-
-before_build:
-  - ps: . .\build.ps1 Setup
-
-
+#---------------------------------#
+#  Build Script                   #
+#---------------------------------#
 build_script:
-  - ps: . .\build.ps1 Build
+  - ps: .\build.ps1 -Target AppVeyor
 
-test_script:
-  - ps: . .\build.ps1 Test
+# Tests
+test: off
 
-artifacts:
-  - path: src
-    name: src
-  - path: bin
-    name: bin
-  - path: log
-    name: log
-
+#---------------------------------#
+#  Notifications                  #
+#---------------------------------#
 notifications:
 - provider: Email
   to:
