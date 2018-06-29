@@ -1,10 +1,17 @@
 #---------------------------------#
-#  Build Image                    #
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: 1.0.{build}
+
+#---------------------------------#
+#    environment configuration    #
 #---------------------------------#
 image: Visual Studio 2017
 
 #---------------------------------#
-#  Build Script                   #
+#       build configuration       #
 #---------------------------------#
 build_script:
   - ps: .\build.ps1
@@ -13,7 +20,7 @@ build_script:
 test: off
 
 #---------------------------------#
-#  Notifications                  #
+#         notifications           #
 #---------------------------------#
 notifications:
 - provider: Email
