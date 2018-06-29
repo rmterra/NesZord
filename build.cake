@@ -11,6 +11,8 @@ var outDir = "./artifacts";
 var solution = "./src/NesZord.sln";
 var testProjects = $"./src/**/bin/{configuration}/*.Tests.New.dll";
 
+var coveralls_token = EnvironmentVariable("COVERALLS_REPO_TOKEN") ?? "undefined";
+
 Task("Restore-NuGet-Packages")
     .Does(() =>
 	{
@@ -51,7 +53,10 @@ Task("Upload-Coverage-Report")
 	.IsDependentOn("RunTests")
 	.Does(() =>
 	{
-		CoverallsIo("./coverage.xml");
+		CoverallsIo("./coverage.xml", new CoverallsIoSettings()
+		{
+			RepoToken = coveralls_token
+		});
 	});
 
 Task("Default")
