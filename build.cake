@@ -38,6 +38,7 @@ Task("RunTests")
 	});
 
 Task("Upload-Coverage-Report")
+	.IsDependentOn("RunTests");
 	.Does(() =>
 	{
 		CoverallsIo("coverage.xml");
