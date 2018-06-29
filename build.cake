@@ -1,6 +1,7 @@
 #addin Cake.Coveralls
 
 #tool "xunit.runner.console"
+#tool "nuget:?package=OpenCover"
 #tool coveralls.io
 
 var target = Argument("target", "Default");
@@ -31,17 +32,26 @@ Task("RunTests")
 	.IsDependentOn("Build")
 	.Does(() => 
 	{
-		XUnit2(testProjects, new XUnit2Settings {
-			XmlReport = true,
-			OutputDirectory = outDir
-		});
+		OpenCover(tool => {
+			tool.XUnit2(testProjects, 
+			new XUnit2Settings 
+			{ 
+				ShadowCopy = false,
+				XmlReport = true,
+				OutputDirectory = outDir
+			});
+		},
+		new FilePath("./coverage.xml"),
+		new OpenCoverSettings()
+			.WithFilter("+[NesZord.*]*")
+			.WithFilter("-[NesZord.Tests.*]*"));
 	});
 
 Task("Upload-Coverage-Report")
 	.IsDependentOn("RunTests")
 	.Does(() =>
 	{
-		CoverallsIo("coverage.xml");
+		CoverallsIo("./coverage.xml");
 	});
 
 Task("Default")
