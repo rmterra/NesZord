@@ -22,3 +22,5 @@ src/stacktrace.txt
 src/watchr.bat
 
 tools/
+
+coverage.xml
