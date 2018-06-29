@@ -1,4 +1,7 @@
+#addin Cake.Coveralls
+
 #tool "xunit.runner.console"
+#tool coveralls.io
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
@@ -34,7 +37,16 @@ Task("RunTests")
 		});
 	});
 
+Task("Upload-Coverage-Report")
+	.Does(() =>
+	{
+		CoverallsIo("coverage.xml");
+	});
+
 Task("Default")
 	.IsDependentOn("RunTests");
+
+Task("AppVeyor")
+	.IsDependentOn("Upload-Coverage-Report");
 
 RunTarget(target);
