@@ -71,16 +71,12 @@
     <Compile Include="Describe_addressing_mode_lookup.cs" />
     <Compile Include="Describe_memory.cs" />
     <Compile Include="MemoryMock.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_inc_operation.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_dec_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_jsr_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_jump_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_lsr_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_eor_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_ora_operation.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_decrement_operations.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_increment_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_nop_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_ror_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_rol_operation.cs" />
@@ -88,16 +84,8 @@
     <Compile Include="OpCodes\Describe_microprocessor_rts_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_stack_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_status_flag_operations.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_sty_operation.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_stx_operation.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_sta_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_system_functions.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_transfer_operations.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_cpx_operation.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_cpy_operation.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_ldy_operation.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_ldx_operation.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_lda_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_sbc_operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
