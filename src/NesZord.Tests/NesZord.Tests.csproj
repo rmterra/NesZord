@@ -78,7 +78,6 @@
     <Compile Include="OpCodes\Describe_microprocessor_status_flag_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_system_functions.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_transfer_operations.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_sbc_operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
