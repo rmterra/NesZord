@@ -15,7 +15,7 @@ namespace NesZord.Tests.New.OpCodes.AND
 		}
 
 		[Fact]
-		public void Set_bitwise_and_result_on_Accumulator()
+		public void Set_bitwise_AND_result_on_Accumulator()
 		{
 			// Act
 			this.RunProgram();

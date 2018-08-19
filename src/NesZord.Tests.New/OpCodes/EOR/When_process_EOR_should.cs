@@ -15,7 +15,7 @@ namespace NesZord.Tests.New.OpCodes.EOR
 		}
 
 		[Fact]
-		public void Set_bitwise_xor_result_on_accumulator()
+		public void Set_bitwise_XOR_result_on_accumulator()
 		{
 			// Act
 			this.RunProgram();
