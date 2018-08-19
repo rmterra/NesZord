@@ -66,7 +66,7 @@ namespace NesZord.Tests.New.OpCodes.ADC
 		}
 
 		[Fact]
-		public void Add_carry_flag_to_final_result_given_that_it_is_set()
+		public void Add_carry_flag_to_final_result_given_that_is_set()
 		{
 			// Arrange
 			this.Processor.RunProgram(new byte[] { (byte)OpCode.SEC_Implied });
