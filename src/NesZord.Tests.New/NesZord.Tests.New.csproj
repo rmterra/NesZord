@@ -78,6 +78,19 @@
     <Compile Include="AddressingMode\AbsoluteAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteXAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteYAddressingMode.cs" />
+    <Compile Include="OpCodes\TSX\When_process_TSX_should.cs" />
+    <Compile Include="OpCodes\TXS\When_process_TXS_should.cs" />
+    <Compile Include="OpCodes\TYA\When_process_TYA_should.cs" />
+    <Compile Include="OpCodes\TXA\When_process_TXA_should.cs" />
+    <Compile Include="OpCodes\TAY\When_process_TAY_should.cs" />
+    <Compile Include="OpCodes\TAX\When_process_TAX_should.cs" />
+    <Compile Include="OpCodes\CLV\When_process_CLV_should.cs" />
+    <Compile Include="OpCodes\CLI\When_process_CLI_should.cs" />
+    <Compile Include="OpCodes\CLD\When_process_CLD_should.cs" />
+    <Compile Include="OpCodes\CLC\When_process_CLC_should.cs" />
+    <Compile Include="OpCodes\SEI\When_process_SEI_should.cs" />
+    <Compile Include="OpCodes\SED\When_process_SED_should.cs" />
+    <Compile Include="OpCodes\SEC\When_process_SEC_should.cs" />
     <Compile Include="OpCodes\ORA\When_process_ORA_should.cs" />
     <Compile Include="OpCodes\ORA\When_process_ORA_with_absolute_addressing_mode_should.cs" />
     <Compile Include="OpCodes\ORA\When_process_ORA_with_absolute_x_addressing_mode_should.cs" />
@@ -87,6 +100,7 @@
     <Compile Include="OpCodes\ORA\When_process_ORA_with_indirect_indexed_addressing_mode_should.cs" />
     <Compile Include="OpCodes\ORA\When_process_ORA_with_zero_page_addressing_mode_should.cs" />
     <Compile Include="OpCodes\ORA\When_process_ORA_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\BRK\When_process_BRK_should.cs" />
     <Compile Include="OpCodes\SBC\When_process_SBC_should.cs" />
     <Compile Include="OpCodes\SBC\When_process_SBC_with_absolute_addressing_mode_should.cs" />
     <Compile Include="OpCodes\SBC\When_process_SBC_with_absolute_x_addressing_mode_should.cs" />

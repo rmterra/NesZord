@@ -74,9 +74,6 @@
     <Compile Include="OpCodes\Describe_microprocessor_jump_operations.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_operation.cs" />
     <Compile Include="OpCodes\Describe_microprocessor_stack_operations.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_status_flag_operations.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_system_functions.cs" />
-    <Compile Include="OpCodes\Describe_microprocessor_transfer_operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
