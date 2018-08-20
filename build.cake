@@ -9,7 +9,7 @@ var configuration = Argument("configuration", "Release");
 
 var outDir = "./artifacts";
 var solution = "./src/NesZord.sln";
-var testProjects = $"./src/**/bin/{configuration}/*.Tests.New.dll";
+var testProjects = $"./src/**/bin/{configuration}/*.Tests.dll";
 
 var coveralls_token = EnvironmentVariable("COVERALLS_REPO_TOKEN") ?? "undefined";
 
