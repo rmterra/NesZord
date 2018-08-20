@@ -74,7 +74,7 @@
   <ItemGroup>
     <Compile Include="AddressingMode\AccumulatorAddressingMode.cs" />
     <Compile Include="AddressingMode\ZeroPageYAddressingMode.cs" />
-    <Compile Include="MemoryMock.cs" />
+    <Compile Include="Memory\MemoryMock.cs" />
     <Compile Include="AddressingMode\AbsoluteAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteXAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteYAddressingMode.cs" />
@@ -260,6 +260,8 @@
     <Compile Include="AddressingMode\ZeroPageXAddressingMode.cs" />
     <Compile Include="OpCodes\When_process_opcode_with_addressing_mode_should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Memory\When_load_memory_should.cs" />
+    <Compile Include="When_lookup_for_addressing_mode_should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
