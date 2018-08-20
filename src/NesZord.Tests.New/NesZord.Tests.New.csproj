@@ -78,6 +78,9 @@
     <Compile Include="AddressingMode\AbsoluteAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteXAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteYAddressingMode.cs" />
+    <Compile Include="OpCodes\JMP\When_process_JMP_should.cs" />
+    <Compile Include="OpCodes\JMP\When_process_JMP_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\JMP\When_process_JMP_with_indirect_addressing_mode_should.cs" />
     <Compile Include="OpCodes\PLP\When_process_PLP_should.cs" />
     <Compile Include="OpCodes\TSX\When_process_TSX_should.cs" />
     <Compile Include="OpCodes\TXS\When_process_TXS_should.cs" />
