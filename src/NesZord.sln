@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0C491E
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesZord.Tests.New", "NesZord.Tests.New\NesZord.Tests.New.csproj", "{1A400A95-450B-430F-84F4-2D9D4FD803BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesZord.Tests", "NesZord.Tests\NesZord.Tests.csproj", "{1A400A95-450B-430F-84F4-2D9D4FD803BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\xunit.runner.console.2.3.1\build\xunit.runner.console.props" Condition="Exists('..\packages\xunit.runner.console.2.3.1\build\xunit.runner.console.props')" />
+  <Import Project="..\packages\xunit.runner.visualstudio.2.3.1\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.3.1\build\net20\xunit.runner.visualstudio.props')" />
+  <Import Project="..\packages\xunit.core.2.3.1\build\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.3.1\build\xunit.core.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1A400A95-450B-430F-84F4-2D9D4FD803BD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NesZord.Tests</RootNamespace>
+    <AssemblyName>NesZord.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoFixture, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.4.4.0\lib\net452\AutoFixture.dll</HintPath>
+    </Reference>
+    <Reference Include="Fare, Version=2.1.0.0, Culture=neutral, PublicKeyToken=ea68d375bf33a7c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fare.2.1.1\lib\net35\Fare.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions, Version=5.3.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.5.3.2\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.assert.2.3.1\lib\netstandard1.1\xunit.assert.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.3.1\lib\netstandard1.1\xunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.execution.2.3.1\lib\net452\xunit.execution.desktop.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddressingMode\AccumulatorAddressingMode.cs" />
+    <Compile Include="AddressingMode\ZeroPageYAddressingMode.cs" />
+    <Compile Include="Memory\MemoryMock.cs" />
+    <Compile Include="AddressingMode\AbsoluteAddressingMode.cs" />
+    <Compile Include="AddressingMode\AbsoluteXAddressingMode.cs" />
+    <Compile Include="AddressingMode\AbsoluteYAddressingMode.cs" />
+    <Compile Include="OpCodes\JMP\When_process_JMP_should.cs" />
+    <Compile Include="OpCodes\JMP\When_process_JMP_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\JMP\When_process_JMP_with_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\PLP\When_process_PLP_should.cs" />
+    <Compile Include="OpCodes\TSX\When_process_TSX_should.cs" />
+    <Compile Include="OpCodes\TXS\When_process_TXS_should.cs" />
+    <Compile Include="OpCodes\TYA\When_process_TYA_should.cs" />
+    <Compile Include="OpCodes\TXA\When_process_TXA_should.cs" />
+    <Compile Include="OpCodes\TAY\When_process_TAY_should.cs" />
+    <Compile Include="OpCodes\TAX\When_process_TAX_should.cs" />
+    <Compile Include="OpCodes\CLV\When_process_CLV_should.cs" />
+    <Compile Include="OpCodes\CLI\When_process_CLI_should.cs" />
+    <Compile Include="OpCodes\CLD\When_process_CLD_should.cs" />
+    <Compile Include="OpCodes\CLC\When_process_CLC_should.cs" />
+    <Compile Include="OpCodes\SEI\When_process_SEI_should.cs" />
+    <Compile Include="OpCodes\SED\When_process_SED_should.cs" />
+    <Compile Include="OpCodes\SEC\When_process_SEC_should.cs" />
+    <Compile Include="OpCodes\ORA\When_process_ORA_should.cs" />
+    <Compile Include="OpCodes\ORA\When_process_ORA_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ORA\When_process_ORA_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ORA\When_process_ORA_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ORA\When_process_ORA_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ORA\When_process_ORA_with_indexed_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ORA\When_process_ORA_with_indirect_indexed_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ORA\When_process_ORA_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ORA\When_process_ORA_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\BRK\When_process_BRK_should.cs" />
+    <Compile Include="OpCodes\SBC\When_process_SBC_should.cs" />
+    <Compile Include="OpCodes\SBC\When_process_SBC_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\SBC\When_process_SBC_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\SBC\When_process_SBC_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\SBC\When_process_SBC_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\SBC\When_process_SBC_with_indexed_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\SBC\When_process_SBC_with_indirect_indexed_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\SBC\When_process_SBC_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\SBC\When_process_SBC_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\PLA\When_process_PLA_should.cs" />
+    <Compile Include="OpCodes\PHP\When_process_PHP_should.cs" />
+    <Compile Include="OpCodes\PHA\When_process_PHA_should.cs" />
+    <Compile Include="OpCodes\NOP\When_process_NOP_should.cs" />
+    <Compile Include="OpCodes\RTI\When_process_RTI_should.cs" />
+    <Compile Include="OpCodes\RTS\When_process_RTS_should.cs" />
+    <Compile Include="OpCodes\JSR\When_process_JSR_should.cs" />
+    <Compile Include="OpCodes\EOR\When_process_EOR_should.cs" />
+    <Compile Include="OpCodes\EOR\When_process_EOR_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\EOR\When_process_EOR_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\EOR\When_process_EOR_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\EOR\When_process_EOR_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\EOR\When_process_EOR_with_indexed_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\EOR\When_process_EOR_with_indirect_indexed_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\EOR\When_process_EOR_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\EOR\When_process_EOR_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\INY\When_process_INY_should.cs" />
+    <Compile Include="OpCodes\INX\When_process_INX_should.cs" />
+    <Compile Include="OpCodes\DEY\When_process_DEY_should.cs" />
+    <Compile Include="OpCodes\DEX\When_process_DEX_should.cs" />
+    <Compile Include="OpCodes\INC\When_process_INC_should.cs" />
+    <Compile Include="OpCodes\INC\When_process_INC_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\INC\When_process_INC_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\INC\When_process_INC_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\INC\When_process_INC_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\DEC\When_process_DEC_should.cs" />
+    <Compile Include="OpCodes\DEC\When_process_DEC_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\DEC\When_process_DEC_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\DEC\When_process_DEC_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\DEC\When_process_DEC_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROR\When_process_ROR_should.cs" />
+    <Compile Include="OpCodes\ROR\When_process_ROR_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROR\When_process_ROR_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROR\When_process_ROR_with_accumulator_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROR\When_process_ROR_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROR\When_process_ROR_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROL\When_process_ROL_should.cs" />
+    <Compile Include="OpCodes\ROL\When_process_ROL_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROL\When_process_ROL_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROL\When_process_ROL_with_accumulator_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROL\When_process_ROL_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ROL\When_process_ROL_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LSR\When_process_LSR_should.cs" />
+    <Compile Include="OpCodes\LSR\When_process_LSR_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LSR\When_process_LSR_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LSR\When_process_LSR_with_accumulator_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LSR\When_process_LSR_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LSR\When_process_LSR_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STY\When_process_STY_should.cs" />
+    <Compile Include="OpCodes\STY\When_process_STY_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STY\When_process_STY_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STY\When_process_STY_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STX\When_process_STX_with_zero_page_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STX\When_process_STX_should.cs" />
+    <Compile Include="OpCodes\STX\When_process_STX_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STX\When_process_STX_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STA\When_process_STA_should.cs" />
+    <Compile Include="OpCodes\STA\When_process_STA_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STA\When_process_STA_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STA\When_process_STA_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STA\When_process_STA_with_indexed_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STA\When_process_STA_with_indirect_indexed_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STA\When_process_STA_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\STA\When_process_STA_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDY\When_process_LDY_should.cs" />
+    <Compile Include="OpCodes\LDY\When_process_LDY_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDY\When_process_LDY_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDY\When_process_LDY_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDY\When_process_LDY_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDY\When_process_LDY_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDX\When_process_LDX_should.cs" />
+    <Compile Include="OpCodes\LDX\When_process_LDX_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDX\When_process_LDX_with_zero_page_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDX\When_process_LDX_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDX\When_process_LDX_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDX\When_process_LDX_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDA\When_process_LDA_should.cs" />
+    <Compile Include="OpCodes\LDA\When_process_LDA_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDA\When_process_LDA_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDA\When_process_LDA_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDA\When_process_LDA_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDA\When_process_LDA_with_indexed_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDA\When_process_LDA_with_indirect_indexed_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDA\When_process_LDA_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\LDA\When_process_LDA_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_indirect_indexed_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_indexed_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ADC\When_process_ADC_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\AND\When_process_AND_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\AND\When_process_AND_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\AND\When_process_AND_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\AND\When_process_AND_with_indexed_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\AND\When_process_AND_with_indirect_indexed_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\AND\When_process_AND_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\AND\When_process_AND_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\AND\When_process_AND_should.cs" />
+    <Compile Include="OpCodes\AND\When_process_AND_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="AddressingMode\IAddressingMode.cs" />
+    <Compile Include="AddressingMode\ImmediateAddressingMode.cs" />
+    <Compile Include="AddressingMode\IndexedIndirectAddressingMode.cs" />
+    <Compile Include="AddressingMode\IndirectIndexedAddressingMode.cs" />
+    <Compile Include="OpCodes\ASL\When_process_ASL_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ASL\When_process_ASL_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ASL\When_process_ASL_with_accumulator_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ASL\When_process_ASL_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ASL\When_process_ASL_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\ASL\When_process_ASL_should.cs" />
+    <Compile Include="OpCodes\BCC\When_process_BCC_should.cs" />
+    <Compile Include="OpCodes\BCS\When_process_BCS_should.cs" />
+    <Compile Include="OpCodes\BEQ\When_process_BEQ_should.cs" />
+    <Compile Include="OpCodes\BIT\When_process_BIT_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\BIT\When_process_BIT_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\BIT\When_process_BIT_should.cs" />
+    <Compile Include="OpCodes\BMI\When_process_BMI_should.cs" />
+    <Compile Include="OpCodes\BNE\When_process_BNE_should.cs" />
+    <Compile Include="OpCodes\BPL\When_process_BPL_should.cs" />
+    <Compile Include="OpCodes\BVC\When_process_BVC_should.cs" />
+    <Compile Include="OpCodes\BVS\When_process_BVS_should.cs" />
+    <Compile Include="OpCodes\CMP\When_process_CMP_should.cs" />
+    <Compile Include="OpCodes\CMP\When_process_CMP_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CMP\When_process_CMP_with_absolute_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CMP\When_process_CMP_with_absolute_y_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CMP\When_process_CMP_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CMP\When_process_CMP_with_indexed_indirect_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CMP\When_process_CMP_with_indirect_indexed_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CMP\When_process_CMP_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CMP\When_process_CMP_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CPY\When_process_CPY_should.cs" />
+    <Compile Include="OpCodes\CPY\When_process_CPY_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CPY\When_process_CPY_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CPY\When_process_CPY_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CPX\When_process_CPX_with_absolute_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CPX\When_process_CPX_with_immediate_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CPX\When_process_CPX_with_zero_page_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\CPX\When_process_CPX_should.cs" />
+    <Compile Include="OpCodes\When_process_opcode_should.cs" />
+    <Compile Include="AddressingMode\ZeroPageAddressingMode.cs" />
+    <Compile Include="AddressingMode\ZeroPageXAddressingMode.cs" />
+    <Compile Include="OpCodes\When_process_opcode_with_addressing_mode_should.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Memory\When_load_memory_should.cs" />
+    <Compile Include="When_lookup_for_addressing_mode_should.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\xunit.analyzers.0.7.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NesZord.Core\NesZord.Core.csproj">
+      <Project>{5f2ac895-87ed-42ef-ad02-c6e5f9a5eeba}</Project>
+      <Name>NesZord.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\xunit.core.2.3.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.3.1\build\xunit.core.props'))" />
+    <Error Condition="!Exists('..\packages\xunit.core.2.3.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.3.1\build\xunit.core.targets'))" />
+    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.3.1\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.3.1\build\net20\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\packages\xunit.runner.console.2.3.1\build\xunit.runner.console.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.console.2.3.1\build\xunit.runner.console.props'))" />
+  </Target>
+  <Import Project="..\packages\xunit.core.2.3.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.3.1\build\xunit.core.targets')" />
+</Project>
