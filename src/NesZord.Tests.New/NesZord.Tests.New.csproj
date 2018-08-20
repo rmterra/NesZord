@@ -78,6 +78,7 @@
     <Compile Include="AddressingMode\AbsoluteAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteXAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteYAddressingMode.cs" />
+    <Compile Include="OpCodes\PLP\When_process_PLP_should.cs" />
     <Compile Include="OpCodes\TSX\When_process_TSX_should.cs" />
     <Compile Include="OpCodes\TXS\When_process_TXS_should.cs" />
     <Compile Include="OpCodes\TYA\When_process_TYA_should.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="OpCodes\SBC\When_process_SBC_with_indirect_indexed_addressing_mode_should.cs" />
     <Compile Include="OpCodes\SBC\When_process_SBC_with_zero_page_addressing_mode_should.cs" />
     <Compile Include="OpCodes\SBC\When_process_SBC_with_zero_page_x_addressing_mode_should.cs" />
+    <Compile Include="OpCodes\PLA\When_process_PLA_should.cs" />
     <Compile Include="OpCodes\PHP\When_process_PHP_should.cs" />
     <Compile Include="OpCodes\PHA\When_process_PHA_should.cs" />
     <Compile Include="OpCodes\NOP\When_process_NOP_should.cs" />
