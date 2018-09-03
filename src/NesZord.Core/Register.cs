@@ -10,12 +10,12 @@ namespace NesZord.Core
 	{
 		public bool IsFirstBitSet
 		{
-			get { return this.Value.GetBitAt(Microprocessor.FIRST_BIT_INDEX); }
+			get { return this.Value.GetBitAt(Cpu.FIRST_BIT_INDEX); }
 		}
 
 		public bool IsSignBitSet
 		{
-			get { return this.Value.GetBitAt(Microprocessor.SIGN_BIT_INDEX); }
+			get { return this.Value.GetBitAt(Cpu.SIGN_BIT_INDEX); }
 		}
 
 		public bool IsValueEqualZero

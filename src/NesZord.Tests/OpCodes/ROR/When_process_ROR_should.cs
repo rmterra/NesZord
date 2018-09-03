@@ -12,7 +12,7 @@ namespace NesZord.Tests.OpCodes.ROR
 			: base(addressingMode)
 		{
 			this.OperationByte = 0x05;
-			this.Processor.RunProgram(new byte[] { (byte)OpCode.CLC_Implied });
+			this.Cpu.RunProgram(new byte[] { (byte)OpCode.CLC_Implied });
 		}
 
 		[Fact]
@@ -32,7 +32,7 @@ namespace NesZord.Tests.OpCodes.ROR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeTrue();
+			this.Cpu.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -42,7 +42,7 @@ namespace NesZord.Tests.OpCodes.ROR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -52,14 +52,14 @@ namespace NesZord.Tests.OpCodes.ROR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Set_sign_bit_on_shifted_result_value_given_that_carry_flag_is_set()
 		{
 			// Arrange
-			this.Processor.RunProgram(new byte[] { (byte)OpCode.SEC_Implied });
+			this.Cpu.RunProgram(new byte[] { (byte)OpCode.SEC_Implied });
 
 			// Act
 			this.RunProgram();
@@ -72,13 +72,13 @@ namespace NesZord.Tests.OpCodes.ROR
 		public void Set_negative_flag_given_that_shift_result_hash_sign_bit_set()
 		{
 			// Arrange
-			this.Processor.RunProgram(new byte[] { (byte)OpCode.SEC_Implied });
+			this.Cpu.RunProgram(new byte[] { (byte)OpCode.SEC_Implied });
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeTrue();
+			this.Cpu.Negative.Should().BeTrue();
 		}
 
 		[Fact]
@@ -91,7 +91,7 @@ namespace NesZord.Tests.OpCodes.ROR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeFalse();
+			this.Cpu.Carry.Should().BeFalse();
 		}
 
 		[Fact]
@@ -104,7 +104,7 @@ namespace NesZord.Tests.OpCodes.ROR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeTrue();
+			this.Cpu.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -117,7 +117,7 @@ namespace NesZord.Tests.OpCodes.ROR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 	}
 }

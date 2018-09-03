@@ -6,7 +6,7 @@ namespace NesZord.Tests.AddressingMode
 {
 	public class AccumulatorAddressingMode : IAddressingMode
 	{
-		private Microprocessor processor;
+		private Cpu cpu;
 
 		private OpCode opCode;
 
@@ -17,14 +17,14 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte OperationByte
 		{
-			get => this.processor.Accumulator.Value;
-			set => this.processor.Accumulator.Value = value;
+			get => this.cpu.Accumulator.Value;
+			set => this.cpu.Accumulator.Value = value;
 		}
 
-		public void Initialize(Microprocessor processor, MemoryMock memory)
-			=> this.processor = processor ?? throw new ArgumentNullException(nameof(processor));
+		public void Initialize(Cpu cpu, MemoryMock memory)
+			=> this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
 
 		public void RunProgram()
-			=> this.processor.RunProgram(new byte[] { (byte)this.opCode });
+			=> this.cpu.RunProgram(new byte[] { (byte)this.opCode });
 	}
 }

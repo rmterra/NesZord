@@ -8,12 +8,12 @@ namespace NesZord.Tests.OpCodes
 		public When_process_opcode_should()
 		{
 			this.Memory = new MemoryMock();
-			this.Processor = new Microprocessor(this.Memory);
+			this.Cpu = new Cpu(this.Memory);
 		}
 
 		protected MemoryMock Memory { get; }
 
-		protected Microprocessor Processor { get; }
+		protected Cpu Cpu { get; }
 
 		protected abstract void RunProgram();
 	}

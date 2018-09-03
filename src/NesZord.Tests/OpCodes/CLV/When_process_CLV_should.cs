@@ -13,12 +13,12 @@ namespace NesZord.Tests.OpCodes.CLV
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Overflow.Should().BeFalse();
+			this.Cpu.Overflow.Should().BeFalse();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.CLV_Implied
 			});

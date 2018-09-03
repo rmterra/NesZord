@@ -13,7 +13,7 @@ namespace NesZord.Tests.OpCodes.BVS
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Accumulator.Value.Should().Equals(0x00);
+			this.Cpu.Accumulator.Value.Should().Equals(0x00);
 		}
 
 		[Fact]
@@ -23,12 +23,12 @@ namespace NesZord.Tests.OpCodes.BVS
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Overflow.Should().BeTrue();
+			this.Cpu.Overflow.Should().BeTrue();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.LDA_Immediate, 0xff,
 				(byte) OpCode.ADC_Immediate, 0x01,

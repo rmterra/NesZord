@@ -33,12 +33,12 @@ namespace NesZord.Tests.OpCodes.JSR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.ProgramCounter.Should().Equals(0x0621);
+			this.Cpu.ProgramCounter.Should().Equals(0x0621);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte)OpCode.JSR_Absolute, 0x020, 0x06,
 				(byte)OpCode.BRK_Implied

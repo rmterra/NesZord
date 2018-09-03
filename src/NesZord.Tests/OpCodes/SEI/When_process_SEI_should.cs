@@ -13,12 +13,12 @@ namespace NesZord.Tests.OpCodes.SEI
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Interrupt.Should().BeTrue();
+			this.Cpu.Interrupt.Should().BeTrue();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.SEI_Implied
 			});

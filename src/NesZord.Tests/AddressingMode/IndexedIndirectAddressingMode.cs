@@ -9,7 +9,7 @@ namespace NesZord.Tests.AddressingMode
 	{
 		private static Fixture fixture = new Fixture();
 
-		private Microprocessor processor;
+		private Cpu cpu;
 
 		private MemoryMock memory;
 
@@ -30,9 +30,9 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte XRegisterValue { get; private set; }
 
-		public void Initialize(Microprocessor processor, MemoryMock memory)
+		public void Initialize(Cpu cpu, MemoryMock memory)
 		{
-			this.processor = processor ?? throw new ArgumentNullException(nameof(processor));
+			this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
 			this.memory = memory ?? throw new ArgumentNullException(nameof(memory));
 
 			this.RandomOffset = fixture.Create<byte>();
@@ -40,7 +40,7 @@ namespace NesZord.Tests.AddressingMode
 		}
 
 		public void RunProgram()
-			=> this.processor.RunProgram(new byte[]
+			=> this.cpu.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDX_Immediate, this.XRegisterValue,
 				(byte)this.opCode, this.RandomOffset

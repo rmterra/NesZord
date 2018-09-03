@@ -21,12 +21,12 @@ namespace NesZord.Tests.OpCodes.TAX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.X.Value.Should().Equals(this.Processor.Accumulator.Value);
+			this.Cpu.X.Value.Should().Equals(this.Cpu.Accumulator.Value);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
 				(byte)OpCode.TAX_Implied

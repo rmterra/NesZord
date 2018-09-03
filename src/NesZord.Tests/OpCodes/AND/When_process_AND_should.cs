@@ -10,7 +10,7 @@ namespace NesZord.Tests.OpCodes.AND
 		public When_process_AND_should(T addressingMode)
 			: base(addressingMode)
 		{
-			this.Processor.Accumulator.Value = 0xa9;
+			this.Cpu.Accumulator.Value = 0xa9;
 			this.OperationByte = 0x05;
 		}
 
@@ -21,7 +21,7 @@ namespace NesZord.Tests.OpCodes.AND
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Accumulator.Value.Should().Be(0x01);
+			this.Cpu.Accumulator.Value.Should().Be(0x01);
 		}
 
 		[Fact]
@@ -31,7 +31,7 @@ namespace NesZord.Tests.OpCodes.AND
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -41,35 +41,35 @@ namespace NesZord.Tests.OpCodes.AND
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Set_negative_flag_given_that_accumulator_sign_bit_is_set()
 		{
 			// Arrange
-			this.Processor.Accumulator.Value = 0x80;
+			this.Cpu.Accumulator.Value = 0x80;
 			this.OperationByte = 0x80;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeTrue();
+			this.Cpu.Negative.Should().BeTrue();
 		}
 
 		[Fact]
 		public void Set_zero_flag_given_that_operation_result_over_accumulator_is_0x00()
 		{
 			// Arrange
-			this.Processor.Accumulator.Value = 0x00;
+			this.Cpu.Accumulator.Value = 0x00;
 			this.OperationByte = 0x00;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 	}
 }

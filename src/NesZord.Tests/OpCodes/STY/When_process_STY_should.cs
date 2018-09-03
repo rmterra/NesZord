@@ -16,7 +16,7 @@ namespace NesZord.Tests.OpCodes.STY
 		public void Store_the_y_register_value_at_memory()
 		{
 			// Arrange
-			this.Processor.Y.Value = 0x05;
+			this.Cpu.Y.Value = 0x05;
 
 			// Act
 			this.RunProgram();

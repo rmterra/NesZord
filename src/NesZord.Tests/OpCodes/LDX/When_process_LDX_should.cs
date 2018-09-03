@@ -20,7 +20,7 @@ namespace NesZord.Tests.OpCodes.LDX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.X.Value.Should().Be(0x05);
+			this.Cpu.X.Value.Should().Be(0x05);
 		}
 
 		[Fact]
@@ -33,7 +33,7 @@ namespace NesZord.Tests.OpCodes.LDX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 
 		[Fact]
@@ -46,7 +46,7 @@ namespace NesZord.Tests.OpCodes.LDX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
@@ -59,7 +59,7 @@ namespace NesZord.Tests.OpCodes.LDX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -72,7 +72,7 @@ namespace NesZord.Tests.OpCodes.LDX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeTrue();
+			this.Cpu.Negative.Should().BeTrue();
 		}
 	}
 }

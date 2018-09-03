@@ -6,7 +6,7 @@ using NesZord.Core.Extensions;
 
 namespace NesZord.Core
 {
-	public class Microprocessor
+	public class Cpu
 	{
 		public const int BCD_MAX_VALUE = 99;
 
@@ -38,7 +38,7 @@ namespace NesZord.Core
 
 		private readonly Memory memory;
 
-		public Microprocessor(Memory memory)
+		public Cpu(Memory memory)
 		{
 			if (memory == null) { throw new ArgumentNullException(nameof(memory)); }
 
@@ -72,7 +72,7 @@ namespace NesZord.Core
 				{ OpCode.INY_Implied, this.IncrementValueAtY },
 				{ OpCode.NOP_Implied, () => { } }, /*yes, this opcode do nothing =x*/
 				{ OpCode.PHA_Implied, this.PushAccumulatorToStack },
-				{ OpCode.PHP_Implied, this.PushProcessorStatusToStack },
+				{ OpCode.PHP_Implied, this.PushCpuStatusToStack },
 				{ OpCode.PLA_Implied, this.PullFromStackToAccumulator },
 				{ OpCode.PLP_Implied, this.PullFromStackToStatusFlags },
 				{ OpCode.RTI_Implied, this.ReturnFromInterrupt },
@@ -669,7 +669,7 @@ namespace NesZord.Core
 			this.StackPointer.Push(this.Accumulator.Value);
 		}
 
-		private void PushProcessorStatusToStack()
+		private void PushCpuStatusToStack()
 		{
 			var status = default(byte);
 

@@ -13,12 +13,12 @@ namespace NesZord.Tests.OpCodes.CLC
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeFalse();
+			this.Cpu.Carry.Should().BeFalse();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.SEC_Implied,
 				(byte) OpCode.CLC_Implied

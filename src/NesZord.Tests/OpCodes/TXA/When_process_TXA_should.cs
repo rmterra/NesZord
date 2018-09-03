@@ -21,12 +21,12 @@ namespace NesZord.Tests.OpCodes.TXA
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Accumulator.Value.Should().Equals(this.Processor.X.Value);
+			this.Cpu.Accumulator.Value.Should().Equals(this.Cpu.X.Value);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDX_Immediate, fixture.Create<byte>(),
 				(byte)OpCode.TXA_Implied

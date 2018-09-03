@@ -22,7 +22,7 @@ namespace NesZord.Tests.OpCodes.PHA
 
 			// Assert
 			var stackValue = this.Memory.Read(Core.Memory.INITIAL_STACK_OFFSET, Core.Memory.STACK_PAGE);
-			stackValue.Should().Equals(this.Processor.Accumulator.Value);
+			stackValue.Should().Equals(this.Cpu.Accumulator.Value);
 		}
 
 		[Fact]
@@ -32,12 +32,12 @@ namespace NesZord.Tests.OpCodes.PHA
 			this.RunProgram();
 
 			// Assert
-			this.Processor.StackPointer.CurrentOffset.Should().Equals(0xfe);
+			this.Cpu.StackPointer.CurrentOffset.Should().Equals(0xfe);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.LDA_Immediate, this.fixture.Create<byte>(),
 				(byte) OpCode.PHA_Implied

@@ -21,12 +21,12 @@ namespace NesZord.Tests.OpCodes.TYA
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Accumulator.Value.Should().Equals(this.Processor.Y.Value);
+			this.Cpu.Accumulator.Value.Should().Equals(this.Cpu.Y.Value);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDY_Immediate, fixture.Create<byte>(),
 				(byte)OpCode.TYA_Implied

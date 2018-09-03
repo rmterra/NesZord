@@ -13,7 +13,7 @@ namespace NesZord.Tests.OpCodes.PLP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeTrue();
+			this.Cpu.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -23,7 +23,7 @@ namespace NesZord.Tests.OpCodes.PLP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Decimal.Should().BeTrue();
+			this.Cpu.Decimal.Should().BeTrue();
 		}
 
 		[Fact]
@@ -33,7 +33,7 @@ namespace NesZord.Tests.OpCodes.PLP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -43,7 +43,7 @@ namespace NesZord.Tests.OpCodes.PLP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Interrupt.Should().BeFalse();
+			this.Cpu.Interrupt.Should().BeFalse();
 		}
 
 		[Fact]
@@ -53,7 +53,7 @@ namespace NesZord.Tests.OpCodes.PLP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Break.Should().BeFalse();
+			this.Cpu.Break.Should().BeFalse();
 		}
 
 		[Fact]
@@ -63,7 +63,7 @@ namespace NesZord.Tests.OpCodes.PLP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Overflow.Should().BeFalse();
+			this.Cpu.Overflow.Should().BeFalse();
 		}
 
 		[Fact]
@@ -73,7 +73,7 @@ namespace NesZord.Tests.OpCodes.PLP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
@@ -83,12 +83,12 @@ namespace NesZord.Tests.OpCodes.PLP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.StackPointer.CurrentOffset.Should().Equals(0xff);
+			this.Cpu.StackPointer.CurrentOffset.Should().Equals(0xff);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.SEC_Implied,
 				(byte) OpCode.SED_Implied,

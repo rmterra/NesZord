@@ -12,7 +12,7 @@ namespace NesZord.Tests.OpCodes.CMP
 		public When_process_CMP_should(T addressingMode)
 			: base(addressingMode)
 		{
-			this.Processor.Accumulator.Value = 0x05;
+			this.Cpu.Accumulator.Value = 0x05;
 		}
 
 		[Fact]
@@ -25,7 +25,7 @@ namespace NesZord.Tests.OpCodes.CMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
@@ -38,7 +38,7 @@ namespace NesZord.Tests.OpCodes.CMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeFalse();
+			this.Cpu.Carry.Should().BeFalse();
 		}
 
 		[Fact]
@@ -51,7 +51,7 @@ namespace NesZord.Tests.OpCodes.CMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -64,7 +64,7 @@ namespace NesZord.Tests.OpCodes.CMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
@@ -77,7 +77,7 @@ namespace NesZord.Tests.OpCodes.CMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeTrue();
+			this.Cpu.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -90,7 +90,7 @@ namespace NesZord.Tests.OpCodes.CMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 
 		[Fact]
@@ -103,7 +103,7 @@ namespace NesZord.Tests.OpCodes.CMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
@@ -116,7 +116,7 @@ namespace NesZord.Tests.OpCodes.CMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeTrue();
+			this.Cpu.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -129,49 +129,49 @@ namespace NesZord.Tests.OpCodes.CMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Set_negative_flag_given_that_compared_result_is_greater_than_0x80()
 		{
 			// Arrange
-			this.Processor.Accumulator.Value = 0xff;
+			this.Cpu.Accumulator.Value = 0xff;
 			this.OperationByte = 0x00;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeTrue();
+			this.Cpu.Negative.Should().BeTrue();
 		}
 
 		[Fact]
 		public void Set_carry_flag_given_that_compared_result_is_greater_than_0x80()
 		{
 			// Arrange
-			this.Processor.Accumulator.Value = 0xff;
+			this.Cpu.Accumulator.Value = 0xff;
 			this.OperationByte = 0x00;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeTrue();
+			this.Cpu.Carry.Should().BeTrue();
 		}
 
 		[Fact]
 		public void Not_set_zero_flag_given_that_compared_result_is_greater_than_0x80()
 		{
 			// Arrange
-			this.Processor.Accumulator.Value = 0xff;
+			this.Cpu.Accumulator.Value = 0xff;
 			this.OperationByte = 0x00;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 	}
 }

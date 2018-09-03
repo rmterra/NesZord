@@ -24,12 +24,12 @@ namespace NesZord.Tests.OpCodes.PHP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.StackPointer.CurrentOffset.Should().Equals(0xfe);
+			this.Cpu.StackPointer.CurrentOffset.Should().Equals(0xfe);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.SEC_Implied,
 				(byte) OpCode.SED_Implied,

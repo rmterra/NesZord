@@ -13,13 +13,13 @@ namespace NesZord.Tests.OpCodes.NOP
 			this.RunProgram();
 
 			// Assert
-			var incrementedValueAtProgramCounter = this.Processor.ProgramCounter - Core.Memory.PROGRAM_ROM_START - 1;
+			var incrementedValueAtProgramCounter = this.Cpu.ProgramCounter - Core.Memory.PROGRAM_ROM_START - 1;
 			incrementedValueAtProgramCounter.Should().Equals(1);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[] { (byte) OpCode.NOP_Implied });
+			this.Cpu.RunProgram(new byte[] { (byte) OpCode.NOP_Implied });
 		}
 	}
 }

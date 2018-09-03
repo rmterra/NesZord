@@ -13,7 +13,7 @@ namespace NesZord.Tests.OpCodes.BMI
 			this.RunProgram();
 
 			// Assert
-			this.Processor.X.Value.Should().Equals(0x80);
+			this.Cpu.X.Value.Should().Equals(0x80);
 		}
 
 		[Fact]
@@ -23,12 +23,12 @@ namespace NesZord.Tests.OpCodes.BMI
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeTrue();
+			this.Cpu.Negative.Should().BeTrue();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.LDX_Immediate, 0x7f,
 				(byte) OpCode.INX_Implied,

@@ -21,7 +21,7 @@ namespace NesZord.Tests.OpCodes.TSX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.X.Value.Should().Equals(this.Processor.StackPointer.CurrentOffset);
+			this.Cpu.X.Value.Should().Equals(this.Cpu.StackPointer.CurrentOffset);
 		}
 
 		[Fact]
@@ -31,7 +31,7 @@ namespace NesZord.Tests.OpCodes.TSX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeTrue();
+			this.Cpu.Negative.Should().BeTrue();
 		}
 
 		[Fact]
@@ -41,14 +41,14 @@ namespace NesZord.Tests.OpCodes.TSX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Set_zero_flag_given_that_stack_pointer_value_is_0x00()
 		{
 			// Act
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDX_Immediate, 0x00,
 				(byte)OpCode.TXS_Implied,
@@ -56,12 +56,12 @@ namespace NesZord.Tests.OpCodes.TSX
 			});
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte)OpCode.TSX_Implied
 			});

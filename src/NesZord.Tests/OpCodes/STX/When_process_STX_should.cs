@@ -16,7 +16,7 @@ namespace NesZord.Tests.OpCodes.STX
 		public void Store_the_x_register_value_at_memory()
 		{
 			// Arrange
-			this.Processor.X.Value = 0x05;
+			this.Cpu.X.Value = 0x05;
 
 			// Act
 			this.RunProgram();

@@ -13,7 +13,7 @@ namespace NesZord.Tests.OpCodes.BEQ
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Y.Value.Should().Equals(0x07);
+			this.Cpu.Y.Value.Should().Equals(0x07);
 		}
 
 		[Fact]
@@ -23,7 +23,7 @@ namespace NesZord.Tests.OpCodes.BEQ
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeTrue();
+			this.Cpu.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -33,12 +33,12 @@ namespace NesZord.Tests.OpCodes.BEQ
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.LDY_Immediate, 0x08,
 				(byte) OpCode.DEY_Implied,

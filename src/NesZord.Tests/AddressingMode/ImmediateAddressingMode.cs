@@ -8,7 +8,7 @@ namespace NesZord.Tests.AddressingMode
 	{
 		private readonly OpCode opCode;
 
-		private Microprocessor processor;
+		private Cpu cpu;
 
 		public ImmediateAddressingMode(OpCode opCode)
 		{
@@ -17,12 +17,12 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte OperationByte { get; set; }
 
-		public void Initialize(Microprocessor processor, MemoryMock memory)
+		public void Initialize(Cpu cpu, MemoryMock memory)
 		{
-			this.processor = processor ?? throw new ArgumentNullException(nameof(processor));
+			this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
 		}
 
 		public void RunProgram()
-			=> this.processor.RunProgram(new byte[] { (byte)this.opCode, this.OperationByte });
+			=> this.cpu.RunProgram(new byte[] { (byte)this.opCode, this.OperationByte });
 	}
 }

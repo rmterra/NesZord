@@ -13,12 +13,12 @@ namespace NesZord.Tests.OpCodes.CLD
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Decimal.Should().BeFalse();
+			this.Cpu.Decimal.Should().BeFalse();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.SED_Implied,
 				(byte) OpCode.CLD_Implied

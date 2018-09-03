@@ -8,7 +8,7 @@ namespace NesZord.Tests.OpCodes.DEY
 	{
 		public When_process_DEY_should()
 		{
-			this.Processor.Y.Value = 0x05;
+			this.Cpu.Y.Value = 0x05;
 		}
 
 		[Fact]
@@ -18,7 +18,7 @@ namespace NesZord.Tests.OpCodes.DEY
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Y.Value.Should().Equals(0x04);
+			this.Cpu.Y.Value.Should().Equals(0x04);
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ namespace NesZord.Tests.OpCodes.DEY
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -38,64 +38,64 @@ namespace NesZord.Tests.OpCodes.DEY
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Set_zero_flag_given_that_x_register_is_0x01()
 		{
 			// Arrange
-			this.Processor.Y.Value = 0x01;
+			this.Cpu.Y.Value = 0x01;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 
 		[Fact]
 		public void Not_set_negative_flag_given_that_x_register_is_0x01()
 		{
 			// Arrange
-			this.Processor.Y.Value = 0x01;
+			this.Cpu.Y.Value = 0x01;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Not_set_zero_flag_given_that_sign_bit_of_x_register_is_set()
 		{
 			// Arrange
-			this.Processor.Y.Value = 0x81;
+			this.Cpu.Y.Value = 0x81;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Set_negative_flag_given_that_sign_bit_of_x_register_is_set()
 		{
 			// Arrange
-			this.Processor.Y.Value = 0x81;
+			this.Cpu.Y.Value = 0x81;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeTrue();
+			this.Cpu.Negative.Should().BeTrue();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[] { (byte) OpCode.DEY_Implied });
+			this.Cpu.RunProgram(new byte[] { (byte) OpCode.DEY_Implied });
 		}
 	}
 }

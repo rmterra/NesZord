@@ -30,7 +30,7 @@ namespace NesZord.Tests.OpCodes.LSR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeFalse();
+			this.Cpu.Carry.Should().BeFalse();
 		}
 
 		[Fact]
@@ -40,7 +40,7 @@ namespace NesZord.Tests.OpCodes.LSR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -50,7 +50,7 @@ namespace NesZord.Tests.OpCodes.LSR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
@@ -63,7 +63,7 @@ namespace NesZord.Tests.OpCodes.LSR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeTrue();
+			this.Cpu.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -76,7 +76,7 @@ namespace NesZord.Tests.OpCodes.LSR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -89,7 +89,7 @@ namespace NesZord.Tests.OpCodes.LSR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
@@ -102,7 +102,7 @@ namespace NesZord.Tests.OpCodes.LSR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeTrue();
+			this.Cpu.Carry.Should().BeTrue();
 		}
 
 		[Fact]
@@ -115,7 +115,7 @@ namespace NesZord.Tests.OpCodes.LSR
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 	}
 }

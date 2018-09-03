@@ -21,12 +21,12 @@ namespace NesZord.Tests.OpCodes.BRK
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Carry.Should().BeFalse();
+			this.Cpu.Carry.Should().BeFalse();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDA_Immediate, fixture.Create<byte>(),
 				(byte)OpCode.TAX_Implied,

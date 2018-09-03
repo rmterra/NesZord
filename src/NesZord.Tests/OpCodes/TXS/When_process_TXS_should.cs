@@ -21,12 +21,12 @@ namespace NesZord.Tests.OpCodes.TXS
 			this.RunProgram();
 
 			// Assert
-			this.Processor.StackPointer.CurrentOffset.Should().Equals(this.Processor.X.Value);
+			this.Cpu.StackPointer.CurrentOffset.Should().Equals(this.Cpu.X.Value);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte)OpCode.LDX_Immediate, fixture.Create<byte>(),
 				(byte)OpCode.TXS_Implied

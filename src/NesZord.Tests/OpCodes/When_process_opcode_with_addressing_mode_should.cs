@@ -15,9 +15,9 @@ namespace NesZord.Tests.OpCodes
 
 			this.AddressingMode = addressingMode;
 			this.Memory = new MemoryMock();
-			this.Processor = new Microprocessor(this.Memory);
+			this.Cpu = new Cpu(this.Memory);
 
-			this.AddressingMode.Initialize(this.Processor, this.Memory);
+			this.AddressingMode.Initialize(this.Cpu, this.Memory);
 		}
 
 		protected T AddressingMode { get; }
@@ -30,7 +30,7 @@ namespace NesZord.Tests.OpCodes
 			set { this.AddressingMode.OperationByte = value; }
 		}
 
-		protected Microprocessor Processor { get; }
+		protected Cpu Cpu { get; }
 
 		protected void RunProgram()
 			=> this.AddressingMode.RunProgram();

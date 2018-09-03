@@ -16,7 +16,7 @@ namespace NesZord.Tests.OpCodes.STA
 		public void Store_the_accumulator_value_at_memory()
 		{
 			// Arrange
-			this.Processor.Accumulator.Value = 0x05;
+			this.Cpu.Accumulator.Value = 0x05;
 
 			// Act
 			this.RunProgram();

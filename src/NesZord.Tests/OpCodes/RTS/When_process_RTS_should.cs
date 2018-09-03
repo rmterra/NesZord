@@ -13,7 +13,7 @@ namespace NesZord.Tests.OpCodes.RTS
 			this.RunProgram();
 
 			// Assert
-			this.Processor.StackPointer.CurrentOffset.Should().Equals(0xff);
+			this.Cpu.StackPointer.CurrentOffset.Should().Equals(0xff);
 		}
 
 		[Fact]
@@ -23,12 +23,12 @@ namespace NesZord.Tests.OpCodes.RTS
 			this.RunProgram();
 
 			// Assert
-			this.Processor.ProgramCounter.Should().Equals(0x0604);
+			this.Cpu.ProgramCounter.Should().Equals(0x0604);
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[] 
+			this.Cpu.RunProgram(new byte[] 
 			{
 				(byte)OpCode.JSR_Absolute, 0x04, 0x06,
 				(byte)OpCode.BRK_Implied,

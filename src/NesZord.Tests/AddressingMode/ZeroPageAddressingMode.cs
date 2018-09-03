@@ -11,7 +11,7 @@ namespace NesZord.Tests.AddressingMode
 
 		private readonly OpCode opCode;
 
-		private Microprocessor processor;
+		private Cpu cpu;
 
 		private MemoryMock memory;
 
@@ -28,15 +28,15 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte RandomOffset { get; private set; }
 
-		public void Initialize(Microprocessor processor, MemoryMock memory)
+		public void Initialize(Cpu cpu, MemoryMock memory)
 		{
-			this.processor = processor ?? throw new ArgumentNullException(nameof(processor));
+			this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
 			this.memory = memory ?? throw new ArgumentNullException(nameof(memory));
 
 			this.RandomOffset = fixture.Create<byte>();
 		}
 
 		public void RunProgram()
-			=> this.processor.RunProgram(new byte[] { (byte)this.opCode, this.RandomOffset });
+			=> this.cpu.RunProgram(new byte[] { (byte)this.opCode, this.RandomOffset });
 	}
 }

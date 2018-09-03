@@ -8,7 +8,7 @@ namespace NesZord.Tests.OpCodes.INX
 	{
 		public When_process_INX_should()
 		{
-			this.Processor.X.Value = 0x05;
+			this.Cpu.X.Value = 0x05;
 		}
 
 		[Fact]
@@ -18,7 +18,7 @@ namespace NesZord.Tests.OpCodes.INX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.X.Value.Should().Equals(0x06);
+			this.Cpu.X.Value.Should().Equals(0x06);
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ namespace NesZord.Tests.OpCodes.INX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -38,64 +38,64 @@ namespace NesZord.Tests.OpCodes.INX
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Set_zero_flag_given_that_x_register_is_0xff()
 		{
 			// Arrange
-			this.Processor.X.Value = 0xff;
+			this.Cpu.X.Value = 0xff;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 
 		[Fact]
 		public void Not_set_negative_flag_given_that_x_register_is_0xff()
 		{
 			// Arrange
-			this.Processor.X.Value = 0xff;
+			this.Cpu.X.Value = 0xff;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Not_set_zero_flag_given_that_sign_bit_of_x_register_is_set()
 		{
 			// Arrange
-			this.Processor.X.Value = 0x7f;
+			this.Cpu.X.Value = 0x7f;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
 		public void Set_negative_flag_given_that_sign_bit_of_x_register_is_set()
 		{
 			// Arrange
-			this.Processor.X.Value = 0x7f;
+			this.Cpu.X.Value = 0x7f;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeTrue();
+			this.Cpu.Negative.Should().BeTrue();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[] { (byte) OpCode.INX_Implied });
+			this.Cpu.RunProgram(new byte[] { (byte) OpCode.INX_Implied });
 		}
 	}
 }

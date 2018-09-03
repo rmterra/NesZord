@@ -8,7 +8,7 @@ namespace NesZord.Tests.OpCodes.PLA
 	{
 		public When_process_PLA_should()
 		{
-			this.Processor.Accumulator.Value = 0x05;
+			this.Cpu.Accumulator.Value = 0x05;
 		}
 
 		[Fact]
@@ -18,7 +18,7 @@ namespace NesZord.Tests.OpCodes.PLA
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Accumulator.Value.Should().Equals(0x05);
+			this.Cpu.Accumulator.Value.Should().Equals(0x05);
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ namespace NesZord.Tests.OpCodes.PLA
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeFalse();
+			this.Cpu.Negative.Should().BeFalse();
 		}
 
 		[Fact]
@@ -38,7 +38,7 @@ namespace NesZord.Tests.OpCodes.PLA
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeFalse();
+			this.Cpu.Zero.Should().BeFalse();
 		}
 
 		[Fact]
@@ -49,7 +49,7 @@ namespace NesZord.Tests.OpCodes.PLA
 
 			// Assert
 			this.Memory.Read(Core.Memory.INITIAL_STACK_OFFSET, Core.Memory.STACK_PAGE)
-				.Should().Equals(this.Processor.Accumulator.Value);
+				.Should().Equals(this.Cpu.Accumulator.Value);
 		}
 
 		[Fact]
@@ -59,38 +59,38 @@ namespace NesZord.Tests.OpCodes.PLA
 			this.RunProgram();
 
 			// Assert
-			this.Processor.StackPointer.CurrentOffset.Should().Equals(0xff);
+			this.Cpu.StackPointer.CurrentOffset.Should().Equals(0xff);
 		}
 
 		[Fact]
 		public void Set_zero_flag_given_that_pulled_value_is_0x00()
 		{
 			// Arrange
-			this.Processor.Accumulator.Value = 0x00;
+			this.Cpu.Accumulator.Value = 0x00;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Zero.Should().BeTrue();
+			this.Cpu.Zero.Should().BeTrue();
 		}
 
 		[Fact]
 		public void Set_negative_flag_given_that_pulled_value_has_sign_bit_set()
 		{
 			// Arrange
-			this.Processor.Accumulator.Value = 0x80;
+			this.Cpu.Accumulator.Value = 0x80;
 
 			// Act
 			this.RunProgram();
 
 			// Assert
-			this.Processor.Negative.Should().BeTrue();
+			this.Cpu.Negative.Should().BeTrue();
 		}
 
 		protected override void RunProgram()
 		{
-			this.Processor.RunProgram(new byte[]
+			this.Cpu.RunProgram(new byte[]
 			{
 				(byte) OpCode.PHA_Implied,
 				(byte) OpCode.LDA_Immediate, 0xff,

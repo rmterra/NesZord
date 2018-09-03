@@ -10,7 +10,7 @@ namespace NesZord.Tests.OpCodes.JMP
 		public When_process_JMP_should(T addressingMode)
 			: base(addressingMode)
 		{
-			this.Processor.Accumulator.Value = 0x05;
+			this.Cpu.Accumulator.Value = 0x05;
 			this.OperationByte = 0x05;
 		}
 
@@ -21,7 +21,7 @@ namespace NesZord.Tests.OpCodes.JMP
 			this.RunProgram();
 
 			// Assert
-			this.Processor.ProgramCounter.Should().Equals(0x05);
+			this.Cpu.ProgramCounter.Should().Equals(0x05);
 		}
 	}
 }
