@@ -20,11 +20,15 @@ namespace NesZord.Core.Memory
 		}
 
 		public MemoryLocation Sum(byte value)
-		{
-			var fullLocation = this.FullLocation;
-			var newLocation = fullLocation + value;
+			=> FromInt32(this.FullLocation + value);
 
-			return new MemoryLocation(newLocation.GetOffset(), newLocation.GetPage());
-		}
+		public MemoryLocation And(int value)
+			=> FromInt32(this.FullLocation & value);
+
+		public MemoryLocation Or(int value)
+			=> FromInt32(this.FullLocation | value);
+
+		private static MemoryLocation FromInt32(int value)
+			=> new MemoryLocation(value.GetOffset(), value.GetPage());
 	}
 }

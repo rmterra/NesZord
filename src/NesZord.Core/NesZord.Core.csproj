@@ -39,6 +39,9 @@
     <Compile Include="AddressingMode.cs" />
     <Compile Include="AddressingModeLookup.cs" />
     <Compile Include="Extensions\Int32Extension.cs" />
+    <Compile Include="Memory\BoundedMemory.cs" />
+    <Compile Include="Memory\IBoundedMemory.cs" />
+    <Compile Include="Memory\Ram.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="Extensions\ArrayExtension.cs" />
     <Compile Include="Extensions\ByteExtension.cs" />
