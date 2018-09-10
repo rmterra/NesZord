@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NesZord.Core;
+using NesZord.Core.Memory;
 using Xunit;
 
 namespace NesZord.Tests.OpCodes.NOP
@@ -13,7 +14,7 @@ namespace NesZord.Tests.OpCodes.NOP
 			this.RunProgram();
 
 			// Assert
-			var incrementedValueAtProgramCounter = this.Cpu.ProgramCounter - Core.Memory.PROGRAM_ROM_START - 1;
+			var incrementedValueAtProgramCounter = this.Cpu.ProgramCounter - MemoryMapper.PROGRAM_ROM_START - 1;
 			incrementedValueAtProgramCounter.Should().Equals(1);
 		}
 

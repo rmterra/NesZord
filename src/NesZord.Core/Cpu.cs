@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using NesZord.Core.Extensions;
+using NesZord.Core.Memory;
 
 namespace NesZord.Core
 {
@@ -36,9 +37,9 @@ namespace NesZord.Core
 
 		private readonly Dictionary<OpCode, Action<MemoryLocation>> addressedOperations;
 
-		private readonly Memory memory;
+		private readonly MemoryMapper memory;
 
-		public Cpu(Memory memory)
+		public Cpu(MemoryMapper memory)
 		{
 			if (memory == null) { throw new ArgumentNullException(nameof(memory)); }
 
@@ -248,7 +249,7 @@ namespace NesZord.Core
 
 		private void LoadProgramToMemory(byte[] program)
 		{
-			this.ProgramCounter = Memory.PROGRAM_ROM_START;
+			this.ProgramCounter = MemoryMapper.PROGRAM_ROM_START;
 			this.memory.LoadMemory(program);
 		}
 
@@ -282,9 +283,9 @@ namespace NesZord.Core
 		{
 			var offset = default(byte);
 
-			if (addressingMode == AddressingMode.ZeroPage) { return new MemoryLocation(this.ReadProgramByte(), Memory.ZERO_PAGE); }
-			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.X.Value), Memory.ZERO_PAGE); }
-			else if (addressingMode == AddressingMode.ZeroPageY) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.Y.Value), Memory.ZERO_PAGE); }
+			if (addressingMode == AddressingMode.ZeroPage) { return new MemoryLocation(this.ReadProgramByte(), MemoryMapper.ZERO_PAGE); }
+			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.X.Value), MemoryMapper.ZERO_PAGE); }
+			else if (addressingMode == AddressingMode.ZeroPageY) { return new MemoryLocation((byte)(this.ReadProgramByte() + this.Y.Value), MemoryMapper.ZERO_PAGE); }
 			else if (addressingMode == AddressingMode.Absolute) { offset = this.ReadProgramByte(); }
 			else if (addressingMode == AddressingMode.AbsoluteX)
 			{
@@ -299,22 +300,22 @@ namespace NesZord.Core
 			else if (addressingMode == AddressingMode.Indirect)
 			{
 				offset = (byte)this.ReadProgramByte();
-				var indirectOffset = this.memory.Read(offset, Memory.ZERO_PAGE);
-				var indirectPage = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
+				var indirectOffset = this.memory.Read(offset, MemoryMapper.ZERO_PAGE);
+				var indirectPage = this.memory.Read((byte)(offset + 1), MemoryMapper.ZERO_PAGE);
 				return new MemoryLocation(indirectOffset, indirectPage);
 			}
 			else if (addressingMode == AddressingMode.IndexedIndirect)
 			{
 				offset = (byte)(this.ReadProgramByte() + this.X.Value);
-				var indirectOffset = this.memory.Read(offset, Memory.ZERO_PAGE);
-				var indirectPage = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
+				var indirectOffset = this.memory.Read(offset, MemoryMapper.ZERO_PAGE);
+				var indirectPage = this.memory.Read((byte)(offset + 1), MemoryMapper.ZERO_PAGE);
 				return new MemoryLocation(indirectOffset, indirectPage);
 			}
 			else if (addressingMode == AddressingMode.IndirectIndexed)
 			{
 				offset = this.ReadProgramByte();
-				var indirectOffset = this.memory.Read(offset, Memory.ZERO_PAGE);
-				var indirectPage = this.memory.Read((byte)(offset + 1), Memory.ZERO_PAGE);
+				var indirectOffset = this.memory.Read(offset, MemoryMapper.ZERO_PAGE);
+				var indirectPage = this.memory.Read((byte)(offset + 1), MemoryMapper.ZERO_PAGE);
 				var location = new MemoryLocation(indirectOffset, indirectPage);
 				return location.Sum(this.Y.Value);
 			}

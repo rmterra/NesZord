@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NesZord.Core;
+using NesZord.Core.Memory;
 using Xunit;
 
 namespace NesZord.Tests.OpCodes.JSR
@@ -13,7 +14,7 @@ namespace NesZord.Tests.OpCodes.JSR
 			this.RunProgram();
 
 			// Assert
-			this.Memory.Read(0xff, Core.Memory.STACK_PAGE).Should().Equals(0x06);
+			this.Memory.Read(0xff, MemoryMapper.STACK_PAGE).Should().Equals(0x06);
 		}
 
 		[Fact]
@@ -23,7 +24,7 @@ namespace NesZord.Tests.OpCodes.JSR
 			this.RunProgram();
 
 			// Assert
-			this.Memory.Read(0xfe, Core.Memory.STACK_PAGE).Should().Equals(0x03);
+			this.Memory.Read(0xfe, MemoryMapper.STACK_PAGE).Should().Equals(0x03);
 		}
 
 		[Fact]

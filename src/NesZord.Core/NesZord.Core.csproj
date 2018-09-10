@@ -42,8 +42,8 @@
     <Compile Include="Register.cs" />
     <Compile Include="Extensions\ArrayExtension.cs" />
     <Compile Include="Extensions\ByteExtension.cs" />
-    <Compile Include="Memory.cs" />
-    <Compile Include="MemoryLocation.cs" />
+    <Compile Include="Memory\MemoryMapper.cs" />
+    <Compile Include="Memory\MemoryLocation.cs" />
     <Compile Include="Cpu.cs" />
     <Compile Include="OpCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

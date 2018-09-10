@@ -74,7 +74,7 @@
   <ItemGroup>
     <Compile Include="AddressingMode\AccumulatorAddressingMode.cs" />
     <Compile Include="AddressingMode\ZeroPageYAddressingMode.cs" />
-    <Compile Include="Memory\MemoryMock.cs" />
+    <Compile Include="Memory\MemoryMapperMock.cs" />
     <Compile Include="AddressingMode\AbsoluteAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteXAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteYAddressingMode.cs" />

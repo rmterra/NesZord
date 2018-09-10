@@ -1,6 +1,6 @@
 ﻿using NesZord.Core.Extensions;
 
-namespace NesZord.Core
+namespace NesZord.Core.Memory
 {
 	public class MemoryLocation
 	{

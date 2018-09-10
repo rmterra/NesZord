@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using NesZord.Core;
+using NesZord.Core.Memory;
 using NesZord.Tests.Memory;
 using System;
 
@@ -13,7 +14,7 @@ namespace NesZord.Tests.AddressingMode
 
 		private Cpu cpu;
 
-		private MemoryMock memory;
+		private MemoryMapperMock memory;
 
 		public ZeroPageAddressingMode(OpCode opCode)
 		{
@@ -22,13 +23,13 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte OperationByte
 		{
-			get => this.memory.Read(this.RandomOffset, Core.Memory.ZERO_PAGE);
+			get => this.memory.Read(this.RandomOffset, MemoryMapper.ZERO_PAGE);
 			set => this.memory.WriteZeroPage(this.RandomOffset, value);
 		}
 
 		public byte RandomOffset { get; private set; }
 
-		public void Initialize(Cpu cpu, MemoryMock memory)
+		public void Initialize(Cpu cpu, MemoryMapperMock memory)
 		{
 			this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
 			this.memory = memory ?? throw new ArgumentNullException(nameof(memory));

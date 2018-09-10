@@ -11,7 +11,7 @@ namespace NesZord.Tests.AddressingMode
 
 		private Cpu cpu;
 
-		private MemoryMock memory;
+		private MemoryMapperMock memory;
 
 		private OpCode opCode;
 
@@ -30,7 +30,7 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte YRegisterValue { get; private set; }
 
-		public void Initialize(Cpu cpu, MemoryMock memory)
+		public void Initialize(Cpu cpu, MemoryMapperMock memory)
 		{
 			this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
 			this.memory = memory ?? throw new ArgumentNullException(nameof(memory));

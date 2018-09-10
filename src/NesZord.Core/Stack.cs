@@ -1,17 +1,18 @@
-﻿using System;
+﻿using NesZord.Core.Memory;
+using System;
 
 namespace NesZord.Core
 {
 	public class Stack
 	{
-		private readonly Memory memory;
+		private readonly MemoryMapper memory;
 
-		public Stack(Memory memory)
+		public Stack(MemoryMapper memory)
 		{
 			if (memory == null) { throw new ArgumentNullException(nameof(memory)); }
 
 			this.memory = memory;
-			this.CurrentOffset = Memory.INITIAL_STACK_OFFSET;
+			this.CurrentOffset = MemoryMapper.INITIAL_STACK_OFFSET;
 		}
 
 		public byte CurrentOffset { get; set; }
@@ -19,12 +20,12 @@ namespace NesZord.Core
 		public byte Pop()
 		{
 			this.CurrentOffset += 1;
-			return this.memory.Read(this.CurrentOffset, Memory.STACK_PAGE);
+			return this.memory.Read(this.CurrentOffset, MemoryMapper.STACK_PAGE);
 		}
 
 		public void Push(byte value)
 		{
-			this.memory.Write(this.CurrentOffset, Memory.STACK_PAGE, value);
+			this.memory.Write(this.CurrentOffset, MemoryMapper.STACK_PAGE, value);
 			this.CurrentOffset -= 1;
 		}
 	}

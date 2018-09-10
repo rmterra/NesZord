@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using FluentAssertions;
+using NesZord.Core.Memory;
 using System;
 using System.Linq;
 using Xunit;
@@ -12,11 +13,11 @@ namespace NesZord.Tests.New
 
 		private readonly Fixture fixture = new Fixture();
 
-		private Core.Memory memory;
+		private MemoryMapper memory;
 
 		public When_load_memory_should()
 		{
-			this.memory = new Core.Memory();
+			this.memory = new MemoryMapper();
 		}
 
 		[Fact]

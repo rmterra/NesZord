@@ -1,9 +1,9 @@
-﻿using NesZord.Core;
-using AutoFixture;
+﻿using AutoFixture;
+using NesZord.Core.Memory;
 
 namespace NesZord.Tests.Memory
 {
-	public class MemoryMock : Core.Memory
+	public class MemoryMapperMock : MemoryMapper
 	{
 		private static readonly Fixture fixture = new Fixture();
 

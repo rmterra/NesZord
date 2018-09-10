@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NesZord.Core;
+using NesZord.Core.Memory;
 using Xunit;
 
 namespace NesZord.Tests.OpCodes.PLA
@@ -48,7 +49,7 @@ namespace NesZord.Tests.OpCodes.PLA
 			this.RunProgram();
 
 			// Assert
-			this.Memory.Read(Core.Memory.INITIAL_STACK_OFFSET, Core.Memory.STACK_PAGE)
+			this.Memory.Read(MemoryMapper.INITIAL_STACK_OFFSET, MemoryMapper.STACK_PAGE)
 				.Should().Equals(this.Cpu.Accumulator.Value);
 		}
 

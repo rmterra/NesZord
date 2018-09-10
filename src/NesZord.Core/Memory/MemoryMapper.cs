@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace NesZord.Core
+namespace NesZord.Core.Memory
 {
-	public class Memory
+	public class MemoryMapper
 	{
 		public const byte INITIAL_STACK_OFFSET = 0xff;
 
@@ -14,7 +14,7 @@ namespace NesZord.Core
 
 		private readonly byte[][] memory;
 
-		public Memory()
+		public MemoryMapper()
 		{
 			this.memory = new byte[0x100][];
 			for (int i = 0; i <= Byte.MaxValue; i++) { this.memory[i] = new byte[0x100]; }
@@ -34,7 +34,7 @@ namespace NesZord.Core
 
 		public void WriteZeroPage(byte offset, byte value)
 		{
-			this.Write(new MemoryLocation(offset, Memory.ZERO_PAGE), value);
+			this.Write(new MemoryLocation(offset, MemoryMapper.ZERO_PAGE), value);
 		}
 
 		public void Write(byte offset, byte page, byte value)

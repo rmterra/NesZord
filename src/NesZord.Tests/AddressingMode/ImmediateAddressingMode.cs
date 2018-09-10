@@ -17,7 +17,7 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte OperationByte { get; set; }
 
-		public void Initialize(Cpu cpu, MemoryMock memory)
+		public void Initialize(Cpu cpu, MemoryMapperMock memory)
 		{
 			this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
 		}

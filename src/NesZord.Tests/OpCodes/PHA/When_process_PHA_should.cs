@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using NesZord.Core;
+using NesZord.Core.Memory;
 using Xunit;
 
 namespace NesZord.Tests.OpCodes.PHA
@@ -21,7 +22,7 @@ namespace NesZord.Tests.OpCodes.PHA
 			this.RunProgram();
 
 			// Assert
-			var stackValue = this.Memory.Read(Core.Memory.INITIAL_STACK_OFFSET, Core.Memory.STACK_PAGE);
+			var stackValue = this.Memory.Read(MemoryMapper.INITIAL_STACK_OFFSET, MemoryMapper.STACK_PAGE);
 			stackValue.Should().Equals(this.Cpu.Accumulator.Value);
 		}
 

@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using NesZord.Core;
+using NesZord.Core.Memory;
 using Xunit;
 
 namespace NesZord.Tests.OpCodes.PHP
@@ -14,7 +15,7 @@ namespace NesZord.Tests.OpCodes.PHP
 			this.RunProgram();
 
 			// Assert
-			this.Memory.Read(Core.Memory.INITIAL_STACK_OFFSET, Core.Memory.STACK_PAGE).Should().Equals(0x09);
+			this.Memory.Read(MemoryMapper.INITIAL_STACK_OFFSET, MemoryMapper.STACK_PAGE).Should().Equals(0x09);
 		}
 
 		[Fact]
