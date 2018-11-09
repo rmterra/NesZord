@@ -22,7 +22,7 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte OperationByte
 		{
-			get => this.memory.Read(memory.GetIndexedIndirectLocation(this.RandomOffset, this.XRegisterValue));
+			get => this.memory.Read(memory.GetIndexedIndirectAddress(this.RandomOffset, this.XRegisterValue));
 			set => this.memory.MockIndexedIndirectMemoryWrite(this.RandomOffset, this.XRegisterValue, value);
 		}
 

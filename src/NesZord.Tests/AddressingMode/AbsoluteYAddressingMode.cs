@@ -14,7 +14,7 @@ namespace NesZord.Tests.AddressingMode
 
 		private MemoryMapperMock memory;
 
-		private MemoryLocation memoryLocation;
+		private MemoryAddress memoryAddress;
 
 		private OpCode opCode;
 
@@ -25,8 +25,8 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte OperationByte
 		{
-			get => this.memory.Read(this.memoryLocation);
-			set => this.memory.Write(this.memoryLocation, value);
+			get => this.memory.Read(this.memoryAddress);
+			set => this.memory.Write(this.memoryAddress, value);
 		}
 
 		public byte RandomOffset { get; private set; }
@@ -44,7 +44,7 @@ namespace NesZord.Tests.AddressingMode
 			this.RandomPage = fixture.Create<byte>();
 			this.YRegisterValue = fixture.Create<byte>();
 
-			this.memoryLocation = new MemoryLocation(this.RandomOffset, this.RandomPage).Sum(this.YRegisterValue);
+			this.memoryAddress = new MemoryAddress(this.RandomOffset, this.RandomPage).Sum(this.YRegisterValue);
 		}
 
 		public void RunProgram()

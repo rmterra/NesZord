@@ -8,7 +8,7 @@ namespace NesZord.Core.Memory
 
 		private byte[] data;
 
-		public BoundedMemory(MemoryLocation firstAddress, MemoryLocation lastAddress)
+		public BoundedMemory(MemoryAddress firstAddress, MemoryAddress lastAddress)
 		{
 			this.FirstAddress = firstAddress ?? throw new ArgumentNullException(nameof(firstAddress));
 			this.LastAddress = lastAddress ?? throw new ArgumentNullException(nameof(lastAddress));
@@ -16,30 +16,30 @@ namespace NesZord.Core.Memory
 			this.data = new byte[LENGTH];
 		}
 
-		public MemoryLocation FirstAddress { get; }
+		public MemoryAddress FirstAddress { get; }
 
-		public MemoryLocation LastAddress { get; }
+		public MemoryAddress LastAddress { get; }
 
-		public void Write(MemoryLocation location, byte value)
+		public void Write(MemoryAddress address, byte value)
 		{
-			if (location == null) { throw new ArgumentNullException(nameof(location)); }
-			this.ThrowIfOutOfRange(location);
+			if (address == null) { throw new ArgumentNullException(nameof(address)); }
+			this.ThrowIfOutOfRange(address);
 
-			this.data[location.FullLocation] = value;
+			this.data[address.FullAddress] = value;
 		}
 
-		public byte Read(MemoryLocation location)
+		public byte Read(MemoryAddress address)
 		{
-			if (location == null) { throw new ArgumentNullException(nameof(location)); }
-			this.ThrowIfOutOfRange(location);
+			if (address == null) { throw new ArgumentNullException(nameof(address)); }
+			this.ThrowIfOutOfRange(address);
 
-			return this.data[location.FullLocation];
+			return this.data[address.FullAddress];
 		}
 
-		private void ThrowIfOutOfRange(MemoryLocation location)
+		private void ThrowIfOutOfRange(MemoryAddress address)
 		{
-			if (location < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
-			if (location > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
+			if (address < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(address)); }
+			if (address > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(address)); }
 		}
 	}
 }

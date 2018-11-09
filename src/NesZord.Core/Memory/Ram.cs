@@ -4,21 +4,21 @@ namespace NesZord.Core.Memory
 {
 	internal class Ram : IBoundedMemory
 	{
-		private static readonly MemoryLocation INTERNAL_RAM_FIRST_ADDRESS = new MemoryLocation(0x00, 0x00);
+		private static readonly MemoryAddress INTERNAL_RAM_FIRST_ADDRESS = new MemoryAddress(0x00, 0x00);
 
-		private static readonly MemoryLocation INTERNAL_RAM_LASTADDRESS = new MemoryLocation(0xff, 0x07);
+		private static readonly MemoryAddress INTERNAL_RAM_LASTADDRESS = new MemoryAddress(0xff, 0x07);
 
-		private static readonly MemoryLocation MIRROR1_FIRST_ADDRESS = new MemoryLocation(0x00, 0x08);
+		private static readonly MemoryAddress MIRROR1_FIRST_ADDRESS = new MemoryAddress(0x00, 0x08);
 
-		private static readonly MemoryLocation MIRROR1_LAST_ADDRESS = new MemoryLocation(0xff, 0x0f);
+		private static readonly MemoryAddress MIRROR1_LAST_ADDRESS = new MemoryAddress(0xff, 0x0f);
 
-		private static readonly MemoryLocation MIRROR2_FIRST_ADDRESS = new MemoryLocation(0x00, 0x10);
+		private static readonly MemoryAddress MIRROR2_FIRST_ADDRESS = new MemoryAddress(0x00, 0x10);
 
-		private static readonly MemoryLocation MIRROR2_LAST_ADDRESS = new MemoryLocation(0xff, 0x17);
+		private static readonly MemoryAddress MIRROR2_LAST_ADDRESS = new MemoryAddress(0xff, 0x17);
 
-		private static readonly MemoryLocation MIRROR3_FIRST_ADDRESS = new MemoryLocation(0x00, 0x18);
+		private static readonly MemoryAddress MIRROR3_FIRST_ADDRESS = new MemoryAddress(0x00, 0x18);
 
-		private static readonly MemoryLocation MIRROR3_LAST_ADDRESS = new MemoryLocation(0xff, 0x1f);
+		private static readonly MemoryAddress MIRROR3_LAST_ADDRESS = new MemoryAddress(0xff, 0x1f);
 
 		private readonly BoundedMemory internalRam;
 
@@ -36,47 +36,47 @@ namespace NesZord.Core.Memory
 			this.mirror3 = new BoundedMemory(MIRROR3_FIRST_ADDRESS, MIRROR3_LAST_ADDRESS);
 		}
 
-		public MemoryLocation FirstAddress { get { return this.internalRam.FirstAddress; } }
+		public MemoryAddress FirstAddress { get { return this.internalRam.FirstAddress; } }
 
-		public MemoryLocation LastAddress { get { return this.mirror3.LastAddress; } }
+		public MemoryAddress LastAddress { get { return this.mirror3.LastAddress; } }
 
-		public void Write(MemoryLocation location, byte value)
+		public void Write(MemoryAddress address, byte value)
 		{
-			if (location == null) { throw new ArgumentNullException(nameof(location)); }
-			this.ThrowIfOutOfRange(location);
+			if (address == null) { throw new ArgumentNullException(nameof(address)); }
+			this.ThrowIfOutOfRange(address);
 
-			var normalizedLocation = this.Normalize(location);
+			var normalizedAddress = this.Normalize(address);
 
-			this.internalRam.Write(normalizedLocation, value);
+			this.internalRam.Write(normalizedAddress, value);
 
-			this.WriteOnMirror(this.mirror1, normalizedLocation, value);
-			this.WriteOnMirror(this.mirror2, normalizedLocation, value);
-			this.WriteOnMirror(this.mirror3, normalizedLocation, value);
+			this.WriteOnMirror(this.mirror1, normalizedAddress, value);
+			this.WriteOnMirror(this.mirror2, normalizedAddress, value);
+			this.WriteOnMirror(this.mirror3, normalizedAddress, value);
 		}
 
-		public byte Read(MemoryLocation location)
+		public byte Read(MemoryAddress address)
 		{
-			if (location == null) { throw new ArgumentNullException(nameof(location)); }
-			this.ThrowIfOutOfRange(location);
+			if (address == null) { throw new ArgumentNullException(nameof(address)); }
+			this.ThrowIfOutOfRange(address);
 
-			var normalizedLocation = this.Normalize(location);
-			return this.internalRam.Read(normalizedLocation);
+			var normalizedAddress = this.Normalize(address);
+			return this.internalRam.Read(normalizedAddress);
 		}
 
-		private void ThrowIfOutOfRange(MemoryLocation location)
+		private void ThrowIfOutOfRange(MemoryAddress address)
 		{
-			if (location < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
-			if (location > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
+			if (address < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(address)); }
+			if (address > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(address)); }
 		}
 
-		private MemoryLocation Normalize(MemoryLocation location)
-			=> location.And(this.internalRam.LastAddress);
+		private MemoryAddress Normalize(MemoryAddress address)
+			=> address.And(this.internalRam.LastAddress);
 
-		private void WriteOnMirror(BoundedMemory mirror, MemoryLocation location, byte value)
+		private void WriteOnMirror(BoundedMemory mirror, MemoryAddress address, byte value)
 		{
-			var mirrorLocation = location.Or(mirror.FirstAddress);
+			var mirrorAddress = address.Or(mirror.FirstAddress);
 
-			mirror.Write(mirrorLocation, value);
+			mirror.Write(mirrorAddress, value);
 		}
 	}
 }

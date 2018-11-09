@@ -15,7 +15,7 @@ namespace NesZord.Tests.OpCodes.JMP
 		}
 
 		[Fact]
-		public void Set_program_counter_as_memory_location_value()
+		public void Set_program_counter_as_memory_address_value()
 		{
 			// Act
 			this.RunProgram();

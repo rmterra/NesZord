@@ -2,12 +2,12 @@
 {
 	internal interface IBoundedMemory
 	{
-		MemoryLocation FirstAddress { get; }
+		MemoryAddress FirstAddress { get; }
 
-		MemoryLocation LastAddress { get; }
+		MemoryAddress LastAddress { get; }
 
-		byte Read(MemoryLocation location);
+		byte Read(MemoryAddress address);
 
-		void Write(MemoryLocation location, byte value);
+		void Write(MemoryAddress address, byte value);
 	}
 }
