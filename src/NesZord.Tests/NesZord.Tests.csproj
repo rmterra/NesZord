@@ -78,6 +78,8 @@
     <Compile Include="AddressingMode\AbsoluteAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteXAddressingMode.cs" />
     <Compile Include="AddressingMode\AbsoluteYAddressingMode.cs" />
+    <Compile Include="Memory\When_read_from_BoundedMemory_should.cs" />
+    <Compile Include="Memory\When_write_on_BondedMemory_should.cs" />
     <Compile Include="OpCodes\JMP\When_process_JMP_should.cs" />
     <Compile Include="OpCodes\JMP\When_process_JMP_with_absolute_addressing_mode_should.cs" />
     <Compile Include="OpCodes\JMP\When_process_JMP_with_indirect_addressing_mode_should.cs" />
