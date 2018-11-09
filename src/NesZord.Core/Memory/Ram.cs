@@ -4,21 +4,21 @@ namespace NesZord.Core.Memory
 {
 	internal class Ram : IBoundedMemory
 	{
-		private const int INTERNAL_RAM_FIRST_ADDRESS = 0x0000;
+		private static readonly MemoryLocation INTERNAL_RAM_FIRST_ADDRESS = new MemoryLocation(0x00, 0x00);
 
-		private const int INTERNAL_RAM_LASTADDRESS = 0x7ff;
+		private static readonly MemoryLocation INTERNAL_RAM_LASTADDRESS = new MemoryLocation(0xff, 0x07);
 
-		private const int MIRROR1_FIRST_ADDRESS = 0x0800;
+		private static readonly MemoryLocation MIRROR1_FIRST_ADDRESS = new MemoryLocation(0x00, 0x08);
 
-		private const int MIRROR1_LAST_ADDRESS = 0x0fff;
+		private static readonly MemoryLocation MIRROR1_LAST_ADDRESS = new MemoryLocation(0xff, 0x0f);
 
-		private const int MIRROR2_FIRST_ADDRESS = 0x1000;
+		private static readonly MemoryLocation MIRROR2_FIRST_ADDRESS = new MemoryLocation(0x00, 0x10);
 
-		private const int MIRROR2_LAST_ADDRESS = 0x17ff;
+		private static readonly MemoryLocation MIRROR2_LAST_ADDRESS = new MemoryLocation(0xff, 0x17);
 
-		private const int MIRROR3_FIRST_ADDRESS = 0x1800;
+		private static readonly MemoryLocation MIRROR3_FIRST_ADDRESS = new MemoryLocation(0x00, 0x18);
 
-		private const int MIRROR3_LAST_ADDRESS = 0x1fff;
+		private static readonly MemoryLocation MIRROR3_LAST_ADDRESS = new MemoryLocation(0xff, 0x1f);
 
 		private readonly BoundedMemory internalRam;
 
@@ -36,9 +36,9 @@ namespace NesZord.Core.Memory
 			this.mirror3 = new BoundedMemory(MIRROR3_FIRST_ADDRESS, MIRROR3_LAST_ADDRESS);
 		}
 
-		public int FirstAddress { get { return this.internalRam.FirstAddress; } }
+		public MemoryLocation FirstAddress { get { return this.internalRam.FirstAddress; } }
 
-		public int LastAddress { get { return this.mirror3.LastAddress; } }
+		public MemoryLocation LastAddress { get { return this.mirror3.LastAddress; } }
 
 		public void Write(MemoryLocation location, byte value)
 		{
@@ -65,8 +65,8 @@ namespace NesZord.Core.Memory
 
 		private void ThrowIfOutOfRange(MemoryLocation location)
 		{
-			if (location.FullLocation < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
-			if (location.FullLocation > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
+			if (location < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
+			if (location > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
 		}
 
 		private MemoryLocation Normalize(MemoryLocation location)

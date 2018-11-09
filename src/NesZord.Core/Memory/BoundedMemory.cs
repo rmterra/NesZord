@@ -4,21 +4,21 @@ namespace NesZord.Core.Memory
 {
 	internal class BoundedMemory : IBoundedMemory
 	{
-		private const int LENGTH = 0x800;
+		private const int LENGTH = 0x0800;
 
 		private byte[] data;
 
-		public BoundedMemory(int firstAddress, int lastAddress)
+		public BoundedMemory(MemoryLocation firstAddress, MemoryLocation lastAddress)
 		{
-			this.data = new byte[LENGTH];
+			this.FirstAddress = firstAddress ?? throw new ArgumentNullException(nameof(firstAddress));
+			this.LastAddress = lastAddress ?? throw new ArgumentNullException(nameof(lastAddress));
 
-			this.FirstAddress = firstAddress;
-			this.LastAddress = lastAddress;
+			this.data = new byte[LENGTH];
 		}
 
-		public int FirstAddress { get; }
+		public MemoryLocation FirstAddress { get; }
 
-		public int LastAddress { get; }
+		public MemoryLocation LastAddress { get; }
 
 		public void Write(MemoryLocation location, byte value)
 		{
@@ -38,8 +38,8 @@ namespace NesZord.Core.Memory
 
 		private void ThrowIfOutOfRange(MemoryLocation location)
 		{
-			if (location.FullLocation < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
-			if (location.FullLocation > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
+			if (location < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
+			if (location > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(location)); }
 		}
 	}
 }

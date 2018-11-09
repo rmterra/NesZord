@@ -2,9 +2,9 @@
 {
 	internal interface IBoundedMemory
 	{
-		int FirstAddress { get; }
+		MemoryLocation FirstAddress { get; }
 
-		int LastAddress { get; }
+		MemoryLocation LastAddress { get; }
 
 		byte Read(MemoryLocation location);
 
