@@ -22,7 +22,7 @@ namespace NesZord.Tests.Memory
 			this.WriteZeroPage(computedOffset, indirectOffset);
 			this.WriteZeroPage((byte)(computedOffset + 1), indirectPage);
 
-			return new MemoryAddress(indirectOffset, indirectPage);
+			return new MemoryAddress(indirectPage, indirectOffset);
 		}
 
 		public void MockIndirectIndexedMemoryWrite(byte offset, byte yRegisterValue, byte value)
@@ -39,7 +39,7 @@ namespace NesZord.Tests.Memory
 			this.WriteZeroPage(offset, indirectOffset);
 			this.WriteZeroPage((byte)(offset + 1), indirectPage);
 
-			return new MemoryAddress(indirectOffset, indirectPage).Sum(yRegisterValue);
+			return new MemoryAddress(indirectPage, indirectOffset).Sum(yRegisterValue);
 		}
 
 		public void MockIndirectMemoryWrite(byte offset, byte value)
@@ -56,7 +56,7 @@ namespace NesZord.Tests.Memory
 			this.Write(offset, ZERO_PAGE, indirectOffset);
 			this.Write((byte)(offset + 1), ZERO_PAGE, indirectPage);
 
-			return new MemoryAddress(indirectOffset, indirectPage);
+			return new MemoryAddress(indirectPage, indirectOffset);
 		}
 	}
 }

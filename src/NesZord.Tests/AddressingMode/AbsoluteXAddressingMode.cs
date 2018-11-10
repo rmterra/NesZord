@@ -44,7 +44,7 @@ namespace NesZord.Tests.AddressingMode
 			this.RandomPage = fixture.Create<byte>();
 			this.XRegisterValue = fixture.Create<byte>();
 
-			this.memoryAddress = new MemoryAddress(this.RandomOffset, this.RandomPage).Sum(this.XRegisterValue);
+			this.memoryAddress = new MemoryAddress(this.RandomPage, this.RandomOffset).Sum(this.XRegisterValue);
 		}
 
 		public void RunProgram()

@@ -54,8 +54,8 @@ namespace NesZord.Core
 				{ OpCode.ASL_Accumulator, this.ArithmeticShiftLeftOnAccumulator },
 				{ OpCode.LSR_Accumulator, this.LogicalShiftRightOnAccumulator },
 				{ OpCode.ROL_Accumulator, this.RotateLeftOnAccumulator },
-                { OpCode.ROR_Accumulator, this.RotateRightOnAccumulator },
-                { OpCode.BCC_Relative, this.BranchIfCarryIsClear },
+				{ OpCode.ROR_Accumulator, this.RotateRightOnAccumulator },
+				{ OpCode.BCC_Relative, this.BranchIfCarryIsClear },
 				{ OpCode.BCS_Relative, this.BranchIfCarryIsSet },
 				{ OpCode.BEQ_Relative, this.BranchIfEqual },
 				{ OpCode.BMI_Relative, this.BranchIfNegativeIsSet },
@@ -281,47 +281,43 @@ namespace NesZord.Core
 
 		private MemoryAddress CreateMemoryAddress(AddressingMode addressingMode)
 		{
-			var offset = default(byte);
+			var offset = this.ReadProgramByte();
 
-			if (addressingMode == AddressingMode.ZeroPage) { return new MemoryAddress(this.ReadProgramByte(), MemoryMapper.ZERO_PAGE); }
-			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryAddress((byte)(this.ReadProgramByte() + this.X.Value), MemoryMapper.ZERO_PAGE); }
-			else if (addressingMode == AddressingMode.ZeroPageY) { return new MemoryAddress((byte)(this.ReadProgramByte() + this.Y.Value), MemoryMapper.ZERO_PAGE); }
-			else if (addressingMode == AddressingMode.Absolute) { offset = this.ReadProgramByte(); }
+			if (addressingMode == AddressingMode.ZeroPage) { return new MemoryAddress(MemoryMapper.ZERO_PAGE, offset); }
+			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryAddress(MemoryMapper.ZERO_PAGE, (byte)(offset + this.X.Value)); }
+			else if (addressingMode == AddressingMode.ZeroPageY) { return new MemoryAddress(MemoryMapper.ZERO_PAGE, (byte)(offset + this.Y.Value)); }
 			else if (addressingMode == AddressingMode.AbsoluteX)
 			{
-				var address = new MemoryAddress(this.ReadProgramByte(), this.ReadProgramByte());
+				var address = new MemoryAddress(this.ReadProgramByte(), offset);
 				return address.Sum(this.X.Value);
 			}
 			else if (addressingMode == AddressingMode.AbsoluteY)
 			{
-				var address = new MemoryAddress(this.ReadProgramByte(), this.ReadProgramByte());
+				var address = new MemoryAddress(this.ReadProgramByte(), offset);
 				return address.Sum(this.Y.Value);
 			}
 			else if (addressingMode == AddressingMode.Indirect)
 			{
-				offset = (byte)this.ReadProgramByte();
 				var indirectOffset = this.memory.Read(offset, MemoryMapper.ZERO_PAGE);
 				var indirectPage = this.memory.Read((byte)(offset + 1), MemoryMapper.ZERO_PAGE);
-				return new MemoryAddress(indirectOffset, indirectPage);
+				return new MemoryAddress(indirectPage, indirectOffset);
 			}
 			else if (addressingMode == AddressingMode.IndexedIndirect)
 			{
-				offset = (byte)(this.ReadProgramByte() + this.X.Value);
+				offset += this.X.Value;
 				var indirectOffset = this.memory.Read(offset, MemoryMapper.ZERO_PAGE);
 				var indirectPage = this.memory.Read((byte)(offset + 1), MemoryMapper.ZERO_PAGE);
-				return new MemoryAddress(indirectOffset, indirectPage);
+				return new MemoryAddress(indirectPage, indirectOffset);
 			}
 			else if (addressingMode == AddressingMode.IndirectIndexed)
 			{
-				offset = this.ReadProgramByte();
 				var indirectOffset = this.memory.Read(offset, MemoryMapper.ZERO_PAGE);
 				var indirectPage = this.memory.Read((byte)(offset + 1), MemoryMapper.ZERO_PAGE);
-				var address = new MemoryAddress(indirectOffset, indirectPage);
+				var address = new MemoryAddress(indirectPage, indirectOffset);
 				return address.Sum(this.Y.Value);
 			}
 
-
-			return new MemoryAddress(offset, this.ReadProgramByte());
+			return new MemoryAddress(this.ReadProgramByte(), offset);
 		}
 
 		private void StoreAccumulator(MemoryAddress address)
@@ -464,7 +460,7 @@ namespace NesZord.Core
 			var result = this.Decimal
 				? this.Accumulator.ToBcd() + byteToAdd.ConvertToBcd() + Convert.ToInt32(this.Carry)
 				: this.Accumulator.Value + byteToAdd + Convert.ToInt32(this.Carry);
-			
+
 			this.Negative = this.Accumulator.IsSignBitSet;
 			this.Zero = result == 0;
 
@@ -691,14 +687,14 @@ namespace NesZord.Core
 
 			var offset = this.StackPointer.Pop();
 			var page = this.StackPointer.Pop();
-			this.ProgramCounter = new MemoryAddress(offset, page).FullAddress;
+			this.ProgramCounter = new MemoryAddress(page, offset).FullAddress;
 		}
 
 		private void ReturnFromSubRoutine()
 		{
 			var offset = this.StackPointer.Pop();
 			var page = this.StackPointer.Pop();
-			var address = new MemoryAddress(offset, page);
+			var address = new MemoryAddress(page, offset);
 
 			this.ProgramCounter = address.FullAddress;
 		}
@@ -732,17 +728,17 @@ namespace NesZord.Core
 			this.memory.Write(address, memoryByte);
 		}
 
-        private void RotateRightOnAccumulator()
-        {
+		private void RotateRightOnAccumulator()
+		{
 			var newCarryValue = this.Accumulator.IsFirstBitSet;
 
-            this.Accumulator.RotateRight((byte)(this.Carry ? 0x80 : 0x00));
+			this.Accumulator.RotateRight((byte)(this.Carry ? 0x80 : 0x00));
 
-            this.Carry = newCarryValue;
+			this.Carry = newCarryValue;
 
-            this.Zero = this.Accumulator.IsValueEqualZero;
-            this.Negative = this.Accumulator.IsSignBitSet;
-        }
+			this.Zero = this.Accumulator.IsValueEqualZero;
+			this.Negative = this.Accumulator.IsSignBitSet;
+		}
 
 		private void RotateRightOnMemory(MemoryAddress address)
 		{

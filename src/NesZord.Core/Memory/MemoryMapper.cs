@@ -34,12 +34,12 @@ namespace NesZord.Core.Memory
 
 		public void WriteZeroPage(byte offset, byte value)
 		{
-			this.Write(new MemoryAddress(offset, MemoryMapper.ZERO_PAGE), value);
+			this.Write(new MemoryAddress(MemoryMapper.ZERO_PAGE, offset), value);
 		}
 
 		public void Write(byte offset, byte page, byte value)
 		{
-			this.Write(new MemoryAddress(offset, page), value);
+			this.Write(new MemoryAddress(page, offset), value);
 		}
 
 		public void Write(MemoryAddress address, byte value)
@@ -49,7 +49,7 @@ namespace NesZord.Core.Memory
 
 		public byte Read(byte offset, byte page)
 		{
-			return this.Read(new MemoryAddress(offset, page));
+			return this.Read(new MemoryAddress(page, offset));
 		}
 
 		public byte Read(MemoryAddress address)

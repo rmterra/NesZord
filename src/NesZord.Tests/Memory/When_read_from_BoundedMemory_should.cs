@@ -11,8 +11,8 @@ namespace NesZord.Tests.Memory
 
 		public When_read_from_BoundedMemory_should()
 		{
-			var firstAddress = new MemoryAddress(0x10, 0x00);
-			var lastAddress = new MemoryAddress(0x20, 0x00);
+			var firstAddress = new MemoryAddress(0x00, 0x10);
+			var lastAddress = new MemoryAddress(0x00, 0x20);
 
 			this.memory = new BoundedMemory(firstAddress, lastAddress);
 		}
@@ -21,7 +21,7 @@ namespace NesZord.Tests.Memory
 		public void Throw_ArgumentRangeException_when_received_address_is_below_of_FirstAddress()
 		{
 			// Act
-			var address = new MemoryAddress(0x05, 0x00);
+			var address = new MemoryAddress(0x00, 0x05);
 			Action act = () => this.memory.Read(address);
 
 			// Assert
@@ -32,7 +32,7 @@ namespace NesZord.Tests.Memory
 		public void Throw_ArgumentRangeException_when_received_address_is_above_of_LastAddress()
 		{
 			// Act
-			var address = new MemoryAddress(0xff, 0x00);
+			var address = new MemoryAddress(0x00, 0xff);
 			Action act = () => this.memory.Read(address);
 
 			// Assert
@@ -43,7 +43,7 @@ namespace NesZord.Tests.Memory
 		public void Read_value_from_received_address_when_value_is_above_of_FirstAddress()
 		{
 			// Arrange
-			var address = new MemoryAddress(0x11, 0x00);
+			var address = new MemoryAddress(0x00, 0x11);
 			this.memory.Write(address, 1);
 
 			// Act
@@ -57,7 +57,7 @@ namespace NesZord.Tests.Memory
 		public void Read_value_from_received_address_when_value_is_below_of_LastAddress()
 		{
 			// Arrange
-			var address = new MemoryAddress(0x1f, 0x00);
+			var address = new MemoryAddress(0x00, 0x1f);
 			this.memory.Write(address, 1);
 
 			// Act

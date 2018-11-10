@@ -6,19 +6,19 @@ namespace NesZord.Core.Memory
 	{
 		private static readonly MemoryAddress INTERNAL_RAM_FIRST_ADDRESS = new MemoryAddress(0x00, 0x00);
 
-		private static readonly MemoryAddress INTERNAL_RAM_LASTADDRESS = new MemoryAddress(0xff, 0x07);
+		private static readonly MemoryAddress INTERNAL_RAM_LASTADDRESS = new MemoryAddress(0x07, 0xff);
 
-		private static readonly MemoryAddress MIRROR1_FIRST_ADDRESS = new MemoryAddress(0x00, 0x08);
+		private static readonly MemoryAddress MIRROR1_FIRST_ADDRESS = new MemoryAddress(0x08, 0x00);
 
-		private static readonly MemoryAddress MIRROR1_LAST_ADDRESS = new MemoryAddress(0xff, 0x0f);
+		private static readonly MemoryAddress MIRROR1_LAST_ADDRESS = new MemoryAddress(0x0f, 0xff);
 
-		private static readonly MemoryAddress MIRROR2_FIRST_ADDRESS = new MemoryAddress(0x00, 0x10);
+		private static readonly MemoryAddress MIRROR2_FIRST_ADDRESS = new MemoryAddress(0x10, 0x00);
 
-		private static readonly MemoryAddress MIRROR2_LAST_ADDRESS = new MemoryAddress(0xff, 0x17);
+		private static readonly MemoryAddress MIRROR2_LAST_ADDRESS = new MemoryAddress(0x17, 0xff);
 
-		private static readonly MemoryAddress MIRROR3_FIRST_ADDRESS = new MemoryAddress(0x00, 0x18);
+		private static readonly MemoryAddress MIRROR3_FIRST_ADDRESS = new MemoryAddress(0x18, 0x00);
 
-		private static readonly MemoryAddress MIRROR3_LAST_ADDRESS = new MemoryAddress(0xff, 0x1f);
+		private static readonly MemoryAddress MIRROR3_LAST_ADDRESS = new MemoryAddress(0x1f, 0xff);
 
 		private readonly BoundedMemory internalRam;
 

@@ -5,10 +5,10 @@ namespace NesZord.Core.Memory
 {
 	public class MemoryAddress : IComparable<int>, IComparable<MemoryAddress>
 	{
-		public MemoryAddress(byte offset, byte page)
+		public MemoryAddress(byte page, byte offset)
 		{
-			this.Offset = offset;
 			this.Page = page;
+			this.Offset = offset;
 		}
 
 		public byte Offset { get; private set; }
@@ -30,7 +30,7 @@ namespace NesZord.Core.Memory
 			=> FromInt32(this.FullAddress | other.FullAddress);
 
 		private static MemoryAddress FromInt32(int value)
-			=> new MemoryAddress(value.GetOffset(), value.GetPage());
+			=> new MemoryAddress(value.GetPage(), value.GetOffset());
 
 		public int CompareTo(MemoryAddress other)
 		{
