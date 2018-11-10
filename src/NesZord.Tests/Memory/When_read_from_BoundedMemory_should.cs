@@ -18,7 +18,7 @@ namespace NesZord.Tests.Memory
 		}
 
 		[Fact]
-		public void Throw_ArgumentRangeException_when_received_address_is_below_of_FirstAddress()
+		public void Throw_ArgumentRangeException_given_that_received_address_is_below_of_FirstAddress()
 		{
 			// Act
 			var address = new MemoryAddress(0x00, 0x05);
@@ -29,7 +29,7 @@ namespace NesZord.Tests.Memory
 		}
 
 		[Fact]
-		public void Throw_ArgumentRangeException_when_received_address_is_above_of_LastAddress()
+		public void Throw_ArgumentRangeException_given_that_received_address_is_above_of_LastAddress()
 		{
 			// Act
 			var address = new MemoryAddress(0x00, 0xff);
@@ -40,7 +40,7 @@ namespace NesZord.Tests.Memory
 		}
 
 		[Fact]
-		public void Read_value_from_received_address_when_value_is_above_of_FirstAddress()
+		public void Read_value_from_received_address_given_that_value_is_above_of_FirstAddress()
 		{
 			// Arrange
 			var address = new MemoryAddress(0x00, 0x11);
@@ -54,7 +54,7 @@ namespace NesZord.Tests.Memory
 		}
 
 		[Fact]
-		public void Read_value_from_received_address_when_value_is_below_of_LastAddress()
+		public void Read_value_from_received_address_given_that_value_is_below_of_LastAddress()
 		{
 			// Arrange
 			var address = new MemoryAddress(0x00, 0x1f);
