@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NesZord.Core.Memory
 {
@@ -6,14 +7,14 @@ namespace NesZord.Core.Memory
 	{
 		private const int LENGTH = 0x0800;
 
-		private byte[] data;
+		private Dictionary<int, byte> data;
 
 		public BoundedMemory(MemoryAddress firstAddress, MemoryAddress lastAddress)
 		{
 			this.FirstAddress = firstAddress ?? throw new ArgumentNullException(nameof(firstAddress));
 			this.LastAddress = lastAddress ?? throw new ArgumentNullException(nameof(lastAddress));
 
-			this.data = new byte[LENGTH];
+			this.data = new Dictionary<int, byte>();
 		}
 
 		public MemoryAddress FirstAddress { get; }
@@ -33,7 +34,9 @@ namespace NesZord.Core.Memory
 			if (address == null) { throw new ArgumentNullException(nameof(address)); }
 			this.ThrowIfOutOfRange(address);
 
-			return this.data[address.FullAddress];
+			return this.data.ContainsKey(address.FullAddress)
+				? this.data[address.FullAddress]
+				: default(byte);
 		}
 
 		private void ThrowIfOutOfRange(MemoryAddress address)
