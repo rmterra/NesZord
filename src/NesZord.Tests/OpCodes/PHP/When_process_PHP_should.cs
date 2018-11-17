@@ -15,7 +15,7 @@ namespace NesZord.Tests.OpCodes.PHP
 			this.RunProgram();
 
 			// Assert
-			this.Memory.Read(MemoryMapper.INITIAL_STACK_OFFSET, MemoryMapper.STACK_PAGE).Should().Equals(0x09);
+			this.Emulator.Read(Core.Emulator.INITIAL_STACK_OFFSET, Core.Emulator.STACK_PAGE).Should().Equals(0x09);
 		}
 
 		[Fact]

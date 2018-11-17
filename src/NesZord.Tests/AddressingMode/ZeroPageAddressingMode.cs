@@ -14,7 +14,7 @@ namespace NesZord.Tests.AddressingMode
 
 		private Cpu cpu;
 
-		private MemoryMapperMock memory;
+		private EmulatorMock emulator;
 
 		public ZeroPageAddressingMode(OpCode opCode)
 		{
@@ -23,16 +23,16 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte OperationByte
 		{
-			get => this.memory.Read(this.RandomOffset, MemoryMapper.ZERO_PAGE);
-			set => this.memory.WriteZeroPage(this.RandomOffset, value);
+			get => this.emulator.Read(this.RandomOffset, Emulator.ZERO_PAGE);
+			set => this.emulator.WriteZeroPage(this.RandomOffset, value);
 		}
 
 		public byte RandomOffset { get; private set; }
 
-		public void Initialize(Cpu cpu, MemoryMapperMock memory)
+		public void Initialize(Cpu cpu, EmulatorMock emulator)
 		{
 			this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
-			this.memory = memory ?? throw new ArgumentNullException(nameof(memory));
+			this.emulator = emulator ?? throw new ArgumentNullException(nameof(emulator));
 
 			this.RandomOffset = fixture.Create<byte>();
 		}

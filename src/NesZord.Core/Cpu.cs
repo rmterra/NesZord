@@ -37,14 +37,13 @@ namespace NesZord.Core
 
 		private readonly Dictionary<OpCode, Action<MemoryAddress>> addressedOperations;
 
-		private readonly MemoryMapper memory;
+		private readonly Emulator emulator;
 
-		public Cpu(MemoryMapper memory)
+		public Cpu(Emulator emulator)
 		{
-			if (memory == null) { throw new ArgumentNullException(nameof(memory)); }
+			this.emulator = emulator ?? throw new ArgumentNullException(nameof(emulator));
 
-			this.memory = memory;
-			this.StackPointer = new Stack(this.memory);
+			this.StackPointer = new Stack(this.emulator);
 			this.Accumulator = new Register();
 			this.X = new Register();
 			this.Y = new Register();
@@ -249,8 +248,8 @@ namespace NesZord.Core
 
 		private void LoadProgramToMemory(byte[] program)
 		{
-			this.ProgramCounter = MemoryMapper.PROGRAM_ROM_START;
-			this.memory.LoadMemory(program);
+			this.ProgramCounter = Emulator.PROGRAM_ROM_START;
+			this.emulator.LoadProgram(program);
 		}
 
 		private void ProcessProgramByteWhileNotBreak()
@@ -283,9 +282,9 @@ namespace NesZord.Core
 		{
 			var offset = this.ReadProgramByte();
 
-			if (addressingMode == AddressingMode.ZeroPage) { return new MemoryAddress(MemoryMapper.ZERO_PAGE, offset); }
-			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryAddress(MemoryMapper.ZERO_PAGE, (byte)(offset + this.X.Value)); }
-			else if (addressingMode == AddressingMode.ZeroPageY) { return new MemoryAddress(MemoryMapper.ZERO_PAGE, (byte)(offset + this.Y.Value)); }
+			if (addressingMode == AddressingMode.ZeroPage) { return new MemoryAddress(Emulator.ZERO_PAGE, offset); }
+			else if (addressingMode == AddressingMode.ZeroPageX) { return new MemoryAddress(Emulator.ZERO_PAGE, (byte)(offset + this.X.Value)); }
+			else if (addressingMode == AddressingMode.ZeroPageY) { return new MemoryAddress(Emulator.ZERO_PAGE, (byte)(offset + this.Y.Value)); }
 			else if (addressingMode == AddressingMode.AbsoluteX)
 			{
 				var address = new MemoryAddress(this.ReadProgramByte(), offset);
@@ -298,21 +297,21 @@ namespace NesZord.Core
 			}
 			else if (addressingMode == AddressingMode.Indirect)
 			{
-				var indirectOffset = this.memory.Read(offset, MemoryMapper.ZERO_PAGE);
-				var indirectPage = this.memory.Read((byte)(offset + 1), MemoryMapper.ZERO_PAGE);
+				var indirectOffset = this.emulator.Read(offset, Emulator.ZERO_PAGE);
+				var indirectPage = this.emulator.Read((byte)(offset + 1), Emulator.ZERO_PAGE);
 				return new MemoryAddress(indirectPage, indirectOffset);
 			}
 			else if (addressingMode == AddressingMode.IndexedIndirect)
 			{
 				offset += this.X.Value;
-				var indirectOffset = this.memory.Read(offset, MemoryMapper.ZERO_PAGE);
-				var indirectPage = this.memory.Read((byte)(offset + 1), MemoryMapper.ZERO_PAGE);
+				var indirectOffset = this.emulator.Read(offset, Emulator.ZERO_PAGE);
+				var indirectPage = this.emulator.Read((byte)(offset + 1), Emulator.ZERO_PAGE);
 				return new MemoryAddress(indirectPage, indirectOffset);
 			}
 			else if (addressingMode == AddressingMode.IndirectIndexed)
 			{
-				var indirectOffset = this.memory.Read(offset, MemoryMapper.ZERO_PAGE);
-				var indirectPage = this.memory.Read((byte)(offset + 1), MemoryMapper.ZERO_PAGE);
+				var indirectOffset = this.emulator.Read(offset, Emulator.ZERO_PAGE);
+				var indirectPage = this.emulator.Read((byte)(offset + 1), Emulator.ZERO_PAGE);
 				var address = new MemoryAddress(indirectPage, indirectOffset);
 				return address.Sum(this.Y.Value);
 			}
@@ -322,17 +321,17 @@ namespace NesZord.Core
 
 		private void StoreAccumulator(MemoryAddress address)
 		{
-			this.memory.Write(address, this.Accumulator.Value);
+			this.emulator.Write(address, this.Accumulator.Value);
 		}
 
 		private void StoreXRegister(MemoryAddress address)
 		{
-			this.memory.Write(address, this.X.Value);
+			this.emulator.Write(address, this.X.Value);
 		}
 
 		private void StoreYRegister(MemoryAddress address)
 		{
-			this.memory.Write(address, this.Y.Value);
+			this.emulator.Write(address, this.Y.Value);
 		}
 
 		private void ArithmeticShiftLeftOnAccumulator()
@@ -396,11 +395,11 @@ namespace NesZord.Core
 
 		private void DecrementValueAtMemory(MemoryAddress address)
 		{
-			var memoryValue = (byte)(this.memory.Read(address) - 1);
+			var memoryValue = (byte)(this.emulator.Read(address) - 1);
 			this.Zero = memoryValue == 0;
 			this.Negative = memoryValue.GetBitAt(SIGN_BIT_INDEX);
 
-			this.memory.Write(address, memoryValue);
+			this.emulator.Write(address, memoryValue);
 		}
 
 		private void DecrementValueAtX()
@@ -419,11 +418,11 @@ namespace NesZord.Core
 
 		private void IncrementValueAtMemory(MemoryAddress address)
 		{
-			var memoryValue = (byte)(this.memory.Read(address) + 1);
+			var memoryValue = (byte)(this.emulator.Read(address) + 1);
 			this.Zero = memoryValue == 0;
 			this.Negative = memoryValue.GetBitAt(SIGN_BIT_INDEX);
 
-			this.memory.Write(address, memoryValue);
+			this.emulator.Write(address, memoryValue);
 		}
 
 		private void IncrementValueAtX()
@@ -451,7 +450,7 @@ namespace NesZord.Core
 
 		private void AddWithCarry(MemoryAddress address)
 		{
-			var byteToAdd = this.memory.Read(address);
+			var byteToAdd = this.emulator.Read(address);
 			this.AddWithCarry(byteToAdd);
 		}
 
@@ -472,7 +471,7 @@ namespace NesZord.Core
 
 		private void ArithmeticShiftLeftOnMemory(MemoryAddress address)
 		{
-			var memoryValue = this.memory.Read(address);
+			var memoryValue = this.emulator.Read(address);
 
 			this.Carry = memoryValue.GetBitAt(SIGN_BIT_INDEX);
 
@@ -481,12 +480,12 @@ namespace NesZord.Core
 			this.Negative = shiftedValue.GetBitAt(SIGN_BIT_INDEX);
 			this.Zero = (shiftedValue & 0xff) == 0;
 
-			this.memory.Write(address, shiftedValue);
+			this.emulator.Write(address, shiftedValue);
 		}
 
 		private void BitwiseAndOperation(MemoryAddress address)
 		{
-			this.BitwiseAndOperation(this.memory.Read(address));
+			this.BitwiseAndOperation(this.emulator.Read(address));
 		}
 
 		private void BitwiseAndOperation(byte byteToCompare)
@@ -498,7 +497,7 @@ namespace NesZord.Core
 
 		private void BitwiseExclusiveOrOperation(MemoryAddress address)
 		{
-			this.BitwiseExclusiveOrOperation(this.memory.Read(address));
+			this.BitwiseExclusiveOrOperation(this.emulator.Read(address));
 		}
 
 		private void BitwiseExclusiveOrOperation(byte byteToCompare)
@@ -510,7 +509,7 @@ namespace NesZord.Core
 
 		private void BitwiseOrOperation(MemoryAddress address)
 		{
-			this.BitwiseOrOperation(this.memory.Read(address));
+			this.BitwiseOrOperation(this.emulator.Read(address));
 		}
 
 		private void BitwiseOrOperation(byte byteToCompare)
@@ -542,7 +541,7 @@ namespace NesZord.Core
 
 		private void CompareAccumulator(MemoryAddress address)
 		{
-			this.CompareAccumulator(this.memory.Read(address));
+			this.CompareAccumulator(this.emulator.Read(address));
 		}
 
 		private void CompareAccumulator(byte byteToCompare)
@@ -555,7 +554,7 @@ namespace NesZord.Core
 
 		private void CompareXRegister(MemoryAddress address)
 		{
-			this.CompareXRegister(this.memory.Read(address));
+			this.CompareXRegister(this.emulator.Read(address));
 		}
 
 		private void CompareXRegister(byte byteToCompare)
@@ -568,7 +567,7 @@ namespace NesZord.Core
 
 		private void CompareYRegister(MemoryAddress address)
 		{
-			this.CompareYRegister(this.memory.Read(address));
+			this.CompareYRegister(this.emulator.Read(address));
 		}
 
 		private void CompareYRegister(byte byteToCompare)
@@ -597,7 +596,7 @@ namespace NesZord.Core
 
 		private void LoadAccumulator(MemoryAddress address)
 		{
-			this.LoadAccumulator(this.memory.Read(address));
+			this.LoadAccumulator(this.emulator.Read(address));
 		}
 
 		private void LoadAccumulator(byte value)
@@ -608,7 +607,7 @@ namespace NesZord.Core
 
 		private void LoadXRegister(MemoryAddress address)
 		{
-			this.LoadXRegister(this.memory.Read(address));
+			this.LoadXRegister(this.emulator.Read(address));
 		}
 
 		private void LoadXRegister(byte value)
@@ -619,7 +618,7 @@ namespace NesZord.Core
 
 		private void LoadYRegister(MemoryAddress address)
 		{
-			this.LoadYRegister(this.memory.Read(address));
+			this.LoadYRegister(this.emulator.Read(address));
 		}
 
 		private void LoadYRegister(byte value)
@@ -630,7 +629,7 @@ namespace NesZord.Core
 
 		private void LogicalShiftRightOnMemory(MemoryAddress address)
 		{
-			var memoryValue = this.memory.Read(address);
+			var memoryValue = this.emulator.Read(address);
 
 			this.Negative = false;
 			this.Carry = memoryValue.GetBitAt(FIRST_BIT_INDEX);
@@ -638,7 +637,7 @@ namespace NesZord.Core
 			var shiftedValue = (byte)(memoryValue >> 1);
 			this.Zero = (shiftedValue & 0xff) == 0;
 
-			this.memory.Write(address, shiftedValue);
+			this.emulator.Write(address, shiftedValue);
 		}
 
 		private void PullFromStackToAccumulator()
@@ -713,7 +712,7 @@ namespace NesZord.Core
 
 		private void RotateLeftOnMemory(MemoryAddress address)
 		{
-			var memoryByte = this.memory.Read(address);
+			var memoryByte = this.emulator.Read(address);
 
 			var newCarryValue = memoryByte.GetBitAt(SIGN_BIT_INDEX);
 
@@ -725,7 +724,7 @@ namespace NesZord.Core
 			this.Zero = memoryByte == 0;
 			this.Negative = memoryByte.GetBitAt(SIGN_BIT_INDEX);
 
-			this.memory.Write(address, memoryByte);
+			this.emulator.Write(address, memoryByte);
 		}
 
 		private void RotateRightOnAccumulator()
@@ -742,7 +741,7 @@ namespace NesZord.Core
 
 		private void RotateRightOnMemory(MemoryAddress address)
 		{
-			var memoryByte = this.memory.Read(address);
+			var memoryByte = this.emulator.Read(address);
 			var newCarryValue = memoryByte.GetBitAt(FIRST_BIT_INDEX);
 
 			memoryByte = (byte)(memoryByte >> 1);
@@ -753,7 +752,7 @@ namespace NesZord.Core
 			this.Zero = memoryByte == 0;
 			this.Negative = memoryByte.GetBitAt(SIGN_BIT_INDEX);
 
-			this.memory.Write(address, memoryByte);
+			this.emulator.Write(address, memoryByte);
 		}
 
 		private void SetCarryFlag()
@@ -773,7 +772,7 @@ namespace NesZord.Core
 
 		private void SubtractWithCarry(MemoryAddress address)
 		{
-			this.SubtractWithCarry(this.memory.Read(address));
+			this.SubtractWithCarry(this.emulator.Read(address));
 		}
 
 		private void SubtractWithCarry(byte byteToSubtract)
@@ -795,7 +794,7 @@ namespace NesZord.Core
 
 		private void TestBitsInAccumulator(MemoryAddress address)
 		{
-			var memoryValue = this.memory.Read(address);
+			var memoryValue = this.emulator.Read(address);
 			var testResult = (byte)(this.Accumulator.Value & memoryValue);
 
 			this.Negative = testResult.GetBitAt(SIGN_BIT_INDEX);
@@ -839,7 +838,7 @@ namespace NesZord.Core
 		{
 			var page = (byte)(this.ProgramCounter >> 8);
 			var offset = (byte)(this.ProgramCounter & 0xff);
-			var value = this.memory.Read(offset, page);
+			var value = this.emulator.Read(offset, page);
 
 			this.ProgramCounter++;
 

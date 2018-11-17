@@ -7,11 +7,11 @@ namespace NesZord.Tests.OpCodes
 	{
 		public When_process_opcode_should()
 		{
-			this.Memory = new MemoryMapperMock();
-			this.Cpu = new Cpu(this.Memory);
+			this.Emulator = new EmulatorMock();
+			this.Cpu = new Cpu(this.Emulator);
 		}
 
-		protected MemoryMapperMock Memory { get; }
+		protected EmulatorMock Emulator { get; }
 
 		protected Cpu Cpu { get; }
 

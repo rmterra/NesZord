@@ -11,7 +11,7 @@ namespace NesZord.Tests.AddressingMode
 
 		private Cpu cpu;
 
-		private MemoryMapperMock memory;
+		private EmulatorMock emulator;
 
 		private OpCode opCode;
 
@@ -22,18 +22,18 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte OperationByte
 		{
-			get => this.memory.Read(memory.GetIndirectIndexedAddress(this.RandomOffset, this.YRegisterValue));
-			set => this.memory.MockIndirectIndexedMemoryWrite(this.RandomOffset, this.YRegisterValue, value);
+			get => this.emulator.Read(emulator.GetIndirectIndexedAddress(this.RandomOffset, this.YRegisterValue));
+			set => this.emulator.MockIndirectIndexedMemoryWrite(this.RandomOffset, this.YRegisterValue, value);
 		}
 
 		public byte RandomOffset { get; private set; }
 
 		public byte YRegisterValue { get; private set; }
 
-		public void Initialize(Cpu cpu, MemoryMapperMock memory)
+		public void Initialize(Cpu cpu, EmulatorMock emulator)
 		{
 			this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
-			this.memory = memory ?? throw new ArgumentNullException(nameof(memory));
+			this.emulator = emulator ?? throw new ArgumentNullException(nameof(emulator));
 
 			this.RandomOffset = fixture.Create<byte>();
 			this.YRegisterValue = fixture.Create<byte>();

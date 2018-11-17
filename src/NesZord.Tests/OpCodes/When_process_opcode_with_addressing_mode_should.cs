@@ -14,15 +14,15 @@ namespace NesZord.Tests.OpCodes
 #pragma warning restore IDE0016 // Use 'throw' expression
 
 			this.AddressingMode = addressingMode;
-			this.Memory = new MemoryMapperMock();
-			this.Cpu = new Cpu(this.Memory);
+			this.Emulator = new EmulatorMock();
+			this.Cpu = new Cpu(this.Emulator);
 
-			this.AddressingMode.Initialize(this.Cpu, this.Memory);
+			this.AddressingMode.Initialize(this.Cpu, this.Emulator);
 		}
 
 		protected T AddressingMode { get; }
 
-		protected MemoryMapperMock Memory { get; }
+		protected EmulatorMock Emulator { get; }
 
 		protected byte OperationByte
 		{

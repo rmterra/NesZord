@@ -1,8 +1,9 @@
-﻿using System;
+﻿using NesZord.Core.Memory;
+using System;
 
-namespace NesZord.Core.Memory
+namespace NesZord.Core
 {
-	public class MemoryMapper
+	public class Emulator
 	{
 		public const byte INITIAL_STACK_OFFSET = 0xff;
 
@@ -14,13 +15,13 @@ namespace NesZord.Core.Memory
 
 		private readonly byte[][] memory;
 
-		public MemoryMapper()
+		public Emulator()
 		{
 			this.memory = new byte[0x100][];
 			for (int i = 0; i <= Byte.MaxValue; i++) { this.memory[i] = new byte[0x100]; }
 		}
 
-		public void LoadMemory(byte[] program)
+		public void LoadProgram(byte[] program)
 		{
 			byte page = PROGRAM_ROM_START >> 8;
 			byte offset = PROGRAM_ROM_START & 0xff;
@@ -34,7 +35,7 @@ namespace NesZord.Core.Memory
 
 		public void WriteZeroPage(byte offset, byte value)
 		{
-			this.Write(new MemoryAddress(MemoryMapper.ZERO_PAGE, offset), value);
+			this.Write(new MemoryAddress(Emulator.ZERO_PAGE, offset), value);
 		}
 
 		public void Write(byte offset, byte page, byte value)

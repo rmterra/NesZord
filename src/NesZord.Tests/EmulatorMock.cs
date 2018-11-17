@@ -1,9 +1,10 @@
 ﻿using AutoFixture;
+using NesZord.Core;
 using NesZord.Core.Memory;
 
-namespace NesZord.Tests.Memory
+namespace NesZord.Tests
 {
-	public class MemoryMapperMock : MemoryMapper
+	public class EmulatorMock : Emulator
 	{
 		private static readonly Fixture fixture = new Fixture();
 

@@ -1,23 +1,23 @@
 ﻿using AutoFixture;
 using FluentAssertions;
-using NesZord.Core.Memory;
+using NesZord.Core;
 using System;
 using System.Linq;
 using Xunit;
 
 namespace NesZord.Tests.New
 {
-	public class When_load_memory_should
+	public class When_load_program_should
 	{
 		private static Random random = new Random();
 
 		private readonly Fixture fixture = new Fixture();
 
-		private MemoryMapper memory;
+		private Emulator emulator;
 
-		public When_load_memory_should()
+		public When_load_program_should()
 		{
-			this.memory = new MemoryMapper();
+			this.emulator = new Emulator();
 		}
 
 		[Fact]
@@ -28,12 +28,12 @@ namespace NesZord.Tests.New
 			var bytes = this.fixture.CreateMany<byte>(randomByteCount);
 
 			// Act
-			this.memory.LoadMemory(bytes.ToArray());
+			this.emulator.LoadProgram(bytes.ToArray());
 
 			// Assert
 			for (int i = 0; i < randomByteCount - 1; i++)
 			{
-				this.memory.Read((byte)i, 0x06).Should().Equals(bytes.ElementAt(i));
+				this.emulator.Read((byte)i, 0x06).Should().Equals(bytes.ElementAt(i));
 			}
 		}
 	}
