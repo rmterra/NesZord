@@ -248,7 +248,7 @@ namespace NesZord.Core
 
 		private void LoadProgramToMemory(byte[] program)
 		{
-			this.ProgramCounter = Emulator.PROGRAM_ROM_START;
+			this.ProgramCounter = Emulator.PROGRAM_ROM_START.FullAddress;
 			this.emulator.LoadProgram(program);
 		}
 
@@ -297,21 +297,21 @@ namespace NesZord.Core
 			}
 			else if (addressingMode == AddressingMode.Indirect)
 			{
-				var indirectOffset = this.emulator.Read(offset, Emulator.ZERO_PAGE);
-				var indirectPage = this.emulator.Read((byte)(offset + 1), Emulator.ZERO_PAGE);
+				var indirectOffset = this.emulator.Read(Emulator.ZERO_PAGE, offset);
+				var indirectPage = this.emulator.Read(Emulator.ZERO_PAGE, (byte)(offset + 1));
 				return new MemoryAddress(indirectPage, indirectOffset);
 			}
 			else if (addressingMode == AddressingMode.IndexedIndirect)
 			{
 				offset += this.X.Value;
-				var indirectOffset = this.emulator.Read(offset, Emulator.ZERO_PAGE);
-				var indirectPage = this.emulator.Read((byte)(offset + 1), Emulator.ZERO_PAGE);
+				var indirectOffset = this.emulator.Read(Emulator.ZERO_PAGE, offset);
+				var indirectPage = this.emulator.Read(Emulator.ZERO_PAGE, (byte)(offset + 1));
 				return new MemoryAddress(indirectPage, indirectOffset);
 			}
 			else if (addressingMode == AddressingMode.IndirectIndexed)
 			{
-				var indirectOffset = this.emulator.Read(offset, Emulator.ZERO_PAGE);
-				var indirectPage = this.emulator.Read((byte)(offset + 1), Emulator.ZERO_PAGE);
+				var indirectOffset = this.emulator.Read(Emulator.ZERO_PAGE, offset);
+				var indirectPage = this.emulator.Read(Emulator.ZERO_PAGE, (byte)(offset + 1));
 				var address = new MemoryAddress(indirectPage, indirectOffset);
 				return address.Sum(this.Y.Value);
 			}
@@ -838,7 +838,7 @@ namespace NesZord.Core
 		{
 			var page = (byte)(this.ProgramCounter >> 8);
 			var offset = (byte)(this.ProgramCounter & 0xff);
-			var value = this.emulator.Read(offset, page);
+			var value = this.emulator.Read(page, offset);
 
 			this.ProgramCounter++;
 

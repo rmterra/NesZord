@@ -19,12 +19,12 @@ namespace NesZord.Core
 		public byte Pop()
 		{
 			this.CurrentOffset += 1;
-			return this.emulator.Read(this.CurrentOffset, Emulator.STACK_PAGE);
+			return this.emulator.Read(Emulator.STACK_PAGE, this.CurrentOffset);
 		}
 
 		public void Push(byte value)
 		{
-			this.emulator.Write(this.CurrentOffset, Emulator.STACK_PAGE, value);
+			this.emulator.Write(Emulator.STACK_PAGE, this.CurrentOffset, value);
 			this.CurrentOffset -= 1;
 		}
 	}

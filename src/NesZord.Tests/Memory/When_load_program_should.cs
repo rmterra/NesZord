@@ -33,7 +33,7 @@ namespace NesZord.Tests.New
 			// Assert
 			for (int i = 0; i < randomByteCount - 1; i++)
 			{
-				this.emulator.Read((byte)i, 0x06).Should().Equals(bytes.ElementAt(i));
+				this.emulator.Read(0x06, (byte)i).Should().Equals(bytes.ElementAt(i));
 			}
 		}
 	}

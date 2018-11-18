@@ -20,6 +20,9 @@ namespace NesZord.Core.Memory
 			get { return (this.Page << 8) + this.Offset; }
 		}
 
+		internal MemoryAddress NextAddress()
+			=> this.Sum(0x0001);
+
 		public MemoryAddress Sum(byte value)
 			=> FromInt32(this.FullAddress + value);
 

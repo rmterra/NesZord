@@ -49,7 +49,7 @@ namespace NesZord.Tests.OpCodes.PLA
 			this.RunProgram();
 
 			// Assert
-			this.Emulator.Read(Core.Emulator.INITIAL_STACK_OFFSET, Core.Emulator.STACK_PAGE)
+			this.Emulator.Read(Core.Emulator.STACK_PAGE, Core.Emulator.INITIAL_STACK_OFFSET)
 				.Should().Equals(this.Cpu.Accumulator.Value);
 		}
 

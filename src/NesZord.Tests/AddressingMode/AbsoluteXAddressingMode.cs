@@ -1,7 +1,6 @@
 ﻿using AutoFixture;
 using NesZord.Core;
 using NesZord.Core.Memory;
-using NesZord.Tests.Memory;
 using System;
 
 namespace NesZord.Tests.AddressingMode
@@ -40,11 +39,13 @@ namespace NesZord.Tests.AddressingMode
 			this.cpu = cpu ?? throw new ArgumentNullException(nameof(cpu));
 			this.emulator = emulator ?? throw new ArgumentNullException(nameof(emulator));
 
-			this.RandomOffset = fixture.Create<byte>();
-			this.RandomPage = fixture.Create<byte>();
+			var randomAddress = this.emulator.GetRandomAddress();
+
+			this.RandomPage = randomAddress.Page;
+			this.RandomOffset = randomAddress.Offset;
 			this.XRegisterValue = fixture.Create<byte>();
 
-			this.memoryAddress = new MemoryAddress(this.RandomPage, this.RandomOffset).Sum(this.XRegisterValue);
+			this.memoryAddress = randomAddress.Sum(this.XRegisterValue);
 		}
 
 		public void RunProgram()

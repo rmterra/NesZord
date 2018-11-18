@@ -14,7 +14,7 @@ namespace NesZord.Tests.OpCodes.JSR
 			this.RunProgram();
 
 			// Assert
-			this.Emulator.Read(0xff, Core.Emulator.STACK_PAGE).Should().Equals(0x06);
+			this.Emulator.Read(Core.Emulator.STACK_PAGE, 0xff).Should().Equals(0x06);
 		}
 
 		[Fact]
@@ -24,7 +24,7 @@ namespace NesZord.Tests.OpCodes.JSR
 			this.RunProgram();
 
 			// Assert
-			this.Emulator.Read(0xfe, Core.Emulator.STACK_PAGE).Should().Equals(0x03);
+			this.Emulator.Read(Core.Emulator.STACK_PAGE, 0xfe).Should().Equals(0x03);
 		}
 
 		[Fact]

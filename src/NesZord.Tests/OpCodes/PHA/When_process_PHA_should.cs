@@ -22,7 +22,7 @@ namespace NesZord.Tests.OpCodes.PHA
 			this.RunProgram();
 
 			// Assert
-			var stackValue = this.Emulator.Read(Core.Emulator.INITIAL_STACK_OFFSET, Core.Emulator.STACK_PAGE);
+			var stackValue = this.Emulator.Read(Core.Emulator.STACK_PAGE, Core.Emulator.INITIAL_STACK_OFFSET);
 			stackValue.Should().Equals(this.Cpu.Accumulator.Value);
 		}
 

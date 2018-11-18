@@ -1,5 +1,4 @@
 ﻿using NesZord.Core.Memory;
-using System;
 
 namespace NesZord.Core
 {
@@ -11,25 +10,29 @@ namespace NesZord.Core
 
 		public const byte ZERO_PAGE = 0x00;
 
-		public const int PROGRAM_ROM_START = 0x0600;
+		public static readonly MemoryAddress PROGRAM_ROM_START = new MemoryAddress(0x80, 0x00);
 
-		private readonly byte[][] memory;
+		public static readonly MemoryAddress PROGRAM_ROM_END = new MemoryAddress(0xff, 0xff);
+
+		private readonly BoundedMemory romMemory;
+
+		private readonly Ram ramMemory;
 
 		public Emulator()
 		{
-			this.memory = new byte[0x100][];
-			for (int i = 0; i <= Byte.MaxValue; i++) { this.memory[i] = new byte[0x100]; }
+			this.ramMemory = new Ram();
+			this.romMemory = new BoundedMemory(PROGRAM_ROM_START, PROGRAM_ROM_END);
 		}
 
 		public void LoadProgram(byte[] program)
 		{
-			byte page = PROGRAM_ROM_START >> 8;
-			byte offset = PROGRAM_ROM_START & 0xff;
+			var address = romMemory.FirstAddress;
 
 			for (int i = 0; i < program.Length; i++)
 			{
-				this.memory[page][offset] = program[i];
-				offset++;
+				this.romMemory.Write(address, program[i]);
+
+				address = address.NextAddress();
 			}
 		}
 
@@ -38,24 +41,38 @@ namespace NesZord.Core
 			this.Write(new MemoryAddress(Emulator.ZERO_PAGE, offset), value);
 		}
 
-		public void Write(byte offset, byte page, byte value)
+		public void Write(byte page, byte offset, byte value)
 		{
 			this.Write(new MemoryAddress(page, offset), value);
 		}
 
 		public void Write(MemoryAddress address, byte value)
 		{
-			this.memory[address.Page][address.Offset] = value;
+			if (address < PROGRAM_ROM_START)
+			{
+				this.ramMemory.Write(address, value);
+			}
+			else
+			{
+				this.romMemory.Write(address, value);
+			}
 		}
 
-		public byte Read(byte offset, byte page)
+		public byte Read(byte page, byte offset)
 		{
 			return this.Read(new MemoryAddress(page, offset));
 		}
 
 		public byte Read(MemoryAddress address)
 		{
-			return this.memory[address.Page][address.Offset];
+			if (address < PROGRAM_ROM_START)
+			{
+				return this.ramMemory.Read(address);
+			}
+			else
+			{
+				return this.romMemory.Read(address);
+			}
 		}
 	}
 }
