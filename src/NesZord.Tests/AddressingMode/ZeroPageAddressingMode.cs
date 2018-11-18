@@ -18,7 +18,7 @@ namespace NesZord.Tests.AddressingMode
 
 		public byte OperationByte
 		{
-			get => this.emulator.Read(Emulator.ZERO_PAGE, this.RandomOffset);
+			get => this.emulator.ReadZeroPage(this.RandomOffset);
 			set => this.emulator.WriteZeroPage(this.RandomOffset, value);
 		}
 

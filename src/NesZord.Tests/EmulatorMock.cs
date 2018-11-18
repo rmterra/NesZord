@@ -36,8 +36,8 @@ namespace NesZord.Tests
 			var indirectPage = this.GetRandomPage();
 			var indirectOffset = this.GetRandomOffset();
 
-			this.Write(ZERO_PAGE, offset, indirectOffset);
-			this.Write(ZERO_PAGE, (byte)(offset + 1), indirectPage);
+			this.WriteZeroPage(offset, indirectOffset);
+			this.WriteZeroPage((byte)(offset + 1), indirectPage);
 
 			return new MemoryAddress(indirectPage, indirectOffset);
 		}

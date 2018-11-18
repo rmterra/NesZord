@@ -37,14 +37,10 @@ namespace NesZord.Core
 		}
 
 		public void WriteZeroPage(byte offset, byte value)
-		{
-			this.Write(new MemoryAddress(Emulator.ZERO_PAGE, offset), value);
-		}
+			=> this.Write(ZERO_PAGE, offset, value);
 
 		public void Write(byte page, byte offset, byte value)
-		{
-			this.Write(new MemoryAddress(page, offset), value);
-		}
+			=> this.Write(new MemoryAddress(page, offset), value);
 
 		public void Write(MemoryAddress address, byte value)
 		{
@@ -58,10 +54,11 @@ namespace NesZord.Core
 			}
 		}
 
+		public byte ReadZeroPage(byte offset)
+			=> this.Read(ZERO_PAGE, offset);
+
 		public byte Read(byte page, byte offset)
-		{
-			return this.Read(new MemoryAddress(page, offset));
-		}
+			=> this.Read(new MemoryAddress(page, offset));
 
 		public byte Read(MemoryAddress address)
 		{

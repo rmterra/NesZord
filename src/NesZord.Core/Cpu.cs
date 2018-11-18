@@ -297,21 +297,21 @@ namespace NesZord.Core
 			}
 			else if (addressingMode == AddressingMode.Indirect)
 			{
-				var indirectOffset = this.emulator.Read(Emulator.ZERO_PAGE, offset);
-				var indirectPage = this.emulator.Read(Emulator.ZERO_PAGE, (byte)(offset + 1));
+				var indirectOffset = this.emulator.ReadZeroPage(offset);
+				var indirectPage = this.emulator.ReadZeroPage((byte)(offset + 1));
 				return new MemoryAddress(indirectPage, indirectOffset);
 			}
 			else if (addressingMode == AddressingMode.IndexedIndirect)
 			{
 				offset += this.X.Value;
-				var indirectOffset = this.emulator.Read(Emulator.ZERO_PAGE, offset);
-				var indirectPage = this.emulator.Read(Emulator.ZERO_PAGE, (byte)(offset + 1));
+				var indirectOffset = this.emulator.ReadZeroPage(offset);
+				var indirectPage = this.emulator.ReadZeroPage((byte)(offset + 1));
 				return new MemoryAddress(indirectPage, indirectOffset);
 			}
 			else if (addressingMode == AddressingMode.IndirectIndexed)
 			{
-				var indirectOffset = this.emulator.Read(Emulator.ZERO_PAGE, offset);
-				var indirectPage = this.emulator.Read(Emulator.ZERO_PAGE, (byte)(offset + 1));
+				var indirectOffset = this.emulator.ReadZeroPage(offset);
+				var indirectPage = this.emulator.ReadZeroPage((byte)(offset + 1));
 				var address = new MemoryAddress(indirectPage, indirectOffset);
 				return address.Sum(this.Y.Value);
 			}
