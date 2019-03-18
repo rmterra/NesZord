@@ -20,7 +20,15 @@ namespace NesZord.Core.Memory
 			get { return (this.Page << 8) + this.Offset; }
 		}
 
-		internal MemoryAddress NextAddress()
+		public bool In(MemoryAddress address1, MemoryAddress address2)
+		{
+			if (address1 == null) { throw new ArgumentNullException(nameof(address1)); }
+			if (address2 == null) { throw new ArgumentNullException(nameof(address2)); }
+
+			return this >= address1 && this <= address2;
+		}
+
+		public MemoryAddress NextAddress()
 			=> this.Sum(0x0001);
 
 		public MemoryAddress Sum(byte value)
