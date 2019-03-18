@@ -43,10 +43,12 @@ namespace NesZord.Core.Memory
 		public void Write(MemoryAddress address, byte value)
 		{
 			if (address == null) { throw new ArgumentNullException(nameof(address)); }
-			this.ThrowIfOutOfRange(address);
+			if (address.In(this.FirstAddress, this.LastAddress) == false)
+			{
+				throw new ArgumentOutOfRangeException(nameof(address));
+			}
 
 			var normalizedAddress = this.Normalize(address);
-
 			this.internalRam.Write(normalizedAddress, value);
 
 			this.WriteOnMirror(this.mirror1, normalizedAddress, value);
@@ -57,16 +59,13 @@ namespace NesZord.Core.Memory
 		public byte Read(MemoryAddress address)
 		{
 			if (address == null) { throw new ArgumentNullException(nameof(address)); }
-			this.ThrowIfOutOfRange(address);
+			if (address.In(this.FirstAddress, this.LastAddress) == false)
+			{
+				throw new ArgumentOutOfRangeException(nameof(address));
+			}
 
 			var normalizedAddress = this.Normalize(address);
 			return this.internalRam.Read(normalizedAddress);
-		}
-
-		private void ThrowIfOutOfRange(MemoryAddress address)
-		{
-			if (address < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(address)); }
-			if (address > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(address)); }
 		}
 
 		private MemoryAddress Normalize(MemoryAddress address)

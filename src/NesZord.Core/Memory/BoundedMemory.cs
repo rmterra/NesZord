@@ -24,7 +24,10 @@ namespace NesZord.Core.Memory
 		public void Write(MemoryAddress address, byte value)
 		{
 			if (address == null) { throw new ArgumentNullException(nameof(address)); }
-			this.ThrowIfOutOfRange(address);
+			if (address.In(this.FirstAddress, this.LastAddress) == false)
+			{
+				throw new ArgumentOutOfRangeException(nameof(address));
+			}
 
 			this.data[address.FullAddress] = value;
 		}
@@ -32,17 +35,14 @@ namespace NesZord.Core.Memory
 		public byte Read(MemoryAddress address)
 		{
 			if (address == null) { throw new ArgumentNullException(nameof(address)); }
-			this.ThrowIfOutOfRange(address);
+			if (address.In(this.FirstAddress, this.LastAddress) == false)
+			{
+				throw new ArgumentOutOfRangeException(nameof(address));
+			}
 
 			return this.data.ContainsKey(address.FullAddress)
 				? this.data[address.FullAddress]
 				: default(byte);
-		}
-
-		private void ThrowIfOutOfRange(MemoryAddress address)
-		{
-			if (address < this.FirstAddress) { throw new ArgumentOutOfRangeException(nameof(address)); }
-			if (address > this.LastAddress) { throw new ArgumentOutOfRangeException(nameof(address)); }
 		}
 	}
 }
