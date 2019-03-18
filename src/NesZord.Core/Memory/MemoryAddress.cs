@@ -27,10 +27,18 @@ namespace NesZord.Core.Memory
 			=> FromInt32(this.FullAddress + value);
 
 		public MemoryAddress And(MemoryAddress other)
-			=> FromInt32(this.FullAddress & other.FullAddress);
+		{
+			if (other == null) { throw new ArgumentNullException(nameof(other)); }
+
+			return FromInt32(this.FullAddress & other.FullAddress);
+		}
 
 		public MemoryAddress Or(MemoryAddress other)
-			=> FromInt32(this.FullAddress | other.FullAddress);
+		{
+			if (other == null) { throw new ArgumentNullException(nameof(other)); }
+
+			return FromInt32(this.FullAddress | other.FullAddress);
+		}
 
 		private static MemoryAddress FromInt32(int value)
 			=> new MemoryAddress(value.GetPage(), value.GetOffset());
