@@ -15,6 +15,25 @@ namespace NesZord.Core.Memory
 			this.data = new Dictionary<int, byte>();
 		}
 
+		public BoundedMemory(byte[] buffer)
+		{
+			if (buffer == null) { throw new ArgumentNullException(nameof(buffer)); }
+
+			this.data = new Dictionary<int, byte>();
+
+			this.FirstAddress = new MemoryAddress(0x00, 0x00);
+
+			var currentAddress = this.FirstAddress;
+
+			foreach (var value in buffer)
+			{
+				this.data[currentAddress.FullAddress] = value;
+				currentAddress = currentAddress.NextAddress();
+			}
+
+			this.LastAddress = currentAddress;
+		}
+
 		public MemoryAddress FirstAddress { get; }
 
 		public MemoryAddress LastAddress { get; }

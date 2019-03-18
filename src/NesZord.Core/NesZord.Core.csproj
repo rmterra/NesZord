@@ -38,8 +38,10 @@
   <ItemGroup>
     <Compile Include="AddressingMode.cs" />
     <Compile Include="AddressingModeLookup.cs" />
+    <Compile Include="Cartridge\Cart.cs" />
     <Compile Include="Cartridge\IMapper.cs" />
     <Compile Include="Cartridge\Mapper003.cs" />
+    <Compile Include="Cartridge\MapperFactory.cs" />
     <Compile Include="Extensions\Int32Extension.cs" />
     <Compile Include="Memory\BoundedMemory.cs" />
     <Compile Include="Memory\IBoundedMemory.cs" />
