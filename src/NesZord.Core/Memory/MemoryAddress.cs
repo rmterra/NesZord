@@ -60,7 +60,13 @@ namespace NesZord.Core.Memory
 		public static bool operator <(MemoryAddress address1, MemoryAddress address2)
 			=> address1.CompareTo(address2) < 0;
 
+		public static bool operator <=(MemoryAddress address1, MemoryAddress address2)
+			=> address1.CompareTo(address2) <= 0;
+
 		public static bool operator >(MemoryAddress address1, MemoryAddress address2)
 			=> address1.CompareTo(address2) > 0;
+
+		public static bool operator >=(MemoryAddress address1, MemoryAddress address2)
+			=> address1.CompareTo(address2) >= 0;
 	}
 }
