@@ -5,8 +5,6 @@ namespace NesZord.Core.Memory
 {
 	internal class BoundedMemory : IBoundedMemory
 	{
-		private const int LENGTH = 0x0800;
-
 		private Dictionary<int, byte> data;
 
 		public BoundedMemory(MemoryAddress firstAddress, MemoryAddress lastAddress)
